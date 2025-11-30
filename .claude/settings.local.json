@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nAdd minimal modern theme foundation for Misu brand\n\n- Update color palette with earthy, natural tones (sage green, cream, off-white)\n- Add Inter font for clean typography\n- Redesign header with sticky nav, mobile menu, and CTA button\n- Create hero section with configurable content and background image support\n- Update footer with brand tagline and improved layout\n- Add button system and utility classes to critical CSS\n- Expand CSS variables with spacing scale and transitions\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

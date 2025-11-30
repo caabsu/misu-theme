@@ -1,9 +1,9 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Skeleton",
-    "theme_version": "0.1.0",
-    "theme_author": "Shopify",
+    "theme_name": "Misu",
+    "theme_version": "1.0.0",
+    "theme_author": "Misu",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://support.shopify.com/"
   },
@@ -17,8 +17,14 @@
       {
         "type": "font_picker",
         "id": "type_primary_font",
-        "default": "work_sans_n4",
+        "default": "inter_n4",
         "label": "t:general.primary"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_heading_font",
+        "default": "inter_n5",
+        "label": "t:labels.heading_font"
       }
     ]
   },
@@ -49,7 +55,7 @@
         "step": 1,
         "unit": "px",
         "label": "t:labels.page_margin",
-        "default": 20
+        "default": 24
       }
     ]
   },
@@ -57,26 +63,72 @@
     "name": "t:general.colors",
     "settings": [
       {
+        "type": "header",
+        "content": "t:labels.base_colors"
+      },
+      {
         "type": "color",
         "id": "background_color",
-        "default": "#FFFFFF",
+        "default": "#FAFAF8",
         "label": "t:labels.background"
       },
       {
         "type": "color",
         "id": "foreground_color",
-        "default": "#333333",
+        "default": "#1A1A1A",
         "label": "t:labels.foreground"
+      },
+      {
+        "type": "color",
+        "id": "foreground_muted",
+        "default": "#6B6B6B",
+        "label": "t:labels.foreground_muted"
+      },
+      {
+        "type": "header",
+        "content": "t:labels.accent_colors"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "default": "#2D5A47",
+        "label": "t:labels.primary_color"
+      },
+      {
+        "type": "color",
+        "id": "color_primary_contrast",
+        "default": "#FFFFFF",
+        "label": "t:labels.primary_contrast"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "default": "#E8E4DF",
+        "label": "t:labels.secondary_color"
+      },
+      {
+        "type": "header",
+        "content": "t:labels.ui_settings"
       },
       {
         "type": "range",
         "id": "input_corner_radius",
         "min": 0,
-        "max": 10,
+        "max": 24,
         "step": 1,
         "unit": "px",
         "label": "t:labels.input_corner_radius",
-        "default": 4
+        "default": 8
+      },
+      {
+        "type": "range",
+        "id": "button_corner_radius",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "t:labels.button_corner_radius",
+        "default": 50
       }
     ]
   }

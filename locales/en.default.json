@@ -1,4 +1,10 @@
 {
+  "general": {
+    "menu": "Menu",
+    "navigation": "Navigation",
+    "skip_to_content": "Skip to content",
+    "close": "Close"
+  },
   "404": {
     "title": "404",
     "not_found": "Page not found.",

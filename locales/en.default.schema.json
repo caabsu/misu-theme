@@ -19,6 +19,8 @@
     "header": "Header",
     "layout": "Layout",
     "main": "Main",
+    "menu": "Menu",
+    "navigation": "Navigation",
     "page": "Page",
     "password": "Password",
     "primary": "Primary",
@@ -33,21 +35,53 @@
     "theme": "Theme",
     "typography": "Typography"
   },
+  "sections": {
+    "hero": {
+      "name": "Hero"
+    }
+  },
   "labels": {
     "alignment": "Alignment",
     "background": "Background",
+    "background_image": "Background image",
+    "base_colors": "Base colors",
+    "accent_colors": "Accent colors",
+    "button_corner_radius": "Button corner radius",
+    "button_text": "Button text",
+    "button_url": "Button URL",
+    "call_to_action": "Call to action",
+    "content": "Content",
+    "content_width": "Content width",
+    "eyebrow": "Eyebrow text",
     "foreground": "Foreground",
+    "foreground_muted": "Muted text",
     "grid_gap": "Grid spacing",
     "grid_item_width": "Grid item width",
+    "heading": "Heading",
+    "heading_font": "Heading font",
     "input_corner_radius": "Input corner radius",
+    "layout": "Layout",
     "layout_direction": "Layout direction",
+    "logo": "Logo",
     "menu": "Menu",
+    "min_height": "Minimum height",
+    "overlay_opacity": "Overlay opacity",
     "padding": "Padding",
     "page_margin": "Page margin",
     "page_width": "Page width",
+    "primary_button": "Primary button",
+    "primary_color": "Primary color",
+    "primary_contrast": "Primary contrast",
+    "secondary_button": "Secondary button",
+    "secondary_color": "Secondary color",
+    "show_cart": "Show cart",
     "show_payment_icons": "Show payment icons",
+    "subheading": "Subheading",
+    "tagline": "Tagline",
+    "text_alignment": "Text alignment",
     "text_style": "Text style",
-    "text": "Text"
+    "text": "Text",
+    "ui_settings": "UI settings"
   },
   "options": {
     "alignment": {
@@ -71,6 +105,6 @@
       "title": "Title",
       "subtitle": "Subtitle",
       "normal": "Normal text"
-    },
+    }
   }
 }

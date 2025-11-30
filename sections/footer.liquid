@@ -1,39 +1,134 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <a href="{{ routes.root_url }}" class="footer__logo">
+        {{ shop.name }}
+      </a>
+      {% if section.settings.tagline != blank %}
+        <p class="footer__tagline">{{ section.settings.tagline }}</p>
+      {% endif %}
+    </div>
+
+    {% if section.settings.menu.links.size > 0 %}
+      <nav class="footer__nav" aria-label="{{ 'general.navigation' | t }}">
+        {% for link in section.settings.menu.links %}
+          <a href="{{ link.url }}" class="footer__link">
+            {{ link.title }}
+          </a>
+        {% endfor %}
+      </nav>
+    {% endif %}
   </div>
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
+  <div class="footer__bottom">
+    <div class="footer__copyright">
+      &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
+    </div>
 
-  <div class="footer__payment">
     {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
+      <div class="footer__payment">
+        {% for type in shop.enabled_payment_types %}
+          {{ type | payment_type_svg_tag }}
+        {% endfor %}
+      </div>
     {% endif %}
   </div>
 </footer>
 
 {% stylesheet %}
-  footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
+  .footer {
+    margin-top: auto;
+    background-color: var(--color-secondary);
+    padding: var(--space-3xl) var(--page-margin) var(--space-xl);
   }
-  footer a {
-    text-decoration: none;
+
+  .footer__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .footer__logo {
+    font-family: var(--font-heading--family);
+    font-weight: 600;
+    font-size: 1.25rem;
     color: var(--color-foreground);
+    text-decoration: none;
+    letter-spacing: -0.02em;
   }
-  footer .footer__links,
-  footer .footer__payment {
+
+  .footer__tagline {
+    color: var(--color-foreground-muted);
+    font-size: 0.875rem;
+    margin: 0;
+    max-width: 30ch;
+  }
+
+  .footer__nav {
     display: flex;
-    gap: 1rem;
+    flex-wrap: wrap;
+    gap: var(--space-md) var(--space-xl);
+  }
+
+  .footer__link {
+    font-size: 0.875rem;
+    color: var(--color-foreground);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .footer__link:hover {
+    color: var(--color-primary);
+  }
+
+  .footer__bottom {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding-top: var(--space-xl);
+  }
+
+  .footer__copyright {
+    font-size: 0.8125rem;
+    color: var(--color-foreground-muted);
+  }
+
+  .footer__payment {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .footer__payment svg {
+    height: 1.5rem;
+    width: auto;
+    opacity: 0.7;
+  }
+
+  @media (min-width: 768px) {
+    .footer__inner {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .footer__bottom {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 {% endstylesheet %}
 
@@ -42,9 +137,16 @@
   "name": "t:general.footer",
   "settings": [
     {
+      "type": "text",
+      "id": "tagline",
+      "label": "t:labels.tagline",
+      "default": "Premium grain-mix drinks for everyday wellness."
+    },
+    {
       "type": "link_list",
       "id": "menu",
-      "label": "t:labels.menu"
+      "label": "t:labels.menu",
+      "default": "footer"
     },
     {
       "type": "checkbox",

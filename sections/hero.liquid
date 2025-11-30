@@ -1,0 +1,302 @@
+<section
+  class="hero full-width"
+  style="
+    --hero-min-height: {{ section.settings.min_height }}vh;
+    --hero-text-align: {{ section.settings.text_alignment }};
+    --hero-content-width: {{ section.settings.content_width }}%;
+  "
+>
+  {% if section.settings.background_image %}
+    <div class="hero__background">
+      {{ section.settings.background_image | image_url: width: 2000 | image_tag: loading: 'eager', class: 'hero__background-image' }}
+      <div class="hero__overlay" style="--overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+    </div>
+  {% endif %}
+
+  <div class="hero__content">
+    {% if section.settings.eyebrow != blank %}
+      <p class="hero__eyebrow">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+
+    {% if section.settings.heading != blank %}
+      <h1 class="hero__heading">{{ section.settings.heading }}</h1>
+    {% endif %}
+
+    {% if section.settings.subheading != blank %}
+      <p class="hero__subheading">{{ section.settings.subheading }}</p>
+    {% endif %}
+
+    {% if section.settings.button_text != blank or section.settings.button_text_secondary != blank %}
+      <div class="hero__actions">
+        {% if section.settings.button_text != blank %}
+          <a href="{{ section.settings.button_url }}" class="btn btn--primary btn--lg">
+            {{ section.settings.button_text }}
+          </a>
+        {% endif %}
+
+        {% if section.settings.button_text_secondary != blank %}
+          <a href="{{ section.settings.button_url_secondary }}" class="btn btn--secondary btn--lg">
+            {{ section.settings.button_text_secondary }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .hero {
+    position: relative;
+    min-height: var(--hero-min-height, 80vh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: var(--hero-text-align, center);
+    padding: var(--space-4xl) var(--page-margin);
+    overflow: hidden;
+  }
+
+  .hero__background {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .hero__background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, var(--overlay-opacity, 0.3));
+  }
+
+  .hero__content {
+    max-width: calc(var(--hero-content-width, 60) * 1%);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    animation: heroFadeIn 0.8s ease-out;
+  }
+
+  .hero__eyebrow {
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary);
+    margin: 0;
+  }
+
+  .hero:has(.hero__background) .hero__eyebrow {
+    color: var(--color-primary-contrast);
+    opacity: 0.9;
+  }
+
+  .hero__heading {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin: 0;
+  }
+
+  .hero:has(.hero__background) .hero__heading {
+    color: var(--color-primary-contrast);
+  }
+
+  .hero__subheading {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--color-foreground-muted);
+    margin: 0;
+    max-width: 40ch;
+  }
+
+  .hero[style*="center"] .hero__subheading {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero:has(.hero__background) .hero__subheading {
+    color: var(--color-primary-contrast);
+    opacity: 0.85;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
+
+  .hero[style*="center"] .hero__actions {
+    justify-content: center;
+  }
+
+  .hero:has(.hero__background) .btn--secondary {
+    border-color: var(--color-primary-contrast);
+    color: var(--color-primary-contrast);
+  }
+
+  .hero:has(.hero__background) .btn--secondary:hover {
+    background-color: var(--color-primary-contrast);
+    color: var(--color-foreground);
+  }
+
+  @keyframes heroFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero {
+      min-height: 70vh;
+      padding: var(--space-3xl) var(--page-margin);
+    }
+
+    .hero__content {
+      max-width: 100%;
+    }
+
+    .hero__actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .hero__actions .btn {
+      width: 100%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.hero.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:labels.content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:labels.eyebrow",
+      "default": "Welcome to Misu"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:labels.heading",
+      "default": "Nourish your day with nature's best grains"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "t:labels.subheading",
+      "default": "Discover our collection of premium grain-mix drinks, crafted for taste, health, and everyday wellness."
+    },
+    {
+      "type": "header",
+      "content": "t:labels.primary_button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "t:labels.button_text",
+      "default": "Shop collection"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "t:labels.button_url",
+      "default": "/collections/all"
+    },
+    {
+      "type": "header",
+      "content": "t:labels.secondary_button"
+    },
+    {
+      "type": "text",
+      "id": "button_text_secondary",
+      "label": "t:labels.button_text",
+      "default": "Learn more"
+    },
+    {
+      "type": "url",
+      "id": "button_url_secondary",
+      "label": "t:labels.button_url",
+      "default": "/pages/about"
+    },
+    {
+      "type": "header",
+      "content": "t:labels.background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "t:labels.background_image"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "t:labels.overlay_opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 30,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "t:labels.layout"
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "t:labels.min_height",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "default": 80,
+      "unit": "vh"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "t:labels.content_width",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "default": 60,
+      "unit": "%"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:labels.text_alignment",
+      "options": [
+        { "value": "left", "label": "t:options.alignment.left" },
+        { "value": "center", "label": "t:options.alignment.center" }
+      ],
+      "default": "center"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.hero.name"
+    }
+  ]
+}
+{% endschema %}
