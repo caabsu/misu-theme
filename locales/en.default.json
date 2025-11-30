@@ -3,12 +3,14 @@
     "menu": "Menu",
     "navigation": "Navigation",
     "skip_to_content": "Skip to content",
-    "close": "Close"
+    "close": "Close",
+    "search": "Search",
+    "cart": "Cart"
   },
   "404": {
-    "title": "404",
-    "not_found": "Page not found.",
-    "back_to_shopping": "Back to shopping"
+    "title": "Page not found",
+    "not_found": "The page you requested does not exist.",
+    "back_to_shopping": "Continue shopping"
   },
   "blog": {
     "article_comments": "Comments",
@@ -16,25 +18,62 @@
     "comment_form_body": "Comment",
     "comment_form_email": "Email",
     "comment_form_name": "Name",
-    "comment_form_submit": "Post",
-    "comment_form_title": "Add a comment"
+    "comment_form_submit": "Post comment",
+    "comment_form_title": "Leave a comment",
+    "read_more": "Read more"
   },
   "cart": {
     "checkout": "Checkout",
-    "title": "Cart",
+    "title": "Your cart",
     "update": "Update",
-    "remove": "Remove"
+    "remove": "Remove",
+    "empty": "Your cart is empty",
+    "continue_shopping": "Continue shopping",
+    "subtotal": "Subtotal",
+    "taxes_and_shipping": "Taxes and shipping calculated at checkout"
   },
   "customers": {
     "login": {
       "email": "Email",
       "password": "Password",
       "submit": "Sign in",
-      "title": "Login"
+      "title": "Login",
+      "forgot_password": "Forgot your password?",
+      "create_account": "Create account"
+    },
+    "register": {
+      "title": "Create account",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Create"
+    },
+    "account": {
+      "title": "My account",
+      "orders": "Order history",
+      "addresses": "Addresses",
+      "logout": "Log out"
     }
   },
   "collections": {
-    "title": "Collections"
+    "title": "Collections",
+    "empty": "No products found",
+    "filter": "Filter",
+    "sort": "Sort",
+    "clear_all": "Clear all"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "sale": "Sale",
+      "unavailable": "Unavailable",
+      "quantity": "Quantity",
+      "description": "Description",
+      "in_stock": "In stock",
+      "out_of_stock": "Out of stock"
+    }
   },
   "gift_card": {
     "add_to_apple_wallet": "Add to Apple Wallet",
@@ -44,15 +83,27 @@
     "use_at_checkout": "Use this gift card at checkout"
   },
   "password": {
-    "title": "This shop is private",
+    "title": "Opening soon",
     "password": "Password",
-    "enter": "Enter"
+    "enter": "Enter store",
+    "powered_by": "Powered by Shopify"
   },
   "search": {
     "title": "Search",
-    "placeholder": "Search articles, pages, or products",
+    "placeholder": "Search products, articles...",
     "submit": "Search",
-    "no_results_html": "No results found for {{ terms }}",
-    "results_for_html": "{{ count }} results found for {{ terms }}"
+    "no_results_html": "No results found for \"{{ terms }}\"",
+    "results_for_html": "{{ count }} results for \"{{ terms }}\""
+  },
+  "sections": {
+    "featured_collection": {
+      "view_all": "View all",
+      "placeholder_title": "Product title"
+    },
+    "newsletter": {
+      "placeholder": "Enter your email",
+      "submit": "Subscribe",
+      "success": "Thanks for subscribing!"
+    }
   }
 }

@@ -1,0 +1,165 @@
+{% doc %}
+  Renders a product card for use in collection grids and featured sections.
+
+  @param {product} product - The product object to display
+  @param {boolean} [show_vendor] - Whether to show the vendor name (defaults to theme setting)
+
+  @example
+  {% render 'product-card', product: product %}
+  {% render 'product-card', product: product, show_vendor: true %}
+{% enddoc %}
+
+{% liquid
+  assign show_vendor = show_vendor | default: settings.product_show_vendor
+  assign show_secondary = settings.product_show_secondary_image
+%}
+
+<a href="{{ product.url }}" class="product-card">
+  <div class="product-card__image">
+    {% if product.featured_image %}
+      {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'product-card__img product-card__img--primary' }}
+      {% if show_secondary and product.images.size > 1 %}
+        {{ product.images[1] | image_url: width: 600 | image_tag: loading: 'lazy', class: 'product-card__img product-card__img--secondary' }}
+      {% endif %}
+    {% else %}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {% endif %}
+
+    {% if settings.product_show_sale_badge and product.compare_at_price > product.price %}
+      <span class="product-card__badge product-card__badge--sale">
+        {{ 'products.product.sale' | t }}
+      </span>
+    {% elsif settings.product_show_soldout_badge and product.available == false %}
+      <span class="product-card__badge product-card__badge--soldout">
+        {{ 'products.product.sold_out' | t }}
+      </span>
+    {% endif %}
+  </div>
+
+  <div class="product-card__info">
+    {% if show_vendor and product.vendor %}
+      <p class="product-card__vendor">{{ product.vendor }}</p>
+    {% endif %}
+
+    <h3 class="product-card__title">{{ product.title }}</h3>
+
+    <div class="product-card__price">
+      {% if product.compare_at_price > product.price %}
+        <span class="product-card__price--compare">{{ product.compare_at_price | money }}</span>
+      {% endif %}
+      <span class="product-card__price--current {% if product.compare_at_price > product.price %}product-card__price--sale{% endif %}">
+        {{ product.price | money }}
+      </span>
+    </div>
+  </div>
+</a>
+
+{% stylesheet %}
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .product-card__image {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background-color: var(--color-secondary);
+    border-radius: var(--input-border-radius);
+    margin-bottom: var(--space-md);
+  }
+
+  .product-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity var(--transition-base), transform var(--transition-slow);
+  }
+
+  .product-card__img--secondary {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+
+  .product-card:hover .product-card__img--primary {
+    transform: scale(1.03);
+  }
+
+  .product-card:hover .product-card__img--secondary {
+    opacity: 1;
+  }
+
+  .product-card__badge {
+    position: absolute;
+    top: var(--space-sm);
+    left: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: var(--button-border-radius);
+  }
+
+  .product-card__badge--sale {
+    background-color: var(--color-primary);
+    color: var(--color-primary-text);
+  }
+
+  .product-card__badge--soldout {
+    background-color: var(--color-text-muted);
+    color: var(--color-background);
+  }
+
+  .product-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .product-card__vendor {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+
+  .product-card__title {
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    margin: 0;
+    transition: color var(--transition-fast);
+  }
+
+  .product-card:hover .product-card__title {
+    color: var(--color-primary);
+  }
+
+  .product-card__price {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--font-size-sm);
+    margin: 0;
+  }
+
+  .product-card__price--compare {
+    color: var(--color-text-muted);
+    text-decoration: line-through;
+  }
+
+  .product-card__price--sale {
+    color: var(--color-primary);
+  }
+
+  .placeholder-svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--color-text-muted);
+    opacity: 0.3;
+  }
+{% endstylesheet %}

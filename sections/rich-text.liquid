@@ -1,0 +1,155 @@
+<section class="rich-text" style="--text-align: {{ section.settings.text_alignment }}; --content-width: {{ section.settings.content_width }}%;">
+  <div class="rich-text__inner">
+    {% if section.settings.eyebrow != blank %}
+      <p class="rich-text__eyebrow">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+
+    {% if section.settings.heading != blank %}
+      <h2 class="rich-text__heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    {% if section.settings.text != blank %}
+      <div class="rich-text__content">{{ section.settings.text }}</div>
+    {% endif %}
+
+    {% if section.settings.button_text != blank %}
+      <a href="{{ section.settings.button_url }}" class="btn btn--{{ section.settings.button_style }}">
+        {{ section.settings.button_text }}
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .rich-text {
+    padding: var(--space-4xl) var(--page-margin);
+    text-align: var(--text-align);
+  }
+
+  .rich-text__inner {
+    max-width: calc(var(--content-width) * var(--page-width) / 100);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .rich-text[style*="center"] .rich-text__inner {
+    align-items: center;
+  }
+
+  .rich-text[style*="left"] .rich-text__inner {
+    align-items: flex-start;
+  }
+
+  .rich-text[style*="right"] .rich-text__inner {
+    align-items: flex-end;
+  }
+
+  .rich-text__eyebrow {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary);
+    margin: 0;
+  }
+
+  .rich-text__heading {
+    margin: 0;
+  }
+
+  .rich-text__content {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .rich-text__content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .rich-text .btn {
+    margin-top: var(--space-sm);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.rich_text.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.rich_text.eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.rich_text.heading",
+      "default": "Talk about your brand"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:sections.rich_text.text",
+      "default": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.rich_text.button_header"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "t:sections.rich_text.button_text"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "t:sections.rich_text.button_url"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "t:sections.rich_text.button_style",
+      "options": [
+        { "value": "primary", "label": "t:sections.rich_text.button_primary" },
+        { "value": "secondary", "label": "t:sections.rich_text.button_secondary" },
+        { "value": "outline", "label": "t:sections.rich_text.button_outline" }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.rich_text.layout_header"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:sections.rich_text.text_alignment",
+      "options": [
+        { "value": "left", "label": "t:sections.rich_text.align_left" },
+        { "value": "center", "label": "t:sections.rich_text.align_center" },
+        { "value": "right", "label": "t:sections.rich_text.align_right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "default": 60,
+      "unit": "%",
+      "label": "t:sections.rich_text.content_width"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.rich_text.name"
+    }
+  ]
+}
+{% endschema %}

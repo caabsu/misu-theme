@@ -1,42 +1,88 @@
+{% doc %}
+  Renders CSS custom properties (variables) for the theme based on global settings.
+  This snippet should be included in the <head> of the theme layout.
+
+  @example
+  {% render 'css-variables' %}
+{% enddoc %}
+
 {% style %}
-  {% # Loads all font variantions with display: swap %}
-  {{ settings.type_primary_font | font_face: font_display: 'swap' }}
-  {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
-  {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
-  {{ settings.type_primary_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
-  {{ settings.type_heading_font | font_face: font_display: 'swap' }}
-  {{ settings.type_heading_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
+  {%- comment -%} Load font faces with display: swap for better performance {%- endcomment -%}
+  {{ settings.font_body | font_face: font_display: 'swap' }}
+  {{ settings.font_body | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
+  {{ settings.font_body | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
+  {{ settings.font_heading | font_face: font_display: 'swap' }}
+  {{ settings.font_heading | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
 
   :root {
-    /* Typography */
-    --font-primary--family: {{ settings.type_primary_font.family }}, {{ settings.type_primary_font.fallback_families }};
-    --font-primary--style: {{ settings.type_primary_font.style }};
-    --font-primary--weight: {{ settings.type_primary_font.weight }};
-    --font-heading--family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
-    --font-heading--weight: {{ settings.type_heading_font.weight }};
+    /* ========================================
+       Typography
+       ======================================== */
+    --font-body-family: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+    --font-body-style: {{ settings.font_body.style }};
+    --font-body-weight: {{ settings.font_body.weight }};
+    --font-body-scale: {{ settings.body_size_scale | divided_by: 100.0 }};
 
-    /* Layout */
-    --page-width: {{ settings.max_page_width }};
-    --page-margin: {{ settings.min_page_margin }}px;
+    --font-heading-family: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+    --font-heading-style: {{ settings.font_heading.style }};
+    --font-heading-weight: {{ settings.font_heading.weight }};
+    --font-heading-scale: {{ settings.heading_size_scale | divided_by: 100.0 }};
 
-    /* Colors */
-    --color-background: {{ settings.background_color }};
-    --color-foreground: {{ settings.foreground_color }};
-    --color-foreground-muted: {{ settings.foreground_muted }};
+    /* Base font sizes (scaled by --font-*-scale) */
+    --font-size-xs: calc(0.75rem * var(--font-body-scale));
+    --font-size-sm: calc(0.875rem * var(--font-body-scale));
+    --font-size-base: calc(1rem * var(--font-body-scale));
+    --font-size-lg: calc(1.125rem * var(--font-body-scale));
+    --font-size-xl: calc(1.25rem * var(--font-body-scale));
+
+    /* Heading sizes (scaled by --font-heading-scale) */
+    --font-size-h1: calc(2.5rem * var(--font-heading-scale));
+    --font-size-h2: calc(2rem * var(--font-heading-scale));
+    --font-size-h3: calc(1.5rem * var(--font-heading-scale));
+    --font-size-h4: calc(1.25rem * var(--font-heading-scale));
+    --font-size-h5: calc(1.125rem * var(--font-heading-scale));
+    --font-size-h6: calc(1rem * var(--font-heading-scale));
+
+    /* ========================================
+       Colors
+       ======================================== */
+    --color-background: {{ settings.color_background }};
+    --color-text: {{ settings.color_text }};
+    --color-text-muted: {{ settings.color_text_muted }};
+
     --color-primary: {{ settings.color_primary }};
-    --color-primary-contrast: {{ settings.color_primary_contrast }};
+    --color-primary-text: {{ settings.color_primary_text }};
     --color-secondary: {{ settings.color_secondary }};
+    --color-secondary-text: {{ settings.color_secondary_text }};
 
-    /* UI */
-    --style-border-radius-inputs: {{ settings.input_corner_radius }}px;
-    --style-border-radius-buttons: {{ settings.button_corner_radius }}px;
+    --color-border: {{ settings.color_border }};
+    --color-error: {{ settings.color_error }};
+    --color-success: {{ settings.color_success }};
 
-    /* Animations */
-    --transition-fast: 150ms ease;
-    --transition-base: 250ms ease;
-    --transition-slow: 400ms ease;
+    /* Legacy aliases for backwards compatibility */
+    --color-foreground: var(--color-text);
+    --color-foreground-muted: var(--color-text-muted);
+    --color-primary-contrast: var(--color-primary-text);
 
-    /* Spacing scale */
+    /* ========================================
+       Layout
+       ======================================== */
+    --page-width: {{ settings.page_width }}px;
+    --page-margin: {{ settings.page_margin }}px;
+    --section-spacing: {{ settings.section_spacing }}px;
+
+    /* ========================================
+       UI Elements
+       ======================================== */
+    --button-border-radius: {{ settings.button_border_radius }}px;
+    --input-border-radius: {{ settings.input_border_radius }}px;
+
+    /* Logo */
+    --logo-width: {{ settings.logo_width }}px;
+
+    /* ========================================
+       Spacing Scale
+       ======================================== */
     --space-xs: 0.25rem;
     --space-sm: 0.5rem;
     --space-md: 1rem;
@@ -45,5 +91,20 @@
     --space-2xl: 3rem;
     --space-3xl: 4rem;
     --space-4xl: 6rem;
+
+    /* ========================================
+       Transitions
+       ======================================== */
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+    --transition-slow: 400ms ease;
+
+    /* ========================================
+       Shadows
+       ======================================== */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   }
 {% endstyle %}

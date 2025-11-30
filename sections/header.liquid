@@ -1,8 +1,8 @@
 <header class="header">
   <div class="header__inner">
     <a href="{{ routes.root_url }}" class="header__logo">
-      {% if section.settings.logo %}
-        {{ section.settings.logo | image_url: height: 48 | image_tag: alt: shop.name, class: 'header__logo-image' }}
+      {% if settings.logo %}
+        {{ settings.logo | image_url: width: settings.logo_width | image_tag: alt: shop.name, class: 'header__logo-image', style: 'max-width: var(--logo-width)' }}
       {% else %}
         <span class="header__logo-text">{{ shop.name }}</span>
       {% endif %}
@@ -282,39 +282,34 @@
 
 {% schema %}
 {
-  "name": "t:general.header",
+  "name": "t:sections.header.name",
   "settings": [
-    {
-      "type": "image_picker",
-      "id": "logo",
-      "label": "t:labels.logo"
-    },
     {
       "type": "link_list",
       "id": "menu",
-      "label": "t:labels.menu",
+      "label": "t:settings.header.menu",
       "default": "main-menu"
     },
     {
       "type": "checkbox",
       "id": "show_cart",
-      "label": "t:labels.show_cart",
+      "label": "t:settings.header.show_cart",
       "default": true
     },
     {
       "type": "header",
-      "content": "t:labels.call_to_action"
+      "content": "t:settings.header.cta_header"
     },
     {
       "type": "text",
       "id": "cta_text",
-      "label": "t:labels.button_text",
+      "label": "t:settings.header.cta_text",
       "default": "Shop now"
     },
     {
       "type": "url",
       "id": "cta_url",
-      "label": "t:labels.button_url",
+      "label": "t:settings.header.cta_url",
       "default": "/collections/all"
     }
   ]

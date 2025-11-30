@@ -1,110 +1,181 @@
 {
-  "general": {
-    "404": "Not found",
-    "article": "Article",
-    "block": "Block",
-    "blog": "Blog",
-    "cart": "Cart",
-    "collection": "Collection",
-    "collections": "Collections",
-    "collection_card": "Collection card",
-    "collections_grid": "Collections grid",
-    "colors": "Colors",
-    "column": "Column",
-    "content": "Content",
-    "custom_section": "Custom section",
-    "fonts": "Fonts",
-    "footer": "Footer",
-    "group": "Group",
-    "header": "Header",
-    "layout": "Layout",
-    "main": "Main",
-    "menu": "Menu",
-    "navigation": "Navigation",
-    "page": "Page",
-    "password": "Password",
-    "primary": "Primary",
-    "product": "Product",
-    "row": "Row",
-    "search": "Search",
-    "secondary": "Secondary",
-    "section": "Section",
-    "settings": "Settings",
-    "sidebar": "Sidebar",
-    "text": "Text",
-    "theme": "Theme",
-    "typography": "Typography"
-  },
-  "sections": {
-    "hero": {
-      "name": "Hero"
+  "settings": {
+    "logo": {
+      "name": "Logo",
+      "logo": "Logo image",
+      "logo_width": "Logo width",
+      "favicon": "Favicon",
+      "favicon_info": "32x32px .png recommended"
+    },
+    "colors": {
+      "name": "Colors",
+      "primary_colors": "Primary colors",
+      "background": "Background",
+      "text": "Text",
+      "text_muted": "Muted text",
+      "accent_colors": "Accent colors",
+      "primary": "Primary",
+      "primary_text": "Primary text",
+      "secondary": "Secondary",
+      "secondary_text": "Secondary text",
+      "utility_colors": "Utility colors",
+      "border": "Border",
+      "error": "Error",
+      "success": "Success"
+    },
+    "typography": {
+      "name": "Typography",
+      "headings": "Headings",
+      "heading_font": "Heading font",
+      "heading_size": "Heading size scale",
+      "body": "Body",
+      "body_font": "Body font",
+      "body_size": "Body size scale",
+      "size_small": "Small",
+      "size_medium": "Medium",
+      "size_large": "Large"
+    },
+    "layout": {
+      "name": "Layout",
+      "page_width": "Page width",
+      "width_narrow": "Narrow (1200px)",
+      "width_medium": "Medium (1400px)",
+      "width_wide": "Wide (1600px)",
+      "page_margin": "Page margin",
+      "section_spacing": "Section spacing"
+    },
+    "buttons": {
+      "name": "Buttons",
+      "border_radius": "Border radius",
+      "style": "Default style",
+      "style_solid": "Solid",
+      "style_outline": "Outline"
+    },
+    "inputs": {
+      "name": "Form inputs",
+      "border_radius": "Border radius",
+      "style": "Input style",
+      "style_box": "Box",
+      "style_underline": "Underline"
+    },
+    "products": {
+      "name": "Products",
+      "card_settings": "Product card",
+      "card_style": "Card style",
+      "card_standard": "Standard",
+      "card_minimal": "Minimal",
+      "show_vendor": "Show vendor",
+      "show_secondary_image": "Show secondary image on hover",
+      "badges": "Badges",
+      "show_sale_badge": "Show sale badge",
+      "show_soldout_badge": "Show sold out badge"
+    },
+    "cart": {
+      "name": "Cart",
+      "cart_type": "Cart type",
+      "type_page": "Page",
+      "type_drawer": "Drawer",
+      "show_free_shipping_bar": "Show free shipping bar",
+      "free_shipping_threshold": "Free shipping threshold",
+      "free_shipping_info": "Enter amount in your store's currency"
+    },
+    "social": {
+      "name": "Social media",
+      "accounts": "Accounts",
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "twitter": "X (Twitter)",
+      "tiktok": "TikTok",
+      "youtube": "YouTube",
+      "pinterest": "Pinterest"
+    },
+    "header": {
+      "menu": "Menu",
+      "show_cart": "Show cart icon",
+      "cta_header": "Call to action",
+      "cta_text": "Button text",
+      "cta_url": "Button URL"
     }
   },
-  "labels": {
-    "alignment": "Alignment",
-    "background": "Background",
-    "background_image": "Background image",
-    "base_colors": "Base colors",
-    "accent_colors": "Accent colors",
-    "button_corner_radius": "Button corner radius",
-    "button_text": "Button text",
-    "button_url": "Button URL",
-    "call_to_action": "Call to action",
-    "content": "Content",
-    "content_width": "Content width",
-    "eyebrow": "Eyebrow text",
-    "foreground": "Foreground",
-    "foreground_muted": "Muted text",
-    "grid_gap": "Grid spacing",
-    "grid_item_width": "Grid item width",
-    "heading": "Heading",
-    "heading_font": "Heading font",
-    "input_corner_radius": "Input corner radius",
-    "layout": "Layout",
-    "layout_direction": "Layout direction",
-    "logo": "Logo",
-    "menu": "Menu",
-    "min_height": "Minimum height",
-    "overlay_opacity": "Overlay opacity",
-    "padding": "Padding",
-    "page_margin": "Page margin",
-    "page_width": "Page width",
-    "primary_button": "Primary button",
-    "primary_color": "Primary color",
-    "primary_contrast": "Primary contrast",
-    "secondary_button": "Secondary button",
-    "secondary_color": "Secondary color",
-    "show_cart": "Show cart",
-    "show_payment_icons": "Show payment icons",
-    "subheading": "Subheading",
-    "tagline": "Tagline",
-    "text_alignment": "Text alignment",
-    "text_style": "Text style",
-    "text": "Text",
-    "ui_settings": "UI settings"
-  },
-  "options": {
-    "alignment": {
-      "left": "Left",
-      "center": "Center",
-      "right": "Right"
+  "sections": {
+    "header": {
+      "name": "Header"
     },
-    "direction": {
-      "horizontal": "Horizontal",
-      "vertical": "Vertical"
+    "footer": {
+      "name": "Footer",
+      "tagline": "Tagline",
+      "menu": "Menu",
+      "show_payment_icons": "Show payment icons"
     },
-    "page_width": {
-      "narrow": "Narrow",
-      "wide": "Wide"
+    "hero": {
+      "name": "Hero",
+      "content_header": "Content",
+      "eyebrow": "Eyebrow text",
+      "heading": "Heading",
+      "subheading": "Subheading",
+      "primary_button": "Primary button",
+      "secondary_button": "Secondary button",
+      "button_text": "Button text",
+      "button_url": "Button URL",
+      "background": "Background",
+      "background_image": "Background image",
+      "overlay_opacity": "Overlay opacity",
+      "layout": "Layout",
+      "min_height": "Minimum height",
+      "content_width": "Content width",
+      "text_alignment": "Text alignment"
     },
-    "size": {
-      "large": "Large",
-      "small": "Small"
+    "featured_collection": {
+      "name": "Featured collection",
+      "heading": "Heading",
+      "subheading": "Subheading",
+      "collection": "Collection",
+      "products_to_show": "Products to show",
+      "columns": "Columns on desktop",
+      "show_view_all": "Show view all button"
     },
-    "text_style": {
-      "title": "Title",
-      "subtitle": "Subtitle",
-      "normal": "Normal text"
+    "image_with_text": {
+      "name": "Image with text",
+      "image": "Image",
+      "image_position": "Image position",
+      "position_left": "Left",
+      "position_right": "Right",
+      "content_header": "Content",
+      "eyebrow": "Eyebrow text",
+      "heading": "Heading",
+      "text": "Text",
+      "button_header": "Button",
+      "button_text": "Button text",
+      "button_url": "Button URL",
+      "button_style": "Button style",
+      "button_primary": "Primary",
+      "button_secondary": "Secondary",
+      "button_outline": "Outline"
+    },
+    "rich_text": {
+      "name": "Rich text",
+      "eyebrow": "Eyebrow text",
+      "heading": "Heading",
+      "text": "Text",
+      "button_header": "Button",
+      "button_text": "Button text",
+      "button_url": "Button URL",
+      "button_style": "Button style",
+      "button_primary": "Primary",
+      "button_secondary": "Secondary",
+      "button_outline": "Outline",
+      "layout_header": "Layout",
+      "text_alignment": "Text alignment",
+      "align_left": "Left",
+      "align_center": "Center",
+      "align_right": "Right",
+      "content_width": "Content width"
+    },
+    "newsletter": {
+      "name": "Newsletter",
+      "heading": "Heading",
+      "text": "Description",
+      "full_width": "Full width background"
     }
   }
 }
