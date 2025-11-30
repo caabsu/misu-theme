@@ -1,9 +1,15 @@
 {
+  "general": {
+    "header": "Header",
+    "footer": "Footer"
+  },
   "settings": {
     "logo": {
       "name": "Logo",
       "logo": "Logo image",
       "logo_width": "Logo width",
+      "desktop": "Desktop",
+      "mobile": "Mobile",
       "favicon": "Favicon",
       "favicon_info": "32x32px .png recommended"
     },
@@ -28,6 +34,8 @@
       "headings": "Headings",
       "heading_font": "Heading font",
       "heading_size": "Heading size scale",
+      "desktop": "Desktop",
+      "mobile": "Mobile",
       "body": "Body",
       "body_font": "Body font",
       "body_size": "Body size scale",
@@ -41,6 +49,8 @@
       "width_narrow": "Narrow (1200px)",
       "width_medium": "Medium (1400px)",
       "width_wide": "Wide (1600px)",
+      "desktop": "Desktop",
+      "mobile": "Mobile",
       "page_margin": "Page margin",
       "section_spacing": "Section spacing"
     },
@@ -92,9 +102,14 @@
     "header": {
       "menu": "Menu",
       "show_cart": "Show cart icon",
+      "enable_sticky": "Enable sticky header",
       "cta_header": "Call to action",
       "cta_text": "Button text",
-      "cta_url": "Button URL"
+      "cta_url": "Button URL",
+      "show_cta_mobile": "Show button on mobile",
+      "desktop_layout": "Desktop layout",
+      "mobile_layout": "Mobile layout",
+      "header_height": "Header height"
     }
   },
   "sections": {
@@ -120,10 +135,14 @@
       "background": "Background",
       "background_image": "Background image",
       "overlay_opacity": "Overlay opacity",
-      "layout": "Layout",
+      "desktop_layout": "Desktop layout",
+      "mobile_layout": "Mobile layout",
       "min_height": "Minimum height",
       "content_width": "Content width",
-      "text_alignment": "Text alignment"
+      "text_alignment": "Text alignment",
+      "align_left": "Left",
+      "align_center": "Center",
+      "stack_buttons_mobile": "Stack buttons on mobile"
     },
     "featured_collection": {
       "name": "Featured collection",
@@ -131,15 +150,14 @@
       "subheading": "Subheading",
       "collection": "Collection",
       "products_to_show": "Products to show",
-      "columns": "Columns on desktop",
+      "desktop": "Desktop",
+      "mobile": "Mobile",
+      "columns": "Columns",
       "show_view_all": "Show view all button"
     },
     "image_with_text": {
       "name": "Image with text",
       "image": "Image",
-      "image_position": "Image position",
-      "position_left": "Left",
-      "position_right": "Right",
       "content_header": "Content",
       "eyebrow": "Eyebrow text",
       "heading": "Heading",
@@ -150,7 +168,17 @@
       "button_style": "Button style",
       "button_primary": "Primary",
       "button_secondary": "Secondary",
-      "button_outline": "Outline"
+      "button_outline": "Outline",
+      "desktop_layout": "Desktop layout",
+      "mobile_layout": "Mobile layout",
+      "image_position": "Image position",
+      "position_left": "Left",
+      "position_right": "Right",
+      "position_top": "Top",
+      "position_bottom": "Bottom",
+      "text_alignment": "Text alignment",
+      "align_left": "Left",
+      "align_center": "Center"
     },
     "rich_text": {
       "name": "Rich text",
@@ -164,11 +192,11 @@
       "button_primary": "Primary",
       "button_secondary": "Secondary",
       "button_outline": "Outline",
-      "layout_header": "Layout",
+      "desktop_layout": "Desktop layout",
+      "mobile_layout": "Mobile layout",
       "text_alignment": "Text alignment",
       "align_left": "Left",
       "align_center": "Center",
-      "align_right": "Right",
       "content_width": "Content width"
     },
     "newsletter": {

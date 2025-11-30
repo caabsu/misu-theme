@@ -1,4 +1,11 @@
-<section class="image-with-text {% if section.settings.image_position == 'right' %}image-with-text--reversed{% endif %}">
+<section
+  class="image-with-text {% if section.settings.image_position_desktop == 'right' %}image-with-text--reversed{% endif %}"
+  style="
+    --image-position-mobile: {{ section.settings.image_position_mobile }};
+    --text-align-mobile: {{ section.settings.text_alignment_mobile }};
+    --text-align-desktop: {{ section.settings.text_alignment_desktop }};
+  "
+>
   <div class="image-with-text__image">
     {% if section.settings.image %}
       {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy' }}
@@ -32,10 +39,18 @@
   .image-with-text {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-2xl);
-    padding: var(--space-3xl) var(--page-margin);
+    gap: var(--space-xl);
+    padding: var(--section-spacing-mobile) var(--page-margin-mobile);
     max-width: var(--page-width);
     margin: 0 auto;
+  }
+
+  .image-with-text[style*="image-position-mobile: bottom"] .image-with-text__image {
+    order: 2;
+  }
+
+  .image-with-text[style*="image-position-mobile: bottom"] .image-with-text__content {
+    order: 1;
   }
 
   .image-with-text__image {
@@ -56,6 +71,11 @@
     flex-direction: column;
     justify-content: center;
     gap: var(--space-md);
+    text-align: var(--text-align-mobile);
+  }
+
+  .image-with-text[style*="text-align-mobile: center"] .image-with-text__content {
+    align-items: center;
   }
 
   .image-with-text__eyebrow {
@@ -80,7 +100,6 @@
   }
 
   .image-with-text .btn {
-    align-self: flex-start;
     margin-top: var(--space-sm);
   }
 
@@ -95,6 +114,7 @@
     .image-with-text {
       grid-template-columns: 1fr 1fr;
       gap: var(--space-4xl);
+      padding: var(--section-spacing) var(--page-margin);
     }
 
     .image-with-text--reversed .image-with-text__image {
@@ -103,6 +123,22 @@
 
     .image-with-text--reversed .image-with-text__content {
       order: 1;
+    }
+
+    .image-with-text__content {
+      text-align: var(--text-align-desktop);
+    }
+
+    .image-with-text[style*="text-align-desktop: center"] .image-with-text__content {
+      align-items: center;
+    }
+
+    .image-with-text[style*="text-align-desktop: left"] .image-with-text__content {
+      align-items: flex-start;
+    }
+
+    .image-with-text__image {
+      aspect-ratio: 1;
     }
   }
 {% endstylesheet %}
@@ -116,16 +152,6 @@
       "type": "image_picker",
       "id": "image",
       "label": "t:sections.image_with_text.image"
-    },
-    {
-      "type": "select",
-      "id": "image_position",
-      "label": "t:sections.image_with_text.image_position",
-      "options": [
-        { "value": "left", "label": "t:sections.image_with_text.position_left" },
-        { "value": "right", "label": "t:sections.image_with_text.position_right" }
-      ],
-      "default": "left"
     },
     {
       "type": "header",
@@ -172,6 +198,54 @@
         { "value": "outline", "label": "t:sections.image_with_text.button_outline" }
       ],
       "default": "primary"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.image_with_text.desktop_layout"
+    },
+    {
+      "type": "select",
+      "id": "image_position_desktop",
+      "label": "t:sections.image_with_text.image_position",
+      "options": [
+        { "value": "left", "label": "t:sections.image_with_text.position_left" },
+        { "value": "right", "label": "t:sections.image_with_text.position_right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment_desktop",
+      "label": "t:sections.image_with_text.text_alignment",
+      "options": [
+        { "value": "left", "label": "t:sections.image_with_text.align_left" },
+        { "value": "center", "label": "t:sections.image_with_text.align_center" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.image_with_text.mobile_layout"
+    },
+    {
+      "type": "select",
+      "id": "image_position_mobile",
+      "label": "t:sections.image_with_text.image_position",
+      "options": [
+        { "value": "top", "label": "t:sections.image_with_text.position_top" },
+        { "value": "bottom", "label": "t:sections.image_with_text.position_bottom" }
+      ],
+      "default": "top"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment_mobile",
+      "label": "t:sections.image_with_text.text_alignment",
+      "options": [
+        { "value": "left", "label": "t:sections.image_with_text.align_left" },
+        { "value": "center", "label": "t:sections.image_with_text.align_center" }
+      ],
+      "default": "left"
     }
   ],
   "presets": [

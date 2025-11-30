@@ -1,4 +1,10 @@
-<header class="header">
+<header
+  class="header {% if section.settings.enable_sticky %}header--sticky{% endif %}"
+  style="
+    --header-height-desktop: {{ section.settings.header_height_desktop }}px;
+    --header-height-mobile: {{ section.settings.header_height_mobile }}px;
+  "
+>
   <div class="header__inner">
     <a href="{{ routes.root_url }}" class="header__logo">
       {% if settings.logo %}
@@ -27,7 +33,10 @@
       {% endif %}
 
       {% if section.settings.cta_text != blank %}
-        <a href="{{ section.settings.cta_url }}" class="header__cta btn btn--primary btn--sm">
+        <a
+          href="{{ section.settings.cta_url }}"
+          class="header__cta btn btn--primary btn--sm {% unless section.settings.show_cta_mobile %}header__cta--hide-mobile{% endunless %}"
+        >
           {{ section.settings.cta_text }}
         </a>
       {% endif %}
@@ -79,18 +88,22 @@
 
 {% stylesheet %}
   .header {
-    position: sticky;
-    top: 0;
+    position: relative;
     z-index: 100;
     background-color: var(--color-background);
     border-bottom: 1px solid var(--color-secondary);
+  }
+
+  .header--sticky {
+    position: sticky;
+    top: 0;
   }
 
   .header__inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 4.5rem;
+    height: var(--header-height-mobile);
     padding: 0 var(--page-margin);
     max-width: var(--page-width);
     margin: 0 auto;
@@ -181,6 +194,10 @@
     display: none;
   }
 
+  .header__cta--hide-mobile {
+    display: none !important;
+  }
+
   .header__menu-toggle {
     display: flex;
     align-items: center;
@@ -225,7 +242,7 @@
   .header__mobile-menu {
     display: none;
     position: fixed;
-    top: 4.5rem;
+    top: var(--header-height-mobile);
     left: 0;
     right: 0;
     bottom: 0;
@@ -266,12 +283,20 @@
   }
 
   @media (min-width: 768px) {
+    .header__inner {
+      height: var(--header-height-desktop);
+    }
+
     .header__nav {
       display: flex;
     }
 
     .header__cta {
       display: inline-flex;
+    }
+
+    .header__cta--hide-mobile {
+      display: inline-flex !important;
     }
 
     .header__menu-toggle {
@@ -297,6 +322,12 @@
       "default": true
     },
     {
+      "type": "checkbox",
+      "id": "enable_sticky",
+      "label": "t:settings.header.enable_sticky",
+      "default": true
+    },
+    {
       "type": "header",
       "content": "t:settings.header.cta_header"
     },
@@ -311,6 +342,40 @@
       "id": "cta_url",
       "label": "t:settings.header.cta_url",
       "default": "/collections/all"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta_mobile",
+      "label": "t:settings.header.show_cta_mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:settings.header.desktop_layout"
+    },
+    {
+      "type": "range",
+      "id": "header_height_desktop",
+      "min": 60,
+      "max": 120,
+      "step": 4,
+      "default": 72,
+      "unit": "px",
+      "label": "t:settings.header.header_height"
+    },
+    {
+      "type": "header",
+      "content": "t:settings.header.mobile_layout"
+    },
+    {
+      "type": "range",
+      "id": "header_height_mobile",
+      "min": 56,
+      "max": 80,
+      "step": 4,
+      "default": 64,
+      "unit": "px",
+      "label": "t:settings.header.header_height"
     }
   ]
 }

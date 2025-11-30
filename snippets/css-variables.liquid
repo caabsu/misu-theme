@@ -26,7 +26,11 @@
     --font-heading-family: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
     --font-heading-style: {{ settings.font_heading.style }};
     --font-heading-weight: {{ settings.font_heading.weight }};
-    --font-heading-scale: {{ settings.heading_size_scale | divided_by: 100.0 }};
+
+    /* Desktop/Mobile heading scales */
+    --font-heading-scale-desktop: {{ settings.heading_size_scale | divided_by: 100.0 }};
+    --font-heading-scale-mobile: {{ settings.heading_size_scale_mobile | divided_by: 100.0 }};
+    --font-heading-scale: var(--font-heading-scale-mobile);
 
     /* Base font sizes (scaled by --font-*-scale) */
     --font-size-xs: calc(0.75rem * var(--font-body-scale));
@@ -65,20 +69,30 @@
     --color-primary-contrast: var(--color-primary-text);
 
     /* ========================================
-       Layout
+       Layout - Mobile First (defaults)
        ======================================== */
     --page-width: {{ settings.page_width }}px;
-    --page-margin: {{ settings.page_margin }}px;
-    --section-spacing: {{ settings.section_spacing }}px;
+
+    /* Desktop values (for reference in sections) */
+    --page-margin-desktop: {{ settings.page_margin }}px;
+    --section-spacing-desktop: {{ settings.section_spacing }}px;
+    --logo-width-desktop: {{ settings.logo_width }}px;
+
+    /* Mobile values (for reference in sections) */
+    --page-margin-mobile: {{ settings.page_margin_mobile }}px;
+    --section-spacing-mobile: {{ settings.section_spacing_mobile }}px;
+    --logo-width-mobile: {{ settings.logo_width_mobile }}px;
+
+    /* Active values (mobile first) */
+    --page-margin: var(--page-margin-mobile);
+    --section-spacing: var(--section-spacing-mobile);
+    --logo-width: var(--logo-width-mobile);
 
     /* ========================================
        UI Elements
        ======================================== */
     --button-border-radius: {{ settings.button_border_radius }}px;
     --input-border-radius: {{ settings.input_border_radius }}px;
-
-    /* Logo */
-    --logo-width: {{ settings.logo_width }}px;
 
     /* ========================================
        Spacing Scale
@@ -106,5 +120,17 @@
     --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
+
+  /* ========================================
+     Desktop breakpoint overrides
+     ======================================== */
+  @media (min-width: 768px) {
+    :root {
+      --font-heading-scale: var(--font-heading-scale-desktop);
+      --page-margin: var(--page-margin-desktop);
+      --section-spacing: var(--section-spacing-desktop);
+      --logo-width: var(--logo-width-desktop);
+    }
   }
 {% endstyle %}

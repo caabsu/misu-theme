@@ -1,4 +1,11 @@
-<section class="rich-text" style="--text-align: {{ section.settings.text_alignment }}; --content-width: {{ section.settings.content_width }}%;">
+<section
+  class="rich-text"
+  style="
+    --text-align-desktop: {{ section.settings.text_alignment_desktop }};
+    --text-align-mobile: {{ section.settings.text_alignment_mobile }};
+    --content-width: {{ section.settings.content_width }}%;
+  "
+>
   <div class="rich-text__inner">
     {% if section.settings.eyebrow != blank %}
       <p class="rich-text__eyebrow">{{ section.settings.eyebrow }}</p>
@@ -22,28 +29,24 @@
 
 {% stylesheet %}
   .rich-text {
-    padding: var(--space-4xl) var(--page-margin);
-    text-align: var(--text-align);
+    padding: var(--section-spacing-mobile) var(--page-margin-mobile);
+    text-align: var(--text-align-mobile);
   }
 
   .rich-text__inner {
-    max-width: calc(var(--content-width) * var(--page-width) / 100);
+    max-width: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
   }
 
-  .rich-text[style*="center"] .rich-text__inner {
+  .rich-text[style*="text-align-mobile: center"] .rich-text__inner {
     align-items: center;
   }
 
-  .rich-text[style*="left"] .rich-text__inner {
+  .rich-text[style*="text-align-mobile: left"] .rich-text__inner {
     align-items: flex-start;
-  }
-
-  .rich-text[style*="right"] .rich-text__inner {
-    align-items: flex-end;
   }
 
   .rich-text__eyebrow {
@@ -70,6 +73,25 @@
 
   .rich-text .btn {
     margin-top: var(--space-sm);
+  }
+
+  @media (min-width: 768px) {
+    .rich-text {
+      padding: var(--section-spacing) var(--page-margin);
+      text-align: var(--text-align-desktop);
+    }
+
+    .rich-text__inner {
+      max-width: calc(var(--content-width) * var(--page-width) / 100);
+    }
+
+    .rich-text[style*="text-align-desktop: center"] .rich-text__inner {
+      align-items: center;
+    }
+
+    .rich-text[style*="text-align-desktop: left"] .rich-text__inner {
+      align-items: flex-start;
+    }
   }
 {% endstylesheet %}
 
@@ -122,16 +144,15 @@
     },
     {
       "type": "header",
-      "content": "t:sections.rich_text.layout_header"
+      "content": "t:sections.rich_text.desktop_layout"
     },
     {
       "type": "select",
-      "id": "text_alignment",
+      "id": "text_alignment_desktop",
       "label": "t:sections.rich_text.text_alignment",
       "options": [
         { "value": "left", "label": "t:sections.rich_text.align_left" },
-        { "value": "center", "label": "t:sections.rich_text.align_center" },
-        { "value": "right", "label": "t:sections.rich_text.align_right" }
+        { "value": "center", "label": "t:sections.rich_text.align_center" }
       ],
       "default": "center"
     },
@@ -144,6 +165,20 @@
       "default": 60,
       "unit": "%",
       "label": "t:sections.rich_text.content_width"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.rich_text.mobile_layout"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment_mobile",
+      "label": "t:sections.rich_text.text_alignment",
+      "options": [
+        { "value": "left", "label": "t:sections.rich_text.align_left" },
+        { "value": "center", "label": "t:sections.rich_text.align_center" }
+      ],
+      "default": "center"
     }
   ],
   "presets": [
