@@ -74,19 +74,22 @@
           <p class="ingredients__subheading">{{ section.settings.subheading }}</p>
         {% endif %}
         {% if section.settings.heading != blank %}
-          <h2 class="ingredients__heading">{{ section.settings.heading }}</h2>
+          <h2 class="ingredients__heading">
+            <span class="ingredients__heading-text">{{ section.settings.heading }}</span>
+            <span class="ingredients__heading-line"></span>
+          </h2>
         {% endif %}
       </div>
       {% if section.blocks.size > 1 %}
         <div class="ingredients__nav">
-          <button type="button" class="ingredients__arrow ingredients__arrow--prev" aria-label="Previous" data-direction="prev">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M15 18l-6-6 6-6"/>
+          <button type="button" class="ingredients__arrow ingredients__arrow--prev" aria-label="Previous">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 15l-5-5 5-5"/>
             </svg>
           </button>
-          <button type="button" class="ingredients__arrow ingredients__arrow--next" aria-label="Next" data-direction="next">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M9 18l6-6-6-6"/>
+          <button type="button" class="ingredients__arrow ingredients__arrow--next" aria-label="Next">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M8 15l5-5-5-5"/>
             </svg>
           </button>
         </div>
@@ -179,11 +182,50 @@
     color: var(--ing-heading-color);
     margin: 0;
     letter-spacing: -0.01em;
+    position: relative;
+    display: inline-block;
+  }
+
+  .ingredients__heading-text {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: ingredientsFadeUp 0.6s ease forwards;
+    animation-delay: 0.1s;
+  }
+
+  .ingredients__heading-line {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--ing-accent);
+    animation: ingredientsLineGrow 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.4s;
+  }
+
+  @keyframes ingredientsFadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes ingredientsLineGrow {
+    to {
+      width: 100%;
+    }
+  }
+
+  .ingredients__subheading {
+    opacity: 0;
+    animation: ingredientsFadeUp 0.5s ease forwards;
   }
 
   .ingredients__nav {
     display: flex;
-    gap: 8px;
+    gap: 4px;
     flex-shrink: 0;
   }
 
@@ -191,25 +233,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: var(--ing-arrow-size);
-    height: var(--ing-arrow-size);
+    width: 36px;
+    height: 36px;
     background: transparent;
-    border: 1px solid var(--ing-arrow-color);
-    border-radius: 50%;
+    border: none;
     color: var(--ing-arrow-color);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease;
     padding: 0;
+    opacity: 0.5;
   }
 
   .ingredients__arrow:hover {
-    background: var(--ing-arrow-color);
-    color: var(--ing-bg);
+    opacity: 1;
+  }
+
+  .ingredients__arrow:active {
+    transform: scale(0.95);
   }
 
   .ingredients__arrow svg {
-    width: 50%;
-    height: 50%;
+    width: 20px;
+    height: 20px;
   }
 
   .ingredients__track {
@@ -233,6 +278,25 @@
   .ingredients__card {
     flex: 0 0 220px;
     scroll-snap-align: start;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: ingredientsCardIn 0.6s ease forwards;
+  }
+
+  .ingredients__card:nth-child(1) { animation-delay: 0.2s; }
+  .ingredients__card:nth-child(2) { animation-delay: 0.3s; }
+  .ingredients__card:nth-child(3) { animation-delay: 0.4s; }
+  .ingredients__card:nth-child(4) { animation-delay: 0.5s; }
+  .ingredients__card:nth-child(5) { animation-delay: 0.6s; }
+  .ingredients__card:nth-child(6) { animation-delay: 0.7s; }
+  .ingredients__card:nth-child(7) { animation-delay: 0.8s; }
+  .ingredients__card:nth-child(8) { animation-delay: 0.9s; }
+
+  @keyframes ingredientsCardIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   @media (min-width: 768px) {
@@ -258,6 +322,11 @@
     width: 100%;
     aspect-ratio: 3 / 4;
     object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .ingredients__card:hover .ingredients__img {
+    transform: scale(1.03);
   }
 
   .ingredients__placeholder {
@@ -365,32 +434,35 @@
 {% endstylesheet %}
 
 {% javascript %}
-  (function() {
-    const section = document.currentScript.closest('.shopify-section');
-    if (!section) return;
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.ingredients').forEach(function(section) {
+      const grid = section.querySelector('[data-ingredients-grid]');
+      const prevBtn = section.querySelector('.ingredients__arrow--prev');
+      const nextBtn = section.querySelector('.ingredients__arrow--next');
 
-    const grid = section.querySelector('[data-ingredients-grid]');
-    const prevBtn = section.querySelector('.ingredients__arrow--prev');
-    const nextBtn = section.querySelector('.ingredients__arrow--next');
+      if (!grid) return;
 
-    if (!grid || !prevBtn || !nextBtn) return;
+      const getScrollAmount = function() {
+        const card = grid.querySelector('.ingredients__card');
+        if (!card) return 280;
+        const style = getComputedStyle(grid);
+        const gap = parseInt(style.gap) || 20;
+        return card.offsetWidth + gap;
+      };
 
-    const getScrollAmount = () => {
-      const card = grid.querySelector('.ingredients__card');
-      if (!card) return 280;
-      const style = getComputedStyle(grid);
-      const gap = parseInt(style.gap) || 16;
-      return card.offsetWidth + gap;
-    };
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+          grid.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+        });
+      }
 
-    prevBtn.addEventListener('click', () => {
-      grid.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+          grid.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+        });
+      }
     });
-
-    nextBtn.addEventListener('click', () => {
-      grid.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
-    });
-  })();
+  });
 {% endjavascript %}
 
 {% schema %}
