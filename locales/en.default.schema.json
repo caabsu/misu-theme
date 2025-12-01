@@ -10,7 +10,9 @@
 {
   "general": {
     "header": "Header",
-    "footer": "Footer"
+    "footer": "Footer",
+    "collection": "Collection",
+    "collections_grid": "Collections grid"
   },
   "settings": {
     "logo": {
