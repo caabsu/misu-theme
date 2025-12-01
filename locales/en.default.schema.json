@@ -12,7 +12,11 @@
     "header": "Header",
     "footer": "Footer",
     "collection": "Collection",
-    "collections_grid": "Collections grid"
+    "collections_grid": "Collections grid",
+    "account": "Account",
+    "cart": "Cart",
+    "menu": "Menu",
+    "navigation": "Navigation"
   },
   "settings": {
     "logo": {
@@ -114,12 +118,9 @@
     },
     "header": {
       "menu": "Menu",
+      "show_account": "Show account icon",
       "show_cart": "Show cart icon",
       "enable_sticky": "Enable sticky header",
-      "cta_header": "Call to action",
-      "cta_text": "Button text",
-      "cta_url": "Button URL",
-      "show_cta_mobile": "Show button on mobile",
       "desktop_layout": "Desktop layout",
       "mobile_layout": "Mobile layout",
       "header_height": "Header height"
@@ -217,6 +218,29 @@
       "heading": "Heading",
       "text": "Description",
       "full_width": "Full width background"
+    },
+    "hero_banner": {
+      "name": "Hero banner",
+      "content_header": "Content",
+      "eyebrow": "Eyebrow text",
+      "heading": "Heading",
+      "subheading": "Subheading",
+      "button_text": "Button text",
+      "button_url": "Button URL",
+      "background": "Background",
+      "background_image": "Background image",
+      "overlay_opacity": "Overlay opacity",
+      "layout_header": "Layout",
+      "min_height_desktop": "Minimum height (desktop)",
+      "min_height_mobile": "Minimum height (mobile)",
+      "text_alignment": "Text alignment",
+      "align_left": "Left",
+      "align_center": "Center",
+      "content_position": "Content position",
+      "position_top": "Top",
+      "position_center": "Center",
+      "position_bottom": "Bottom",
+      "show_scroll_indicator": "Show scroll indicator"
     }
   }
 }

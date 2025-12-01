@@ -4,43 +4,11 @@
     --header-height-desktop: {{ section.settings.header_height_desktop }}px;
     --header-height-mobile: {{ section.settings.header_height_mobile }}px;
   "
+  data-header
 >
   <div class="header__inner">
-    <a href="{{ routes.root_url }}" class="header__logo">
-      {% if settings.logo %}
-        {{ settings.logo | image_url: width: settings.logo_width | image_tag: alt: shop.name, class: 'header__logo-image', style: 'max-width: var(--logo-width)' }}
-      {% else %}
-        <span class="header__logo-text">{{ shop.name }}</span>
-      {% endif %}
-    </a>
-
-    <nav class="header__nav" id="header-nav" aria-label="{{ 'general.navigation' | t }}">
-      {% for link in section.settings.menu.links %}
-        <a href="{{ link.url }}" class="header__nav-link {% if link.active %}header__nav-link--active{% endif %}">
-          {{ link.title }}
-        </a>
-      {% endfor %}
-    </nav>
-
-    <div class="header__actions">
-      {% if section.settings.show_cart %}
-        <a href="{{ routes.cart_url }}" class="header__cart btn btn--ghost btn--sm">
-          {{ 'icon-cart.svg' | inline_asset_content }}
-          {% if cart.item_count > 0 %}
-            <span class="header__cart-count">{{ cart.item_count }}</span>
-          {% endif %}
-        </a>
-      {% endif %}
-
-      {% if section.settings.cta_text != blank %}
-        <a
-          href="{{ section.settings.cta_url }}"
-          class="header__cta btn btn--primary btn--sm {% unless section.settings.show_cta_mobile %}header__cta--hide-mobile{% endunless %}"
-        >
-          {{ section.settings.cta_text }}
-        </a>
-      {% endif %}
-
+    {%- comment -%} Mobile: Left side - Menu toggle {%- endcomment -%}
+    <div class="header__mobile-left">
       <button
         class="header__menu-toggle"
         aria-label="{{ 'general.menu' | t }}"
@@ -54,6 +22,42 @@
         </span>
       </button>
     </div>
+
+    {%- comment -%} Logo - Centered on mobile, left on desktop {%- endcomment -%}
+    <a href="{{ routes.root_url }}" class="header__logo">
+      {% if settings.logo %}
+        {{ settings.logo | image_url: width: settings.logo_width | image_tag: alt: shop.name, class: 'header__logo-image' }}
+      {% else %}
+        <span class="header__logo-text">{{ shop.name }}</span>
+      {% endif %}
+    </a>
+
+    {%- comment -%} Desktop: Navigation {%- endcomment -%}
+    <nav class="header__nav" id="header-nav" aria-label="{{ 'general.navigation' | t }}">
+      {% for link in section.settings.menu.links %}
+        <a href="{{ link.url }}" class="header__nav-link {% if link.active %}header__nav-link--active{% endif %}">
+          {{ link.title }}
+        </a>
+      {% endfor %}
+    </nav>
+
+    {%- comment -%} Actions - Right side {%- endcomment -%}
+    <div class="header__actions">
+      {% if section.settings.show_account %}
+        <a href="{{ routes.account_url }}" class="header__icon-btn header__icon-btn--desktop" aria-label="{{ 'general.account' | t }}">
+          {{ 'icon-account.svg' | inline_asset_content }}
+        </a>
+      {% endif %}
+
+      {% if section.settings.show_cart %}
+        <a href="{{ routes.cart_url }}" class="header__icon-btn header__cart" aria-label="{{ 'general.cart' | t }}">
+          {{ 'icon-cart.svg' | inline_asset_content }}
+          {% if cart.item_count > 0 %}
+            <span class="header__cart-count">{{ cart.item_count }}</span>
+          {% endif %}
+        </a>
+      {% endif %}
+    </div>
   </div>
 
   <div class="header__mobile-menu" id="mobile-menu" aria-hidden="true">
@@ -63,11 +67,14 @@
           {{ link.title }}
         </a>
       {% endfor %}
-      {% if section.settings.cta_text != blank %}
-        <a href="{{ section.settings.cta_url }}" class="btn btn--primary" style="margin-top: var(--space-lg);">
-          {{ section.settings.cta_text }}
-        </a>
-      {% endif %}
+
+      <div class="header__mobile-actions">
+        {% if section.settings.show_account %}
+          <a href="{{ routes.account_url }}" class="header__mobile-link">
+            {{ 'general.account' | t }}
+          </a>
+        {% endif %}
+      </div>
     </nav>
   </div>
 </header>
@@ -75,7 +82,9 @@
 {% javascript %}
   const menuToggle = document.querySelector('.header__menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
+  const header = document.querySelector('[data-header]');
 
+  // Mobile menu toggle
   if (menuToggle && mobileMenu) {
     menuToggle.addEventListener('click', () => {
       const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
@@ -84,14 +93,65 @@
       document.body.style.overflow = isOpen ? '' : 'hidden';
     });
   }
+
+  // Transparent header scroll effect
+  if (header) {
+    const heroBanner = document.querySelector('[data-hero-banner]');
+
+    if (heroBanner) {
+      const updateHeaderTransparency = () => {
+        const scrollY = window.scrollY;
+        const heroHeight = heroBanner.offsetHeight;
+        const headerHeight = header.offsetHeight;
+        const transitionStart = 0;
+        const transitionEnd = heroHeight - headerHeight;
+
+        let progress = 0;
+        if (scrollY > transitionStart) {
+          progress = Math.min((scrollY - transitionStart) / (transitionEnd - transitionStart), 1);
+        }
+
+        // Apply eased progress for smoother animation
+        const easedProgress = progress < 0.5
+          ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+        header.style.setProperty('--header-bg-opacity', easedProgress);
+        header.style.setProperty('--header-border-opacity', easedProgress);
+
+        if (progress > 0.5) {
+          header.classList.remove('header--transparent');
+        } else {
+          header.classList.add('header--transparent');
+        }
+      };
+
+      // Initial state
+      header.classList.add('header--transparent');
+      updateHeaderTransparency();
+
+      // Throttled scroll handler
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            updateHeaderTransparency();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+    }
+  }
 {% endjavascript %}
 
 {% stylesheet %}
   .header {
     position: relative;
     z-index: 100;
-    background-color: var(--color-background);
-    border-bottom: 1px solid var(--color-secondary);
+    background-color: rgba(var(--color-background-rgb, 250, 250, 248), var(--header-bg-opacity, 1));
+    border-bottom: 1px solid rgba(var(--color-border-rgb, 229, 229, 229), var(--header-border-opacity, 1));
+    transition: background-color 0.1s ease, border-color 0.1s ease;
   }
 
   .header--sticky {
@@ -99,47 +159,81 @@
     top: 0;
   }
 
+  .header--transparent {
+    background-color: transparent;
+    border-bottom-color: transparent;
+  }
+
+  .header--transparent .header__logo-text,
+  .header--transparent .header__nav-link,
+  .header--transparent .header__icon-btn {
+    color: var(--color-primary-text);
+  }
+
+  .header--transparent .header__menu-icon span {
+    background-color: var(--color-primary-text);
+  }
+
+  .header--transparent .header__nav-link::after {
+    background-color: var(--color-primary-text);
+  }
+
   .header__inner {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: space-between;
     height: var(--header-height-mobile);
     padding: 0 var(--page-margin);
     max-width: var(--page-width);
     margin: 0 auto;
   }
 
+  .header__mobile-left {
+    display: flex;
+    justify-content: flex-start;
+  }
+
   .header__logo {
     text-decoration: none;
     color: var(--color-foreground);
+    flex-shrink: 0;
+    transition: color 0.3s ease;
+    justify-self: center;
   }
 
   .header__logo-text {
-    font-family: var(--font-heading--family);
+    font-family: var(--font-heading-family);
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     letter-spacing: -0.03em;
   }
 
   .header__logo-image {
-    height: 2rem;
+    height: auto;
     width: auto;
+    max-height: 2rem;
+    max-width: 80px;
   }
 
   .header__nav {
     display: none;
     align-items: center;
-    gap: var(--space-xl);
+    gap: var(--space-lg);
+  }
+
+  .header__icon-btn--desktop {
+    display: none;
   }
 
   .header__nav-link {
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     font-weight: 450;
     color: var(--color-foreground);
     text-decoration: none;
     padding: var(--space-sm) 0;
     position: relative;
-    transition: color var(--transition-fast);
+    transition: color 0.3s ease;
+    white-space: nowrap;
   }
 
   .header__nav-link::after {
@@ -161,41 +255,54 @@
   .header__actions {
     display: flex;
     align-items: center;
-    gap: var(--space-sm);
+    justify-content: flex-end;
+    gap: var(--space-xs);
   }
 
-  .header__cart {
-    position: relative;
-    padding: var(--space-sm);
+  .header__icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: var(--color-foreground);
+    text-decoration: none;
+    border-radius: 50%;
+    transition: color 0.3s ease, background-color 0.2s ease;
   }
 
-  .header__cart svg {
+  .header__icon-btn:hover {
+    background-color: var(--color-secondary);
+  }
+
+  .header--transparent .header__icon-btn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .header__icon-btn svg {
     width: 1.25rem;
     height: 1.25rem;
   }
 
+  .header__cart {
+    position: relative;
+  }
+
   .header__cart-count {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 2px;
+    right: 2px;
     background-color: var(--color-primary);
-    color: var(--color-primary-contrast);
+    color: var(--color-primary-text);
     font-size: 0.625rem;
     font-weight: 600;
-    width: 1rem;
+    min-width: 1rem;
     height: 1rem;
+    padding: 0 0.25rem;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .header__cta {
-    display: none;
-  }
-
-  .header__cta--hide-mobile {
-    display: none !important;
   }
 
   .header__menu-toggle {
@@ -249,6 +356,7 @@
     background-color: var(--color-background);
     padding: var(--space-xl) var(--page-margin);
     overflow-y: auto;
+    z-index: 99;
   }
 
   .header__mobile-menu[aria-hidden="false"] {
@@ -263,7 +371,7 @@
   }
 
   .header__mobile-link {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 500;
     color: var(--color-foreground);
     text-decoration: none;
@@ -277,6 +385,12 @@
     color: var(--color-primary);
   }
 
+  .header__mobile-actions {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-border);
+  }
+
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -284,19 +398,32 @@
 
   @media (min-width: 768px) {
     .header__inner {
+      display: flex;
+      grid-template-columns: unset;
       height: var(--header-height-desktop);
+      gap: var(--space-xl);
+    }
+
+    .header__mobile-left {
+      display: none;
+    }
+
+    .header__logo {
+      justify-self: unset;
+    }
+
+    .header__logo-image {
+      max-height: 2.5rem;
+      max-width: 100px;
     }
 
     .header__nav {
       display: flex;
+      flex: 1;
     }
 
-    .header__cta {
-      display: inline-flex;
-    }
-
-    .header__cta--hide-mobile {
-      display: inline-flex !important;
+    .header__icon-btn--desktop {
+      display: flex;
     }
 
     .header__menu-toggle {
@@ -317,6 +444,12 @@
     },
     {
       "type": "checkbox",
+      "id": "show_account",
+      "label": "t:settings.header.show_account",
+      "default": true
+    },
+    {
+      "type": "checkbox",
       "id": "show_cart",
       "label": "t:settings.header.show_cart",
       "default": true
@@ -326,28 +459,6 @@
       "id": "enable_sticky",
       "label": "t:settings.header.enable_sticky",
       "default": true
-    },
-    {
-      "type": "header",
-      "content": "t:settings.header.cta_header"
-    },
-    {
-      "type": "text",
-      "id": "cta_text",
-      "label": "t:settings.header.cta_text",
-      "default": "Shop now"
-    },
-    {
-      "type": "url",
-      "id": "cta_url",
-      "label": "t:settings.header.cta_url",
-      "default": "/collections/all"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_cta_mobile",
-      "label": "t:settings.header.show_cta_mobile",
-      "default": false
     },
     {
       "type": "header",

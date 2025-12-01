@@ -5,7 +5,8 @@
     "skip_to_content": "Skip to content",
     "close": "Close",
     "search": "Search",
-    "cart": "Cart"
+    "cart": "Cart",
+    "account": "Account"
   },
   "404": {
     "title": "Page not found",
