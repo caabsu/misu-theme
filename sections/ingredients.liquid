@@ -175,16 +175,14 @@
 
   .ingredients__row {
     display: flex;
-    align-items: flex-end;
+    align-items: baseline;
     justify-content: space-between;
     width: 100%;
     gap: var(--space-md);
   }
 
   .ingredients__text-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    position: relative;
   }
 
   .ingredients__name {
@@ -195,11 +193,12 @@
   }
 
   .ingredients__line {
-    display: block;
+    position: absolute;
+    bottom: -6px;
+    left: 0;
     width: 0;
     height: 2px;
     background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.3) 100%);
-    margin-top: 8px;
     transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
