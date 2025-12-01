@@ -13,7 +13,7 @@
       "type": "rich-text",
       "name": "t:sections.rich_text.name",
       "settings": {
-        "eyebrow": "",
+        "eyebrow": "from ancient knowledge",
         "heading": "Talk about your brand",
         "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
         "button_text": "",
