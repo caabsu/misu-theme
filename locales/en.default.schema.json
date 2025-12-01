@@ -261,6 +261,31 @@
       "heading_weight": "Heading weight",
       "body_weight": "Body text weight",
       "use_theme_settings": "Use theme settings"
+    },
+    "ingredients": {
+      "name": "Ingredients",
+      "content": "Content",
+      "eyebrow": "Eyebrow text",
+      "heading": "Heading",
+      "subheading": "Subheading",
+      "colors": "Colors",
+      "background_color": "Background color",
+      "text_color": "Text color",
+      "card_background": "Card background",
+      "card_text_color": "Card text color",
+      "accent_color": "Accent color",
+      "cta": "Call to action",
+      "cta_text": "Button text",
+      "cta_url": "Button URL",
+      "cta_style": "Button style",
+      "cta_solid": "Solid",
+      "cta_outline": "Outline",
+      "ingredient": "Ingredient",
+      "image": "Image",
+      "title": "Title",
+      "subtitle": "Subtitle",
+      "description": "Description",
+      "go_to_slide": "Go to slide {{ number }}"
     }
   }
 }
