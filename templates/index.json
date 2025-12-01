@@ -17,6 +17,7 @@
         "subheading": "Experience the perfect blend of quality and craftsmanship in every product we create.",
         "button_text": "Explore now",
         "button_url": "/collections/all",
+        "background_image": "shopify://shop_images/nano-banana-v1_1763359004134.png",
         "overlay_opacity": 40,
         "min_height_desktop": 100,
         "min_height_mobile": 50,
