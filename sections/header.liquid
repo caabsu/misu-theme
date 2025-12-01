@@ -6,7 +6,7 @@
 {% endstyle %}
 
 <header
-  class="header {% if section.settings.enable_sticky %}header--sticky{% endif %}"
+  class="header full-width {% if section.settings.enable_sticky %}header--sticky{% endif %}"
   data-header
 >
   <div class="header__inner">
@@ -29,7 +29,10 @@
     {%- comment -%} Logo - Centered on mobile, left on desktop {%- endcomment -%}
     <a href="{{ routes.root_url }}" class="header__logo">
       {% if settings.logo %}
-        {{ settings.logo | image_url: width: settings.logo_width | image_tag: alt: shop.name, class: 'header__logo-image' }}
+        {{ settings.logo | image_url: width: settings.logo_width | image_tag: alt: shop.name, class: 'header__logo-image header__logo-image--default' }}
+        {% if section.settings.logo_transparent %}
+          {{ section.settings.logo_transparent | image_url: width: settings.logo_width | image_tag: alt: shop.name, class: 'header__logo-image header__logo-image--transparent' }}
+        {% endif %}
       {% else %}
         <span class="header__logo-text">{{ shop.name }}</span>
       {% endif %}
@@ -63,7 +66,7 @@
     </div>
   </div>
 
-  <div class="header__mobile-menu" id="mobile-menu" aria-hidden="true">
+  <div class="header__mobile-menu full-width" id="mobile-menu" aria-hidden="true">
     <nav class="header__mobile-nav">
       {% for link in section.settings.menu.links %}
         <a href="{{ link.url }}" class="header__mobile-link {% if link.active %}header__mobile-link--active{% endif %}">
@@ -110,26 +113,39 @@
           const scrollY = window.scrollY;
           const heroHeight = heroBanner.offsetHeight;
           const headerHeight = header.offsetHeight;
-          const transitionStart = 0;
-          const transitionEnd = heroHeight - headerHeight;
 
-          let progress = 0;
-          if (scrollY > transitionStart) {
-            progress = Math.min((scrollY - transitionStart) / (transitionEnd - transitionStart), 1);
-          }
+          // Start transitioning when scrolled 100px, complete at hero end
+          const transitionStart = 100;
+          const transitionEnd = heroHeight - headerHeight - 50;
 
-          if (progress > 0.5) {
-            header.classList.remove('header--transparent');
-          } else {
+          if (scrollY < transitionStart) {
+            // Fully transparent at top
             header.classList.add('header--transparent');
+            header.style.setProperty('--header-opacity', '0');
+          } else if (scrollY >= transitionEnd) {
+            // Fully solid after hero
+            header.classList.remove('header--transparent');
+            header.style.setProperty('--header-opacity', '1');
+          } else {
+            // Transitioning - calculate progress
+            const progress = (scrollY - transitionStart) / (transitionEnd - transitionStart);
+            header.style.setProperty('--header-opacity', progress.toFixed(2));
+
+            // Switch class at 50% for text color
+            if (progress > 0.5) {
+              header.classList.remove('header--transparent');
+            } else {
+              header.classList.add('header--transparent');
+            }
           }
         };
 
         // Initial state - make header transparent
         header.classList.add('header--transparent');
+        header.style.setProperty('--header-opacity', '0');
         updateHeaderTransparency();
 
-        // Throttled scroll handler
+        // Scroll handler with requestAnimationFrame
         let ticking = false;
         window.addEventListener('scroll', () => {
           if (!ticking) {
@@ -156,9 +172,10 @@
   .header {
     position: relative;
     z-index: 100;
+    width: 100%;
     background-color: var(--color-background);
     border-bottom: 1px solid var(--color-border);
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
   }
 
   .header--sticky {
@@ -166,23 +183,33 @@
     top: 0;
   }
 
+  .header--sticky:not(.header--transparent) {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+
   .header--transparent {
     background-color: transparent;
     border-bottom-color: transparent;
+    box-shadow: none;
   }
 
   .header--transparent .header__logo-text,
   .header--transparent .header__nav-link,
   .header--transparent .header__icon-btn {
-    color: var(--color-primary-text);
+    color: #fff;
   }
 
   .header--transparent .header__menu-icon span {
-    background-color: var(--color-primary-text);
+    background-color: #fff;
   }
 
   .header--transparent .header__nav-link::after {
-    background-color: var(--color-primary-text);
+    background-color: #fff;
+  }
+
+  .header--transparent .header__cart-count {
+    background-color: #fff;
+    color: var(--color-text);
   }
 
   .header__inner {
@@ -207,6 +234,7 @@
     transition: color 0.3s ease;
     justify-self: center;
     grid-column: 2;
+    position: relative;
   }
 
   .header__logo-text {
@@ -221,6 +249,23 @@
     width: auto;
     max-height: 2rem;
     max-width: 80px;
+    transition: opacity 0.3s ease;
+  }
+
+  .header__logo-image--transparent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
+
+  .header--transparent .header__logo-image--default {
+    opacity: 0;
+  }
+
+  .header--transparent .header__logo-image--transparent {
+    opacity: 1;
   }
 
   .header__nav {
@@ -296,7 +341,7 @@
   }
 
   .header--transparent .header__icon-btn::after {
-    background-color: var(--color-primary-text);
+    background-color: #fff;
   }
 
   .header__icon-btn svg {
@@ -535,6 +580,16 @@
       "id": "enable_sticky",
       "label": "t:settings.header.enable_sticky",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:settings.header.transparent_header"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_transparent",
+      "label": "t:settings.header.logo_transparent",
+      "info": "t:settings.header.logo_transparent_info"
     },
     {
       "type": "header",

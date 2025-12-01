@@ -152,6 +152,19 @@
         "label": "t:settings.typography.heading_font"
       },
       {
+        "type": "select",
+        "id": "font_heading_weight",
+        "label": "t:settings.typography.heading_weight",
+        "options": [
+          { "value": "300", "label": "t:settings.typography.weight_light" },
+          { "value": "400", "label": "t:settings.typography.weight_regular" },
+          { "value": "500", "label": "t:settings.typography.weight_medium" },
+          { "value": "600", "label": "t:settings.typography.weight_semibold" },
+          { "value": "700", "label": "t:settings.typography.weight_bold" }
+        ],
+        "default": "600"
+      },
+      {
         "type": "header",
         "content": "t:settings.typography.desktop"
       },
@@ -200,6 +213,18 @@
         "id": "font_body",
         "default": "inter_n4",
         "label": "t:settings.typography.body_font"
+      },
+      {
+        "type": "select",
+        "id": "font_body_weight",
+        "label": "t:settings.typography.body_weight",
+        "options": [
+          { "value": "300", "label": "t:settings.typography.weight_light" },
+          { "value": "400", "label": "t:settings.typography.weight_regular" },
+          { "value": "500", "label": "t:settings.typography.weight_medium" },
+          { "value": "600", "label": "t:settings.typography.weight_semibold" }
+        ],
+        "default": "400"
       },
       {
         "type": "select",

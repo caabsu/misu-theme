@@ -4,6 +4,8 @@
     --text-align-desktop: {{ section.settings.text_alignment_desktop }};
     --text-align-mobile: {{ section.settings.text_alignment_mobile }};
     --content-width: {{ section.settings.content_width }}%;
+    {% if section.settings.heading_weight != 'default' %}--section-heading-weight: {{ section.settings.heading_weight }};{% endif %}
+    {% if section.settings.body_weight != 'default' %}--section-body-weight: {{ section.settings.body_weight }};{% endif %}
   "
 >
   <div class="rich-text__inner">
@@ -60,11 +62,13 @@
 
   .rich-text__heading {
     margin: 0;
+    font-weight: var(--section-heading-weight, var(--font-heading-weight));
   }
 
   .rich-text__content {
     color: var(--color-text-muted);
     line-height: 1.7;
+    font-weight: var(--section-body-weight, var(--font-body-weight));
   }
 
   .rich-text__content p:last-child {
@@ -179,6 +183,37 @@
         { "value": "center", "label": "t:sections.rich_text.align_center" }
       ],
       "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.rich_text.typography"
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "t:sections.rich_text.heading_weight",
+      "options": [
+        { "value": "default", "label": "t:sections.rich_text.use_theme_settings" },
+        { "value": "300", "label": "t:settings.typography.weight_light" },
+        { "value": "400", "label": "t:settings.typography.weight_regular" },
+        { "value": "500", "label": "t:settings.typography.weight_medium" },
+        { "value": "600", "label": "t:settings.typography.weight_semibold" },
+        { "value": "700", "label": "t:settings.typography.weight_bold" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "select",
+      "id": "body_weight",
+      "label": "t:sections.rich_text.body_weight",
+      "options": [
+        { "value": "default", "label": "t:sections.rich_text.use_theme_settings" },
+        { "value": "300", "label": "t:settings.typography.weight_light" },
+        { "value": "400", "label": "t:settings.typography.weight_regular" },
+        { "value": "500", "label": "t:settings.typography.weight_medium" },
+        { "value": "600", "label": "t:settings.typography.weight_semibold" }
+      ],
+      "default": "default"
     }
   ],
   "presets": [

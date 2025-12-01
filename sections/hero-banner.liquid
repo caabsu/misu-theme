@@ -6,6 +6,8 @@
     --hero-min-height-mobile: {{ section.settings.min_height_mobile }}vh;
     --hero-text-align: {{ section.settings.text_alignment }};
     --hero-content-position: {{ section.settings.content_position }};
+    {% if section.settings.heading_weight != 'default' %}--hero-heading-weight: {{ section.settings.heading_weight }};{% endif %}
+    {% if section.settings.body_weight != 'default' %}--hero-body-weight: {{ section.settings.body_weight }};{% endif %}
   "
 >
   {%- comment -%} Background Image {%- endcomment -%}
@@ -137,8 +139,9 @@
   }
 
   .hero-banner__heading {
+    font-family: var(--font-heading-family);
     font-size: clamp(2.5rem, 8vw, 5rem);
-    font-weight: 600;
+    font-weight: var(--hero-heading-weight, var(--font-heading-weight));
     line-height: 1.05;
     letter-spacing: -0.03em;
     color: #fff;
@@ -154,7 +157,9 @@
   }
 
   .hero-banner__subheading {
+    font-family: var(--font-body-family);
     font-size: var(--font-size-lg);
+    font-weight: var(--hero-body-weight, var(--font-body-weight));
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.85);
     margin: 0;
@@ -373,6 +378,37 @@
       "id": "show_scroll_indicator",
       "label": "t:sections.hero_banner.show_scroll_indicator",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.hero_banner.typography"
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "t:sections.hero_banner.heading_weight",
+      "options": [
+        { "value": "default", "label": "t:sections.hero_banner.use_theme_settings" },
+        { "value": "300", "label": "t:settings.typography.weight_light" },
+        { "value": "400", "label": "t:settings.typography.weight_regular" },
+        { "value": "500", "label": "t:settings.typography.weight_medium" },
+        { "value": "600", "label": "t:settings.typography.weight_semibold" },
+        { "value": "700", "label": "t:settings.typography.weight_bold" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "select",
+      "id": "body_weight",
+      "label": "t:sections.hero_banner.body_weight",
+      "options": [
+        { "value": "default", "label": "t:sections.hero_banner.use_theme_settings" },
+        { "value": "300", "label": "t:settings.typography.weight_light" },
+        { "value": "400", "label": "t:settings.typography.weight_regular" },
+        { "value": "500", "label": "t:settings.typography.weight_medium" },
+        { "value": "600", "label": "t:settings.typography.weight_semibold" }
+      ],
+      "default": "default"
     }
   ],
   "presets": [

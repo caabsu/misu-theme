@@ -48,6 +48,7 @@
       "name": "Typography",
       "headings": "Headings",
       "heading_font": "Heading font",
+      "heading_weight": "Heading weight",
       "heading_size": "Heading size scale",
       "font_type": "Font",
       "shopify_fonts": "Shopify fonts",
@@ -55,10 +56,16 @@
       "mobile": "Mobile",
       "body": "Body",
       "body_font": "Body font",
+      "body_weight": "Body weight",
       "body_size": "Body size scale",
       "size_small": "Small",
       "size_medium": "Medium",
-      "size_large": "Large"
+      "size_large": "Large",
+      "weight_light": "Light (300)",
+      "weight_regular": "Regular (400)",
+      "weight_medium": "Medium (500)",
+      "weight_semibold": "Semibold (600)",
+      "weight_bold": "Bold (700)"
     },
     "layout": {
       "name": "Layout",
@@ -121,6 +128,9 @@
       "show_account": "Show account icon",
       "show_cart": "Show cart icon",
       "enable_sticky": "Enable sticky header",
+      "transparent_header": "Transparent header",
+      "logo_transparent": "Logo for transparent header",
+      "logo_transparent_info": "Optional: Shows when header is transparent over hero banners",
       "desktop_layout": "Desktop layout",
       "mobile_layout": "Mobile layout",
       "header_height": "Header height"
@@ -211,7 +221,11 @@
       "text_alignment": "Text alignment",
       "align_left": "Left",
       "align_center": "Center",
-      "content_width": "Content width"
+      "content_width": "Content width",
+      "typography": "Typography",
+      "heading_weight": "Heading weight",
+      "body_weight": "Body text weight",
+      "use_theme_settings": "Use theme settings"
     },
     "newsletter": {
       "name": "Newsletter",
@@ -240,7 +254,11 @@
       "position_top": "Top",
       "position_center": "Center",
       "position_bottom": "Bottom",
-      "show_scroll_indicator": "Show scroll indicator"
+      "show_scroll_indicator": "Show scroll indicator",
+      "typography": "Typography",
+      "heading_weight": "Heading weight",
+      "body_weight": "Body text weight",
+      "use_theme_settings": "Use theme settings"
     }
   }
 }

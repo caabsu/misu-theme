@@ -25,22 +25,20 @@
     {%- if settings.font_body_type == 'custom' -%}
     --font-body-family: "STIX Two Text", Georgia, serif;
     --font-body-style: normal;
-    --font-body-weight: 400;
     {%- else -%}
     --font-body-family: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
     --font-body-style: {{ settings.font_body.style }};
-    --font-body-weight: {{ settings.font_body.weight }};
     {%- endif -%}
+    --font-body-weight: {{ settings.font_body_weight }};
 
     {%- if settings.font_heading_type == 'custom' -%}
     --font-heading-family: "STIX Two Text", Georgia, serif;
     --font-heading-style: normal;
-    --font-heading-weight: 600;
     {%- else -%}
     --font-heading-family: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
     --font-heading-style: {{ settings.font_heading.style }};
-    --font-heading-weight: {{ settings.font_heading.weight }};
     {%- endif -%}
+    --font-heading-weight: {{ settings.font_heading_weight }};
 
     --font-body-scale: {{ settings.body_size_scale | divided_by: 100.0 }};
 
