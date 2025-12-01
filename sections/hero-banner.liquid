@@ -16,6 +16,11 @@
     --hero-eyebrow-size-desktop: {{ section.settings.eyebrow_size_desktop }}px;
     --hero-eyebrow-color: {{ section.settings.eyebrow_color }};
     --hero-heading-color: {{ section.settings.heading_color }};
+    --hero-heading2-color: {{ section.settings.heading2_color }};
+    --hero-heading2-size-mobile: {{ section.settings.heading2_size_mobile }}px;
+    --hero-heading2-size-desktop: {{ section.settings.heading2_size_desktop }}px;
+    --hero-heading2-weight: {{ section.settings.heading2_weight }};
+    --hero-heading2-style: {{ section.settings.heading2_style }};
     --hero-subheading-color: {{ section.settings.subheading_color }};
     --hero-btn-bg: {{ section.settings.button_color | default: settings.color_primary }};
     --hero-btn-text: {{ section.settings.button_text_color | default: '#ffffff' }};
@@ -41,9 +46,12 @@
         <span class="hero-banner__eyebrow">{{ section.settings.eyebrow }}</span>
       {% endif %}
 
-      {% if section.settings.heading != blank %}
+      {% if section.settings.heading != blank or section.settings.heading2 != blank %}
         <h1 class="hero-banner__heading">
-          <span class="hero-banner__heading-line">{{ section.settings.heading }}</span>
+          <span class="hero-banner__heading-line">
+            {{- section.settings.heading -}}
+            {%- if section.settings.heading2 != blank %} <span class="hero-banner__heading2">{{ section.settings.heading2 }}</span>{% endif -%}
+          </span>
         </h1>
       {% endif %}
 
@@ -170,6 +178,13 @@
     animation: heroReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.4s;
   }
 
+  .hero-banner__heading2 {
+    color: var(--hero-heading2-color);
+    font-size: var(--hero-heading2-size-mobile);
+    font-weight: var(--hero-heading2-weight);
+    font-style: var(--hero-heading2-style);
+  }
+
   .hero-banner__subheading {
     font-family: var(--font-body-family);
     font-size: var(--hero-subheading-size-mobile);
@@ -287,6 +302,10 @@
       font-size: var(--hero-heading-size-desktop);
     }
 
+    .hero-banner__heading2 {
+      font-size: var(--hero-heading2-size-desktop);
+    }
+
     .hero-banner__subheading {
       font-size: var(--hero-subheading-size-desktop);
     }
@@ -313,10 +332,17 @@
       "default": "Welcome"
     },
     {
-      "type": "textarea",
+      "type": "text",
       "id": "heading",
-      "label": "t:sections.hero_banner.heading",
-      "default": "Discover something extraordinary"
+      "label": "Heading",
+      "default": "Discover"
+    },
+    {
+      "type": "text",
+      "id": "heading2",
+      "label": "Heading (continued)",
+      "default": "something extraordinary",
+      "info": "This text appears after the heading with its own style"
     },
     {
       "type": "textarea",
@@ -449,6 +475,63 @@
       "id": "heading_color",
       "label": "Heading color",
       "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Heading (continued) style"
+    },
+    {
+      "type": "color",
+      "id": "heading2_color",
+      "label": "Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "heading2_size_mobile",
+      "label": "Size (mobile)",
+      "min": 24,
+      "max": 64,
+      "step": 2,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading2_size_desktop",
+      "label": "Size (desktop)",
+      "min": 32,
+      "max": 96,
+      "step": 2,
+      "default": 64,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "heading2_weight",
+      "label": "Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "heading2_style",
+      "label": "Style",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "italic", "label": "Italic" }
+      ],
+      "default": "italic"
+    },
+    {
+      "type": "header",
+      "content": "Subheading style"
     },
     {
       "type": "range",
