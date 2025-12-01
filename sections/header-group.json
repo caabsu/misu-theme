@@ -17,7 +17,7 @@
         "menu": "main-menu",
         "show_account": true,
         "show_cart": true,
-        "enable_sticky": false,
+        "enable_sticky": true,
         "enable_transparent": true,
         "logo_transparent": "shopify://shop_images/misu_white.png",
         "header_height_desktop": 72,
