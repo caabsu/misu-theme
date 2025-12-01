@@ -1,23 +1,31 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "hero": {
-      "type": "hero",
+    "rich_text_tN6MWa": {
+      "type": "rich-text",
+      "name": "t:sections.rich_text.name",
       "settings": {
-        "eyebrow": "Welcome to Misu",
-        "heading": "Nourish your day with nature's best grains",
-        "subheading": "Discover our collection of premium grain-mix drinks, crafted for taste, health, and everyday wellness.",
-        "button_text": "Shop collection",
-        "button_url": "/collections/all",
-        "button_text_secondary": "Learn more",
-        "button_url_secondary": "/pages/about",
-        "min_height": 80,
+        "eyebrow": "",
+        "heading": "Talk about your brand",
+        "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+        "button_text": "",
+        "button_url": "",
+        "button_style": "primary",
+        "text_alignment_desktop": "center",
         "content_width": 60,
-        "text_alignment": "center",
-        "overlay_opacity": 30
+        "text_alignment_mobile": "center"
       }
     }
   },
   "order": [
-    "hero"
+    "rich_text_tN6MWa"
   ]
 }
