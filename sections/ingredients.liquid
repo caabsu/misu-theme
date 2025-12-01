@@ -3,11 +3,14 @@
   assign text_color = section.settings.text_color | default: settings.color_text
   assign accent = section.settings.accent_color | default: settings.color_primary
 
-  assign heading_color = section.settings.heading_color | default: accent
   assign subheading_color = section.settings.subheading_color | default: text_color
-  assign name_color = section.settings.name_color | default: '#ffffff'
-  assign link_color = section.settings.link_color | default: '#ffffff'
-  assign cta_color = section.settings.cta_color | default: text_color
+  assign heading_color = section.settings.heading_color | default: accent
+  assign name_color = section.settings.name_color | default: text_color
+  assign desc_color = section.settings.desc_color | default: text_color
+  assign overlay_tag_bg = section.settings.overlay_tag_bg | default: accent
+  assign overlay_tag_text = section.settings.overlay_tag_text | default: '#ffffff'
+  assign bottom_tag_border = section.settings.bottom_tag_border | default: text_color
+  assign bottom_tag_text = section.settings.bottom_tag_text | default: text_color
 -%}
 
 <section
@@ -21,91 +24,123 @@
     --ing-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
     --ing-padding-top-desktop: {{ section.settings.padding_top_desktop }}px;
     --ing-padding-bottom-desktop: {{ section.settings.padding_bottom_desktop }}px;
+
+    --ing-header-spacing-mobile: {{ section.settings.header_spacing_mobile }}px;
+    --ing-header-spacing-desktop: {{ section.settings.header_spacing_desktop }}px;
     --ing-gap: {{ section.settings.gap }}px;
-
-    --ing-heading-spacing-mobile: {{ section.settings.heading_spacing_mobile }}px;
-    --ing-heading-spacing-desktop: {{ section.settings.heading_spacing_desktop }}px;
-    --ing-subheading-spacing-mobile: {{ section.settings.subheading_spacing_mobile }}px;
-    --ing-subheading-spacing-desktop: {{ section.settings.subheading_spacing_desktop }}px;
-    --ing-footer-spacing-mobile: {{ section.settings.footer_spacing_mobile }}px;
-    --ing-footer-spacing-desktop: {{ section.settings.footer_spacing_desktop }}px;
-
-    --ing-heading-color: {{ heading_color }};
-    --ing-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
-    --ing-heading-size-desktop: {{ section.settings.heading_size_desktop }}px;
-    --ing-heading-weight: {{ section.settings.heading_weight }};
 
     --ing-subheading-color: {{ subheading_color }};
     --ing-subheading-size-mobile: {{ section.settings.subheading_size_mobile }}px;
     --ing-subheading-size-desktop: {{ section.settings.subheading_size_desktop }}px;
     --ing-subheading-weight: {{ section.settings.subheading_weight }};
 
+    --ing-heading-color: {{ heading_color }};
+    --ing-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --ing-heading-size-desktop: {{ section.settings.heading_size_desktop }}px;
+    --ing-heading-weight: {{ section.settings.heading_weight }};
+
     --ing-name-color: {{ name_color }};
     --ing-name-size-mobile: {{ section.settings.name_size_mobile }}px;
     --ing-name-size-desktop: {{ section.settings.name_size_desktop }}px;
     --ing-name-weight: {{ section.settings.name_weight }};
+    --ing-name-spacing-mobile: {{ section.settings.name_spacing_mobile }}px;
+    --ing-name-spacing-desktop: {{ section.settings.name_spacing_desktop }}px;
 
-    --ing-link-color: {{ link_color }};
-    --ing-link-size-mobile: {{ section.settings.link_size_mobile }}px;
-    --ing-link-size-desktop: {{ section.settings.link_size_desktop }}px;
-    --ing-link-weight: {{ section.settings.link_weight }};
+    --ing-desc-color: {{ desc_color }};
+    --ing-desc-size-mobile: {{ section.settings.desc_size_mobile }}px;
+    --ing-desc-size-desktop: {{ section.settings.desc_size_desktop }}px;
+    --ing-desc-weight: {{ section.settings.desc_weight }};
+    --ing-desc-spacing-mobile: {{ section.settings.desc_spacing_mobile }}px;
+    --ing-desc-spacing-desktop: {{ section.settings.desc_spacing_desktop }}px;
 
-    --ing-cta-color: {{ cta_color }};
-    --ing-cta-size-mobile: {{ section.settings.cta_size_mobile }}px;
-    --ing-cta-size-desktop: {{ section.settings.cta_size_desktop }}px;
-    --ing-cta-weight: {{ section.settings.cta_weight }};
+    --ing-overlay-tag-bg: {{ overlay_tag_bg }};
+    --ing-overlay-tag-text: {{ overlay_tag_text }};
+    --ing-overlay-tag-size-mobile: {{ section.settings.overlay_tag_size_mobile }}px;
+    --ing-overlay-tag-size-desktop: {{ section.settings.overlay_tag_size_desktop }}px;
+
+    --ing-bottom-tag-border: {{ bottom_tag_border }};
+    --ing-bottom-tag-text: {{ bottom_tag_text }};
+    --ing-bottom-tag-size-mobile: {{ section.settings.bottom_tag_size_mobile }}px;
+    --ing-bottom-tag-size-desktop: {{ section.settings.bottom_tag_size_desktop }}px;
+
+    --ing-arrow-color: {{ section.settings.arrow_color | default: text_color }};
+    --ing-arrow-size: {{ section.settings.arrow_size }}px;
   "
 >
   {% if section.settings.heading != blank or section.settings.subheading != blank %}
     <header class="ingredients__header">
-      {% if section.settings.heading != blank %}
-        <h2 class="ingredients__title">{{ section.settings.heading }}</h2>
-      {% endif %}
-      {% if section.settings.subheading != blank %}
-        <p class="ingredients__subtitle">{{ section.settings.subheading }}</p>
+      <div class="ingredients__header-text">
+        {% if section.settings.subheading != blank %}
+          <p class="ingredients__subheading">{{ section.settings.subheading }}</p>
+        {% endif %}
+        {% if section.settings.heading != blank %}
+          <h2 class="ingredients__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+      </div>
+      {% if section.blocks.size > 1 %}
+        <div class="ingredients__nav">
+          <button type="button" class="ingredients__arrow ingredients__arrow--prev" aria-label="Previous" data-direction="prev">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+          </button>
+          <button type="button" class="ingredients__arrow ingredients__arrow--next" aria-label="Next" data-direction="next">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </button>
+        </div>
       {% endif %}
     </header>
   {% endif %}
 
   {% if section.blocks.size > 0 %}
-    <div class="ingredients__grid">
-      {% for block in section.blocks %}
-        <article class="ingredients__item" {{ block.shopify_attributes }}>
-          <div class="ingredients__visual">
-            {% if block.settings.image != blank %}
-              <img
-                src="{{ block.settings.image | image_url: width: 900 }}"
-                alt="{{ block.settings.title | escape }}"
-                loading="lazy"
-                class="ingredients__img"
-              >
-            {% else %}
-              <div class="ingredients__placeholder"></div>
-            {% endif %}
+    <div class="ingredients__track">
+      <div class="ingredients__grid" data-ingredients-grid>
+        {% for block in section.blocks %}
+          <article class="ingredients__card" {{ block.shopify_attributes }}>
+            <div class="ingredients__image-wrap">
+              {% if block.settings.image != blank %}
+                <img
+                  src="{{ block.settings.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.name | escape }}"
+                  loading="lazy"
+                  class="ingredients__img"
+                >
+              {% else %}
+                <div class="ingredients__placeholder"></div>
+              {% endif %}
 
-            <div class="ingredients__overlay">
-              <div class="ingredients__row">
-                <div class="ingredients__text-wrap">
-                  <span class="ingredients__name">{{ block.settings.title }}</span>
-                  <span class="ingredients__line"></span>
-                </div>
-                <a href="{{ block.settings.link | default: '#' }}" class="ingredients__link">
-                  {{ block.settings.link_text | default: 'Details' }}
-                </a>
-              </div>
+              {% if block.settings.overlay_tag != blank %}
+                <span class="ingredients__overlay-tag">{{ block.settings.overlay_tag }}</span>
+              {% endif %}
             </div>
-          </div>
-        </article>
-      {% endfor %}
-    </div>
-  {% endif %}
 
-  {% if section.settings.cta_text != blank %}
-    <footer class="ingredients__footer">
-      <a href="{{ section.settings.cta_url }}" class="ingredients__cta">
-        {{ section.settings.cta_text }}
-      </a>
-    </footer>
+            <div class="ingredients__content">
+              {% if block.settings.name != blank %}
+                <h3 class="ingredients__name">{{ block.settings.name }}</h3>
+              {% endif %}
+
+              {% if block.settings.description != blank %}
+                <p class="ingredients__desc">{{ block.settings.description }}</p>
+              {% endif %}
+
+              {% if block.settings.tag_1 != blank %}
+                <div class="ingredients__tags">
+                  <span class="ingredients__tag">{{ block.settings.tag_1 }}</span>
+                  {% if block.settings.tag_2 != blank %}
+                    <span class="ingredients__tag">{{ block.settings.tag_2 }}</span>
+                  {% endif %}
+                  {% if block.settings.tag_3 != blank %}
+                    <span class="ingredients__tag">{{ block.settings.tag_3 }}</span>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
   {% endif %}
 </section>
 
@@ -114,33 +149,71 @@
     background: var(--ing-bg);
     color: var(--ing-text);
     padding: var(--ing-padding-top-mobile) var(--page-margin) var(--ing-padding-bottom-mobile);
-    text-align: center;
   }
 
   .ingredients__header {
-    margin-bottom: var(--ing-subheading-spacing-mobile);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    margin-bottom: var(--ing-header-spacing-mobile);
   }
 
-  .ingredients__title {
-    font-family: var(--font-heading-family);
-    font-size: var(--ing-heading-size-mobile);
-    font-weight: var(--ing-heading-weight);
-    letter-spacing: -0.01em;
-    color: var(--ing-heading-color);
-    margin: 0 0 var(--ing-heading-spacing-mobile);
+  .ingredients__header-text {
+    text-align: left;
   }
 
-  .ingredients__title:last-child {
-    margin-bottom: 0;
-  }
-
-  .ingredients__subtitle {
+  .ingredients__subheading {
     font-family: var(--font-body-family);
     font-size: var(--ing-subheading-size-mobile);
     font-weight: var(--ing-subheading-weight);
     color: var(--ing-subheading-color);
+    margin: 0 0 4px;
+    opacity: 0.7;
+  }
+
+  .ingredients__heading {
+    font-family: var(--font-heading-family);
+    font-size: var(--ing-heading-size-mobile);
+    font-weight: var(--ing-heading-weight);
+    color: var(--ing-heading-color);
     margin: 0;
-    opacity: 0.8;
+    letter-spacing: -0.01em;
+  }
+
+  .ingredients__nav {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .ingredients__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--ing-arrow-size);
+    height: var(--ing-arrow-size);
+    background: transparent;
+    border: 1px solid var(--ing-arrow-color);
+    border-radius: 50%;
+    color: var(--ing-arrow-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+  }
+
+  .ingredients__arrow:hover {
+    background: var(--ing-arrow-color);
+    color: var(--ing-bg);
+  }
+
+  .ingredients__arrow svg {
+    width: 50%;
+    height: 50%;
+  }
+
+  .ingredients__track {
+    overflow: hidden;
   }
 
   .ingredients__grid {
@@ -150,89 +223,66 @@
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    scroll-behavior: smooth;
   }
 
   .ingredients__grid::-webkit-scrollbar {
     display: none;
   }
 
-  @media (min-width: 768px) {
-    .ingredients__grid {
-      justify-content: center;
-      overflow-x: visible;
-      flex-wrap: wrap;
-    }
-  }
-
-  .ingredients__item {
-    flex: 0 0 280px;
+  .ingredients__card {
+    flex: 0 0 220px;
     scroll-snap-align: start;
   }
 
   @media (min-width: 768px) {
-    .ingredients__item {
-      flex: 0 0 300px;
+    .ingredients__card {
+      flex: 0 0 260px;
     }
   }
 
   @media (min-width: 1024px) {
-    .ingredients__item {
-      flex: 0 0 340px;
+    .ingredients__card {
+      flex: 0 0 280px;
     }
   }
 
-  .ingredients__visual {
+  .ingredients__image-wrap {
     position: relative;
     overflow: hidden;
+    margin-bottom: var(--ing-name-spacing-mobile);
   }
 
   .ingredients__img {
     display: block;
     width: 100%;
-    aspect-ratio: 5 / 3;
+    aspect-ratio: 3 / 4;
     object-fit: cover;
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .ingredients__placeholder {
     width: 100%;
-    aspect-ratio: 5 / 3;
-    background: linear-gradient(
-      135deg,
-      var(--ing-accent) 0%,
-      transparent 80%
-    );
-    opacity: 0.1;
+    aspect-ratio: 3 / 4;
+    background: linear-gradient(135deg, var(--ing-accent) 0%, transparent 80%);
+    opacity: 0.15;
   }
 
-  .ingredients__item:hover .ingredients__img {
-    transform: scale(1.02);
-  }
-
-  .ingredients__overlay {
+  .ingredients__overlay-tag {
     position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: var(--space-md);
-    background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.45) 0%,
-      transparent 55%
-    );
+    top: var(--space-sm);
+    left: var(--space-sm);
+    background: var(--ing-overlay-tag-bg);
+    color: var(--ing-overlay-tag-text);
+    font-size: var(--ing-overlay-tag-size-mobile);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 6px 10px;
+    line-height: 1;
   }
 
-  .ingredients__row {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    width: 100%;
-    gap: var(--space-md);
-  }
-
-  .ingredients__text-wrap {
-    position: relative;
+  .ingredients__content {
+    text-align: left;
   }
 
   .ingredients__name {
@@ -240,61 +290,37 @@
     font-size: var(--ing-name-size-mobile);
     font-weight: var(--ing-name-weight);
     color: var(--ing-name-color);
+    margin: 0 0 var(--ing-desc-spacing-mobile);
+    letter-spacing: -0.01em;
   }
 
-  .ingredients__line {
-    position: absolute;
-    bottom: -6px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--ing-name-color) 0%, transparent 100%);
-    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .ingredients__item:hover .ingredients__line {
-    width: 100%;
-  }
-
-  .ingredients__link {
-    font-size: var(--ing-link-size-mobile);
-    font-weight: var(--ing-link-weight);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--ing-link-color);
-    text-decoration: none;
-    opacity: 0.5;
-    white-space: nowrap;
-    flex-shrink: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .ingredients__item:hover .ingredients__link {
+  .ingredients__desc {
+    font-family: var(--font-body-family);
+    font-size: var(--ing-desc-size-mobile);
+    font-weight: var(--ing-desc-weight);
+    color: var(--ing-desc-color);
+    margin: 0 0 var(--ing-desc-spacing-mobile);
     opacity: 0.8;
+    line-height: 1.5;
   }
 
-  .ingredients__link:hover {
-    opacity: 1;
+  .ingredients__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
   }
 
-  .ingredients__footer {
-    margin-top: var(--ing-footer-spacing-mobile);
-  }
-
-  .ingredients__cta {
+  .ingredients__tag {
     display: inline-block;
-    font-size: var(--ing-cta-size-mobile);
-    font-weight: var(--ing-cta-weight);
-    color: var(--ing-cta-color);
-    text-decoration: none;
-    padding-bottom: 2px;
-    border-bottom: 1px solid var(--ing-accent);
-    opacity: 0.6;
-    transition: opacity 0.3s ease;
-  }
-
-  .ingredients__cta:hover {
-    opacity: 1;
+    background: transparent;
+    border: 1px solid var(--ing-bottom-tag-border);
+    color: var(--ing-bottom-tag-text);
+    font-size: var(--ing-bottom-tag-size-mobile);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 4px 8px;
+    line-height: 1;
   }
 
   @media (min-width: 768px) {
@@ -303,39 +329,69 @@
     }
 
     .ingredients__header {
-      margin-bottom: var(--ing-subheading-spacing-desktop);
+      margin-bottom: var(--ing-header-spacing-desktop);
     }
 
-    .ingredients__title {
-      font-size: var(--ing-heading-size-desktop);
-      margin-bottom: var(--ing-heading-spacing-desktop);
-    }
-
-    .ingredients__title:last-child {
-      margin-bottom: 0;
-    }
-
-    .ingredients__subtitle {
+    .ingredients__subheading {
       font-size: var(--ing-subheading-size-desktop);
     }
 
-    .ingredients__footer {
-      margin-top: var(--ing-footer-spacing-desktop);
+    .ingredients__heading {
+      font-size: var(--ing-heading-size-desktop);
+    }
+
+    .ingredients__image-wrap {
+      margin-bottom: var(--ing-name-spacing-desktop);
     }
 
     .ingredients__name {
       font-size: var(--ing-name-size-desktop);
+      margin-bottom: var(--ing-desc-spacing-desktop);
     }
 
-    .ingredients__link {
-      font-size: var(--ing-link-size-desktop);
+    .ingredients__desc {
+      font-size: var(--ing-desc-size-desktop);
+      margin-bottom: var(--ing-desc-spacing-desktop);
     }
 
-    .ingredients__cta {
-      font-size: var(--ing-cta-size-desktop);
+    .ingredients__overlay-tag {
+      font-size: var(--ing-overlay-tag-size-desktop);
+    }
+
+    .ingredients__tag {
+      font-size: var(--ing-bottom-tag-size-desktop);
     }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  (function() {
+    const section = document.currentScript.closest('.shopify-section');
+    if (!section) return;
+
+    const grid = section.querySelector('[data-ingredients-grid]');
+    const prevBtn = section.querySelector('.ingredients__arrow--prev');
+    const nextBtn = section.querySelector('.ingredients__arrow--next');
+
+    if (!grid || !prevBtn || !nextBtn) return;
+
+    const getScrollAmount = () => {
+      const card = grid.querySelector('.ingredients__card');
+      if (!card) return 280;
+      const style = getComputedStyle(grid);
+      const gap = parseInt(style.gap) || 16;
+      return card.offsetWidth + gap;
+    };
+
+    prevBtn.addEventListener('click', () => {
+      grid.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      grid.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+    });
+  })();
+{% endjavascript %}
 
 {% schema %}
 {
@@ -348,14 +404,15 @@
     },
     {
       "type": "text",
-      "id": "heading",
-      "label": "t:sections.ingredients.heading",
-      "default": "Ingredients"
+      "id": "subheading",
+      "label": "t:sections.ingredients.subheading",
+      "default": "What's inside"
     },
     {
-      "type": "textarea",
-      "id": "subheading",
-      "label": "t:sections.ingredients.subheading"
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.ingredients.heading",
+      "default": "8 Grain Complex"
     },
     {
       "type": "header",
@@ -387,7 +444,7 @@
       "min": 0,
       "max": 100,
       "step": 4,
-      "default": 32,
+      "default": 40,
       "unit": "px"
     },
     {
@@ -407,7 +464,7 @@
       "min": 0,
       "max": 150,
       "step": 4,
-      "default": 48,
+      "default": 60,
       "unit": "px"
     },
     {
@@ -417,17 +474,7 @@
       "min": 0,
       "max": 150,
       "step": 4,
-      "default": 64,
-      "unit": "px"
-    },
-    {
-      "type": "range",
-      "id": "gap",
-      "label": "t:sections.ingredients.gap",
-      "min": 4,
-      "max": 48,
-      "step": 2,
-      "default": 16,
+      "default": 60,
       "unit": "px"
     },
     {
@@ -436,48 +483,8 @@
     },
     {
       "type": "range",
-      "id": "heading_spacing_mobile",
-      "label": "t:sections.ingredients.heading_to_subheading_mobile",
-      "min": 0,
-      "max": 48,
-      "step": 2,
-      "default": 8,
-      "unit": "px"
-    },
-    {
-      "type": "range",
-      "id": "heading_spacing_desktop",
-      "label": "t:sections.ingredients.heading_to_subheading_desktop",
-      "min": 0,
-      "max": 64,
-      "step": 2,
-      "default": 12,
-      "unit": "px"
-    },
-    {
-      "type": "range",
-      "id": "subheading_spacing_mobile",
-      "label": "t:sections.ingredients.subheading_to_grid_mobile",
-      "min": 0,
-      "max": 64,
-      "step": 2,
-      "default": 20,
-      "unit": "px"
-    },
-    {
-      "type": "range",
-      "id": "subheading_spacing_desktop",
-      "label": "t:sections.ingredients.subheading_to_grid_desktop",
-      "min": 0,
-      "max": 80,
-      "step": 2,
-      "default": 32,
-      "unit": "px"
-    },
-    {
-      "type": "range",
-      "id": "footer_spacing_mobile",
-      "label": "t:sections.ingredients.grid_to_footer_mobile",
+      "id": "header_spacing_mobile",
+      "label": "t:sections.ingredients.header_to_grid_mobile",
       "min": 0,
       "max": 64,
       "step": 2,
@@ -486,8 +493,8 @@
     },
     {
       "type": "range",
-      "id": "footer_spacing_desktop",
-      "label": "t:sections.ingredients.grid_to_footer_desktop",
+      "id": "header_spacing_desktop",
+      "label": "t:sections.ingredients.header_to_grid_desktop",
       "min": 0,
       "max": 80,
       "step": 2,
@@ -495,46 +502,14 @@
       "unit": "px"
     },
     {
-      "type": "header",
-      "content": "t:sections.ingredients.heading_style"
-    },
-    {
-      "type": "color",
-      "id": "heading_color",
-      "label": "t:sections.ingredients.color"
-    },
-    {
       "type": "range",
-      "id": "heading_size_mobile",
-      "label": "t:sections.ingredients.size_mobile",
-      "min": 14,
+      "id": "gap",
+      "label": "t:sections.ingredients.gap",
+      "min": 8,
       "max": 48,
-      "step": 1,
+      "step": 2,
       "default": 20,
       "unit": "px"
-    },
-    {
-      "type": "range",
-      "id": "heading_size_desktop",
-      "label": "t:sections.ingredients.size_desktop",
-      "min": 16,
-      "max": 64,
-      "step": 1,
-      "default": 28,
-      "unit": "px"
-    },
-    {
-      "type": "select",
-      "id": "heading_weight",
-      "label": "t:sections.ingredients.font_weight",
-      "options": [
-        { "value": "300", "label": "t:settings.typography.weight_light" },
-        { "value": "400", "label": "t:settings.typography.weight_regular" },
-        { "value": "500", "label": "t:settings.typography.weight_medium" },
-        { "value": "600", "label": "t:settings.typography.weight_semibold" },
-        { "value": "700", "label": "t:settings.typography.weight_bold" }
-      ],
-      "default": "500"
     },
     {
       "type": "header",
@@ -549,20 +524,20 @@
       "type": "range",
       "id": "subheading_size_mobile",
       "label": "t:sections.ingredients.size_mobile",
-      "min": 12,
-      "max": 24,
+      "min": 10,
+      "max": 18,
       "step": 1,
-      "default": 14,
+      "default": 12,
       "unit": "px"
     },
     {
       "type": "range",
       "id": "subheading_size_desktop",
       "label": "t:sections.ingredients.size_desktop",
-      "min": 14,
-      "max": 28,
+      "min": 11,
+      "max": 20,
       "step": 1,
-      "default": 16,
+      "default": 13,
       "unit": "px"
     },
     {
@@ -570,11 +545,70 @@
       "id": "subheading_weight",
       "label": "t:sections.ingredients.font_weight",
       "options": [
-        { "value": "300", "label": "t:settings.typography.weight_light" },
         { "value": "400", "label": "t:settings.typography.weight_regular" },
         { "value": "500", "label": "t:settings.typography.weight_medium" }
       ],
-      "default": "400"
+      "default": "500"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.ingredients.heading_style"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "t:sections.ingredients.color"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "t:sections.ingredients.size_mobile",
+      "min": 18,
+      "max": 48,
+      "step": 1,
+      "default": 24,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "t:sections.ingredients.size_desktop",
+      "min": 20,
+      "max": 64,
+      "step": 1,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "t:sections.ingredients.font_weight",
+      "options": [
+        { "value": "400", "label": "t:settings.typography.weight_regular" },
+        { "value": "500", "label": "t:settings.typography.weight_medium" },
+        { "value": "600", "label": "t:settings.typography.weight_semibold" },
+        { "value": "700", "label": "t:settings.typography.weight_bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.ingredients.arrow_style"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "t:sections.ingredients.color"
+    },
+    {
+      "type": "range",
+      "id": "arrow_size",
+      "label": "t:sections.ingredients.arrow_size",
+      "min": 32,
+      "max": 56,
+      "step": 2,
+      "default": 40,
+      "unit": "px"
     },
     {
       "type": "header",
@@ -590,9 +624,9 @@
       "id": "name_size_mobile",
       "label": "t:sections.ingredients.size_mobile",
       "min": 14,
-      "max": 32,
+      "max": 28,
       "step": 1,
-      "default": 20,
+      "default": 18,
       "unit": "px"
     },
     {
@@ -600,9 +634,9 @@
       "id": "name_size_desktop",
       "label": "t:sections.ingredients.size_desktop",
       "min": 16,
-      "max": 42,
+      "max": 32,
       "step": 1,
-      "default": 24,
+      "default": 20,
       "unit": "px"
     },
     {
@@ -610,48 +644,6 @@
       "id": "name_weight",
       "label": "t:sections.ingredients.font_weight",
       "options": [
-        { "value": "300", "label": "t:settings.typography.weight_light" },
-        { "value": "400", "label": "t:settings.typography.weight_regular" },
-        { "value": "500", "label": "t:settings.typography.weight_medium" },
-        { "value": "600", "label": "t:settings.typography.weight_semibold" },
-        { "value": "700", "label": "t:settings.typography.weight_bold" }
-      ],
-      "default": "500"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.ingredients.link_style"
-    },
-    {
-      "type": "color",
-      "id": "link_color",
-      "label": "t:sections.ingredients.color"
-    },
-    {
-      "type": "range",
-      "id": "link_size_mobile",
-      "label": "t:sections.ingredients.size_mobile",
-      "min": 8,
-      "max": 14,
-      "step": 1,
-      "default": 9,
-      "unit": "px"
-    },
-    {
-      "type": "range",
-      "id": "link_size_desktop",
-      "label": "t:sections.ingredients.size_desktop",
-      "min": 9,
-      "max": 16,
-      "step": 1,
-      "default": 10,
-      "unit": "px"
-    },
-    {
-      "type": "select",
-      "id": "link_weight",
-      "label": "t:sections.ingredients.font_weight",
-      "options": [
         { "value": "400", "label": "t:settings.typography.weight_regular" },
         { "value": "500", "label": "t:settings.typography.weight_medium" },
         { "value": "600", "label": "t:settings.typography.weight_semibold" }
@@ -659,58 +651,151 @@
       "default": "500"
     },
     {
+      "type": "range",
+      "id": "name_spacing_mobile",
+      "label": "t:sections.ingredients.image_to_name_mobile",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "name_spacing_desktop",
+      "label": "t:sections.ingredients.image_to_name_desktop",
+      "min": 4,
+      "max": 32,
+      "step": 2,
+      "default": 16,
+      "unit": "px"
+    },
+    {
       "type": "header",
-      "content": "t:sections.ingredients.cta_style"
+      "content": "t:sections.ingredients.description_style"
     },
     {
       "type": "color",
-      "id": "cta_color",
+      "id": "desc_color",
       "label": "t:sections.ingredients.color"
     },
     {
       "type": "range",
-      "id": "cta_size_mobile",
+      "id": "desc_size_mobile",
       "label": "t:sections.ingredients.size_mobile",
       "min": 12,
+      "max": 18,
+      "step": 1,
+      "default": 13,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "desc_size_desktop",
+      "label": "t:sections.ingredients.size_desktop",
+      "min": 13,
       "max": 20,
       "step": 1,
       "default": 14,
       "unit": "px"
     },
     {
+      "type": "select",
+      "id": "desc_weight",
+      "label": "t:sections.ingredients.font_weight",
+      "options": [
+        { "value": "300", "label": "t:settings.typography.weight_light" },
+        { "value": "400", "label": "t:settings.typography.weight_regular" }
+      ],
+      "default": "400"
+    },
+    {
       "type": "range",
-      "id": "cta_size_desktop",
-      "label": "t:sections.ingredients.size_desktop",
-      "min": 13,
-      "max": 22,
-      "step": 1,
-      "default": 15,
+      "id": "desc_spacing_mobile",
+      "label": "t:sections.ingredients.name_to_desc_mobile",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "default": 8,
       "unit": "px"
     },
     {
-      "type": "select",
-      "id": "cta_weight",
-      "label": "t:sections.ingredients.font_weight",
-      "options": [
-        { "value": "400", "label": "t:settings.typography.weight_regular" },
-        { "value": "500", "label": "t:settings.typography.weight_medium" },
-        { "value": "600", "label": "t:settings.typography.weight_semibold" }
-      ],
-      "default": "500"
+      "type": "range",
+      "id": "desc_spacing_desktop",
+      "label": "t:sections.ingredients.name_to_desc_desktop",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "default": 10,
+      "unit": "px"
     },
     {
       "type": "header",
-      "content": "t:sections.ingredients.cta"
+      "content": "t:sections.ingredients.overlay_tag_style"
     },
     {
-      "type": "text",
-      "id": "cta_text",
-      "label": "t:sections.ingredients.cta_text"
+      "type": "color",
+      "id": "overlay_tag_bg",
+      "label": "t:sections.ingredients.background_color"
     },
     {
-      "type": "url",
-      "id": "cta_url",
-      "label": "t:sections.ingredients.cta_url"
+      "type": "color",
+      "id": "overlay_tag_text",
+      "label": "t:sections.ingredients.text_color"
+    },
+    {
+      "type": "range",
+      "id": "overlay_tag_size_mobile",
+      "label": "t:sections.ingredients.size_mobile",
+      "min": 8,
+      "max": 14,
+      "step": 1,
+      "default": 10,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "overlay_tag_size_desktop",
+      "label": "t:sections.ingredients.size_desktop",
+      "min": 9,
+      "max": 16,
+      "step": 1,
+      "default": 11,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.ingredients.bottom_tag_style"
+    },
+    {
+      "type": "color",
+      "id": "bottom_tag_border",
+      "label": "t:sections.ingredients.border_color"
+    },
+    {
+      "type": "color",
+      "id": "bottom_tag_text",
+      "label": "t:sections.ingredients.text_color"
+    },
+    {
+      "type": "range",
+      "id": "bottom_tag_size_mobile",
+      "label": "t:sections.ingredients.size_mobile",
+      "min": 8,
+      "max": 12,
+      "step": 1,
+      "default": 9,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "bottom_tag_size_desktop",
+      "label": "t:sections.ingredients.size_desktop",
+      "min": 9,
+      "max": 14,
+      "step": 1,
+      "default": 10,
+      "unit": "px"
     }
   ],
   "blocks": [
@@ -725,20 +810,37 @@
         },
         {
           "type": "text",
-          "id": "title",
-          "label": "t:sections.ingredients.title",
-          "default": "Ingredient"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "t:sections.ingredients.link"
+          "id": "overlay_tag",
+          "label": "t:sections.ingredients.overlay_tag",
+          "default": "Organic"
         },
         {
           "type": "text",
-          "id": "link_text",
-          "label": "t:sections.ingredients.link_text",
-          "default": "Details"
+          "id": "name",
+          "label": "t:sections.ingredients.name",
+          "default": "Black Sesame"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "t:sections.ingredients.description",
+          "default": "Rich in anthocyanins and sesamin for cellular defense."
+        },
+        {
+          "type": "text",
+          "id": "tag_1",
+          "label": "t:sections.ingredients.tag_1",
+          "default": "Antioxidant"
+        },
+        {
+          "type": "text",
+          "id": "tag_2",
+          "label": "t:sections.ingredients.tag_2"
+        },
+        {
+          "type": "text",
+          "id": "tag_3",
+          "label": "t:sections.ingredients.tag_3"
         }
       ]
     }
@@ -747,10 +849,46 @@
     {
       "name": "t:sections.ingredients.name",
       "blocks": [
-        { "type": "ingredient", "settings": { "title": "Oats" } },
-        { "type": "ingredient", "settings": { "title": "Sesame" } },
-        { "type": "ingredient", "settings": { "title": "Dates" } },
-        { "type": "ingredient", "settings": { "title": "Walnuts" } }
+        {
+          "type": "ingredient",
+          "settings": {
+            "overlay_tag": "Organic",
+            "name": "Black Sesame",
+            "description": "Rich in anthocyanins and sesamin for cellular defense.",
+            "tag_1": "Antioxidant",
+            "tag_2": "Minerals"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "overlay_tag": "Whole Grain",
+            "name": "Rolled Oats",
+            "description": "High in beta-glucan fiber for heart health and sustained energy.",
+            "tag_1": "Fiber",
+            "tag_2": "Heart Health"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "overlay_tag": "Superfood",
+            "name": "Black Rice",
+            "description": "Ancient grain packed with anthocyanins and essential nutrients.",
+            "tag_1": "Protein",
+            "tag_2": "Antioxidant"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "overlay_tag": "Natural",
+            "name": "Walnuts",
+            "description": "Brain-boosting omega-3 fatty acids and polyphenols.",
+            "tag_1": "Omega-3",
+            "tag_2": "Brain Health"
+          }
+        }
       ]
     }
   ]
