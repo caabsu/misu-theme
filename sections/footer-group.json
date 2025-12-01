@@ -14,7 +14,8 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "menu": "",
+        "tagline": "Premium grain-mix drinks for everyday wellness.",
+        "menu": "footer",
         "show_payment_icons": true
       }
     }
