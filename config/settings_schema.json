@@ -137,19 +137,19 @@
       },
       {
         "type": "select",
-        "id": "font_heading_select",
-        "label": "t:settings.typography.heading_font",
+        "id": "font_heading_type",
+        "label": "t:settings.typography.font_type",
         "options": [
-          { "value": "stix", "label": "STIX Two Text" },
-          { "value": "inter", "label": "Inter" },
-          { "value": "playfair", "label": "Playfair Display" },
-          { "value": "lora", "label": "Lora" },
-          { "value": "montserrat", "label": "Montserrat" },
-          { "value": "roboto", "label": "Roboto" },
-          { "value": "opensans", "label": "Open Sans" },
-          { "value": "poppins", "label": "Poppins" }
+          { "value": "custom", "label": "STIX Two Text" },
+          { "value": "shopify", "label": "t:settings.typography.shopify_fonts" }
         ],
-        "default": "stix"
+        "default": "custom"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "default": "inter_n6",
+        "label": "t:settings.typography.heading_font"
       },
       {
         "type": "header",
@@ -187,19 +187,19 @@
       },
       {
         "type": "select",
-        "id": "font_body_select",
-        "label": "t:settings.typography.body_font",
+        "id": "font_body_type",
+        "label": "t:settings.typography.font_type",
         "options": [
-          { "value": "stix", "label": "STIX Two Text" },
-          { "value": "inter", "label": "Inter" },
-          { "value": "playfair", "label": "Playfair Display" },
-          { "value": "lora", "label": "Lora" },
-          { "value": "montserrat", "label": "Montserrat" },
-          { "value": "roboto", "label": "Roboto" },
-          { "value": "opensans", "label": "Open Sans" },
-          { "value": "poppins", "label": "Poppins" }
+          { "value": "custom", "label": "STIX Two Text" },
+          { "value": "shopify", "label": "t:settings.typography.shopify_fonts" }
         ],
-        "default": "stix"
+        "default": "custom"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "default": "inter_n4",
+        "label": "t:settings.typography.body_font"
       },
       {
         "type": "select",

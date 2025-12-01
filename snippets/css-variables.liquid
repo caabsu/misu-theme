@@ -7,61 +7,41 @@
 {% enddoc %}
 
 {% style %}
-  {%- comment -%} Map font selections to font-family values {%- endcomment -%}
-  {%- liquid
-    case settings.font_heading_select
-      when 'stix'
-        assign heading_family = '"STIX Two Text", Georgia, serif'
-      when 'inter'
-        assign heading_family = 'Inter, system-ui, sans-serif'
-      when 'playfair'
-        assign heading_family = '"Playfair Display", Georgia, serif'
-      when 'lora'
-        assign heading_family = 'Lora, Georgia, serif'
-      when 'montserrat'
-        assign heading_family = 'Montserrat, system-ui, sans-serif'
-      when 'roboto'
-        assign heading_family = 'Roboto, system-ui, sans-serif'
-      when 'opensans'
-        assign heading_family = '"Open Sans", system-ui, sans-serif'
-      when 'poppins'
-        assign heading_family = 'Poppins, system-ui, sans-serif'
-      else
-        assign heading_family = '"STIX Two Text", Georgia, serif'
-    endcase
-
-    case settings.font_body_select
-      when 'stix'
-        assign body_family = '"STIX Two Text", Georgia, serif'
-      when 'inter'
-        assign body_family = 'Inter, system-ui, sans-serif'
-      when 'playfair'
-        assign body_family = '"Playfair Display", Georgia, serif'
-      when 'lora'
-        assign body_family = 'Lora, Georgia, serif'
-      when 'montserrat'
-        assign body_family = 'Montserrat, system-ui, sans-serif'
-      when 'roboto'
-        assign body_family = 'Roboto, system-ui, sans-serif'
-      when 'opensans'
-        assign body_family = '"Open Sans", system-ui, sans-serif'
-      when 'poppins'
-        assign body_family = 'Poppins, system-ui, sans-serif'
-      else
-        assign body_family = '"STIX Two Text", Georgia, serif'
-    endcase
-  -%}
+  {%- comment -%} Load Shopify font faces when using Shopify fonts {%- endcomment -%}
+  {%- if settings.font_body_type == 'shopify' -%}
+    {{ settings.font_body | font_face: font_display: 'swap' }}
+    {{ settings.font_body | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
+    {{ settings.font_body | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
+  {%- endif -%}
+  {%- if settings.font_heading_type == 'shopify' -%}
+    {{ settings.font_heading | font_face: font_display: 'swap' }}
+    {{ settings.font_heading | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
+  {%- endif -%}
 
   :root {
     /* ========================================
        Typography
        ======================================== */
-    --font-body-family: {{ body_family }};
+    {%- if settings.font_body_type == 'custom' -%}
+    --font-body-family: "STIX Two Text", Georgia, serif;
     --font-body-style: normal;
     --font-body-weight: 400;
-    --font-heading-family: {{ heading_family }};
+    {%- else -%}
+    --font-body-family: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+    --font-body-style: {{ settings.font_body.style }};
+    --font-body-weight: {{ settings.font_body.weight }};
+    {%- endif -%}
+
+    {%- if settings.font_heading_type == 'custom' -%}
+    --font-heading-family: "STIX Two Text", Georgia, serif;
     --font-heading-style: normal;
     --font-heading-weight: 600;
+    {%- else -%}
+    --font-heading-family: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+    --font-heading-style: {{ settings.font_heading.style }};
+    --font-heading-weight: {{ settings.font_heading.weight }};
+    {%- endif -%}
+
     --font-body-scale: {{ settings.body_size_scale | divided_by: 100.0 }};
 
     /* Desktop/Mobile heading scales */

@@ -34,6 +34,8 @@
       "headings": "Headings",
       "heading_font": "Heading font",
       "heading_size": "Heading size scale",
+      "font_type": "Font",
+      "shopify_fonts": "Shopify fonts",
       "desktop": "Desktop",
       "mobile": "Mobile",
       "body": "Body",
