@@ -16,7 +16,9 @@
     "color_primary_text": "#f5f0ea",
     "color_secondary": "#d4af37",
     "color_secondary_text": "#f5f0ea",
+    "font_body_type": "shopify",
     "font_body": "space_grotesk_n4",
+    "body_size_scale": "100",
     "content_for_index": []
   }
 }
