@@ -86,68 +86,69 @@
 </header>
 
 {% javascript %}
-  const menuToggle = document.querySelector('.header__menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const header = document.querySelector('[data-header]');
+  function initHeader() {
+    const menuToggle = document.querySelector('.header__menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const header = document.querySelector('[data-header]');
 
-  // Mobile menu toggle
-  if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener('click', () => {
-      const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
-      menuToggle.setAttribute('aria-expanded', !isOpen);
-      mobileMenu.setAttribute('aria-hidden', isOpen);
-      document.body.style.overflow = isOpen ? '' : 'hidden';
-    });
+    // Mobile menu toggle
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', !isOpen);
+        mobileMenu.setAttribute('aria-hidden', isOpen);
+        document.body.style.overflow = isOpen ? '' : 'hidden';
+      });
+    }
+
+    // Transparent header scroll effect
+    if (header) {
+      const heroBanner = document.querySelector('[data-hero-banner]');
+
+      if (heroBanner) {
+        const updateHeaderTransparency = () => {
+          const scrollY = window.scrollY;
+          const heroHeight = heroBanner.offsetHeight;
+          const headerHeight = header.offsetHeight;
+          const transitionStart = 0;
+          const transitionEnd = heroHeight - headerHeight;
+
+          let progress = 0;
+          if (scrollY > transitionStart) {
+            progress = Math.min((scrollY - transitionStart) / (transitionEnd - transitionStart), 1);
+          }
+
+          if (progress > 0.5) {
+            header.classList.remove('header--transparent');
+          } else {
+            header.classList.add('header--transparent');
+          }
+        };
+
+        // Initial state - make header transparent
+        header.classList.add('header--transparent');
+        updateHeaderTransparency();
+
+        // Throttled scroll handler
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            requestAnimationFrame(() => {
+              updateHeaderTransparency();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        }, { passive: true });
+      }
+    }
   }
 
-  // Transparent header scroll effect
-  if (header) {
-    const heroBanner = document.querySelector('[data-hero-banner]');
-
-    if (heroBanner) {
-      const updateHeaderTransparency = () => {
-        const scrollY = window.scrollY;
-        const heroHeight = heroBanner.offsetHeight;
-        const headerHeight = header.offsetHeight;
-        const transitionStart = 0;
-        const transitionEnd = heroHeight - headerHeight;
-
-        let progress = 0;
-        if (scrollY > transitionStart) {
-          progress = Math.min((scrollY - transitionStart) / (transitionEnd - transitionStart), 1);
-        }
-
-        // Apply eased progress for smoother animation
-        const easedProgress = progress < 0.5
-          ? 4 * progress * progress * progress
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-
-        header.style.setProperty('--header-bg-opacity', easedProgress);
-        header.style.setProperty('--header-border-opacity', easedProgress);
-
-        if (progress > 0.5) {
-          header.classList.remove('header--transparent');
-        } else {
-          header.classList.add('header--transparent');
-        }
-      };
-
-      // Initial state
-      header.classList.add('header--transparent');
-      updateHeaderTransparency();
-
-      // Throttled scroll handler
-      let ticking = false;
-      window.addEventListener('scroll', () => {
-        if (!ticking) {
-          requestAnimationFrame(() => {
-            updateHeaderTransparency();
-            ticking = false;
-          });
-          ticking = true;
-        }
-      }, { passive: true });
-    }
+  // Run when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeader);
+  } else {
+    initHeader();
   }
 {% endjavascript %}
 

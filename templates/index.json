@@ -9,9 +9,24 @@
  */
 {
   "sections": {
+    "hero_banner": {
+      "type": "hero-banner",
+      "settings": {
+        "eyebrow": "Welcome",
+        "heading": "Discover something extraordinary",
+        "subheading": "Experience the perfect blend of quality and craftsmanship in every product we create.",
+        "button_text": "Explore now",
+        "button_url": "/collections/all",
+        "overlay_opacity": 40,
+        "min_height_desktop": 100,
+        "min_height_mobile": 90,
+        "text_alignment": "center",
+        "content_position": "center",
+        "show_scroll_indicator": true
+      }
+    },
     "rich_text_tN6MWa": {
       "type": "rich-text",
-      "name": "t:sections.rich_text.name",
       "settings": {
         "eyebrow": "from ancient knowledge",
         "heading": "Talk about your brand",
@@ -26,6 +41,7 @@
     }
   },
   "order": [
+    "hero_banner",
     "rich_text_tN6MWa"
   ]
 }
