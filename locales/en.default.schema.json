@@ -16,7 +16,11 @@
     "account": "Account",
     "cart": "Cart",
     "menu": "Menu",
-    "navigation": "Navigation"
+    "navigation": "Navigation",
+    "custom_section": "Custom section"
+  },
+  "labels": {
+    "background": "Background image"
   },
   "settings": {
     "logo": {
