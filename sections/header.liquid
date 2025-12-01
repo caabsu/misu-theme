@@ -8,6 +8,7 @@
 <header
   class="header full-width {% if section.settings.enable_sticky %}header--sticky{% endif %}"
   data-header
+  data-enable-transparent="{{ section.settings.enable_transparent }}"
 >
   <div class="header__inner">
     {%- comment -%} Mobile: Left side - Menu toggle {%- endcomment -%}
@@ -121,8 +122,9 @@
     // Transparent header scroll effect
     if (header) {
       const heroBanner = document.querySelector('[data-hero-banner]');
+      const enableTransparent = header.getAttribute('data-enable-transparent') === 'true';
 
-      if (heroBanner) {
+      if (heroBanner && enableTransparent) {
         window.updateHeaderTransparency = () => {
           // Don't change transparency if menu is open
           if (menuOpen) return;
@@ -618,6 +620,13 @@
     {
       "type": "header",
       "content": "t:settings.header.transparent_header"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_transparent",
+      "label": "t:settings.header.enable_transparent",
+      "info": "t:settings.header.enable_transparent_info",
+      "default": true
     },
     {
       "type": "image_picker",

@@ -129,6 +129,8 @@
       "show_cart": "Show cart icon",
       "enable_sticky": "Enable sticky header",
       "transparent_header": "Transparent header",
+      "enable_transparent": "Enable transparent header",
+      "enable_transparent_info": "Header becomes transparent over hero banners",
       "logo_transparent": "Logo for transparent header",
       "logo_transparent_info": "Optional: Shows when header is transparent over hero banners",
       "desktop_layout": "Desktop layout",
