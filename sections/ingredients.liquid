@@ -2,7 +2,12 @@
   assign bg_color = section.settings.background_color | default: settings.color_background
   assign text_color = section.settings.text_color | default: settings.color_text
   assign accent = section.settings.accent_color | default: settings.color_primary
-  assign gap = section.settings.gap | default: 16
+
+  assign heading_color = section.settings.heading_color | default: accent
+  assign subheading_color = section.settings.subheading_color | default: text_color
+  assign name_color = section.settings.name_color | default: '#ffffff'
+  assign link_color = section.settings.link_color | default: '#ffffff'
+  assign cta_color = section.settings.cta_color | default: text_color
 -%}
 
 <section
@@ -11,22 +16,54 @@
     --ing-bg: {{ bg_color }};
     --ing-text: {{ text_color }};
     --ing-accent: {{ accent }};
-    --ing-gap: {{ gap }}px;
+
+    --ing-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --ing-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --ing-padding-top-desktop: {{ section.settings.padding_top_desktop }}px;
+    --ing-padding-bottom-desktop: {{ section.settings.padding_bottom_desktop }}px;
+    --ing-gap: {{ section.settings.gap }}px;
+
+    --ing-heading-spacing-mobile: {{ section.settings.heading_spacing_mobile }}px;
+    --ing-heading-spacing-desktop: {{ section.settings.heading_spacing_desktop }}px;
+    --ing-subheading-spacing-mobile: {{ section.settings.subheading_spacing_mobile }}px;
+    --ing-subheading-spacing-desktop: {{ section.settings.subheading_spacing_desktop }}px;
+    --ing-footer-spacing-mobile: {{ section.settings.footer_spacing_mobile }}px;
+    --ing-footer-spacing-desktop: {{ section.settings.footer_spacing_desktop }}px;
+
+    --ing-heading-color: {{ heading_color }};
     --ing-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
     --ing-heading-size-desktop: {{ section.settings.heading_size_desktop }}px;
     --ing-heading-weight: {{ section.settings.heading_weight }};
+
+    --ing-subheading-color: {{ subheading_color }};
+    --ing-subheading-size-mobile: {{ section.settings.subheading_size_mobile }}px;
+    --ing-subheading-size-desktop: {{ section.settings.subheading_size_desktop }}px;
+    --ing-subheading-weight: {{ section.settings.subheading_weight }};
+
+    --ing-name-color: {{ name_color }};
     --ing-name-size-mobile: {{ section.settings.name_size_mobile }}px;
     --ing-name-size-desktop: {{ section.settings.name_size_desktop }}px;
     --ing-name-weight: {{ section.settings.name_weight }};
-    --ing-link-size: {{ section.settings.link_size }}px;
+
+    --ing-link-color: {{ link_color }};
+    --ing-link-size-mobile: {{ section.settings.link_size_mobile }}px;
+    --ing-link-size-desktop: {{ section.settings.link_size_desktop }}px;
     --ing-link-weight: {{ section.settings.link_weight }};
-    --ing-cta-size: {{ section.settings.cta_size }}px;
+
+    --ing-cta-color: {{ cta_color }};
+    --ing-cta-size-mobile: {{ section.settings.cta_size_mobile }}px;
+    --ing-cta-size-desktop: {{ section.settings.cta_size_desktop }}px;
     --ing-cta-weight: {{ section.settings.cta_weight }};
   "
 >
-  {% if section.settings.heading != blank %}
+  {% if section.settings.heading != blank or section.settings.subheading != blank %}
     <header class="ingredients__header">
-      <h2 class="ingredients__title">{{ section.settings.heading }}</h2>
+      {% if section.settings.heading != blank %}
+        <h2 class="ingredients__title">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <p class="ingredients__subtitle">{{ section.settings.subheading }}</p>
+      {% endif %}
     </header>
   {% endif %}
 
@@ -76,12 +113,12 @@
   .ingredients {
     background: var(--ing-bg);
     color: var(--ing-text);
-    padding: var(--space-lg) var(--page-margin) var(--space-xl);
+    padding: var(--ing-padding-top-mobile) var(--page-margin) var(--ing-padding-bottom-mobile);
     text-align: center;
   }
 
   .ingredients__header {
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--ing-subheading-spacing-mobile);
   }
 
   .ingredients__title {
@@ -89,8 +126,21 @@
     font-size: var(--ing-heading-size-mobile);
     font-weight: var(--ing-heading-weight);
     letter-spacing: -0.01em;
-    color: var(--ing-accent);
+    color: var(--ing-heading-color);
+    margin: 0 0 var(--ing-heading-spacing-mobile);
+  }
+
+  .ingredients__title:last-child {
+    margin-bottom: 0;
+  }
+
+  .ingredients__subtitle {
+    font-family: var(--font-body-family);
+    font-size: var(--ing-subheading-size-mobile);
+    font-weight: var(--ing-subheading-weight);
+    color: var(--ing-subheading-color);
     margin: 0;
+    opacity: 0.8;
   }
 
   .ingredients__grid {
@@ -189,7 +239,7 @@
     font-family: var(--font-heading-family);
     font-size: var(--ing-name-size-mobile);
     font-weight: var(--ing-name-weight);
-    color: #fff;
+    color: var(--ing-name-color);
   }
 
   .ingredients__line {
@@ -198,7 +248,7 @@
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.3) 100%);
+    background: linear-gradient(90deg, var(--ing-name-color) 0%, transparent 100%);
     transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
@@ -207,11 +257,11 @@
   }
 
   .ingredients__link {
-    font-size: var(--ing-link-size);
+    font-size: var(--ing-link-size-mobile);
     font-weight: var(--ing-link-weight);
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #fff;
+    color: var(--ing-link-color);
     text-decoration: none;
     opacity: 0.5;
     white-space: nowrap;
@@ -228,14 +278,14 @@
   }
 
   .ingredients__footer {
-    margin-top: var(--space-xl);
+    margin-top: var(--ing-footer-spacing-mobile);
   }
 
   .ingredients__cta {
     display: inline-block;
-    font-size: var(--ing-cta-size);
+    font-size: var(--ing-cta-size-mobile);
     font-weight: var(--ing-cta-weight);
-    color: var(--ing-text);
+    color: var(--ing-cta-color);
     text-decoration: none;
     padding-bottom: 2px;
     border-bottom: 1px solid var(--ing-accent);
@@ -249,15 +299,40 @@
 
   @media (min-width: 768px) {
     .ingredients {
-      padding: var(--space-xl) var(--page-margin) var(--space-2xl);
+      padding: var(--ing-padding-top-desktop) var(--page-margin) var(--ing-padding-bottom-desktop);
+    }
+
+    .ingredients__header {
+      margin-bottom: var(--ing-subheading-spacing-desktop);
     }
 
     .ingredients__title {
       font-size: var(--ing-heading-size-desktop);
+      margin-bottom: var(--ing-heading-spacing-desktop);
+    }
+
+    .ingredients__title:last-child {
+      margin-bottom: 0;
+    }
+
+    .ingredients__subtitle {
+      font-size: var(--ing-subheading-size-desktop);
+    }
+
+    .ingredients__footer {
+      margin-top: var(--ing-footer-spacing-desktop);
     }
 
     .ingredients__name {
       font-size: var(--ing-name-size-desktop);
+    }
+
+    .ingredients__link {
+      font-size: var(--ing-link-size-desktop);
+    }
+
+    .ingredients__cta {
+      font-size: var(--ing-cta-size-desktop);
     }
   }
 {% endstylesheet %}
@@ -268,14 +343,23 @@
   "tag": "section",
   "settings": [
     {
+      "type": "header",
+      "content": "t:sections.ingredients.content"
+    },
+    {
       "type": "text",
       "id": "heading",
       "label": "t:sections.ingredients.heading",
       "default": "Ingredients"
     },
     {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "t:sections.ingredients.subheading"
+    },
+    {
       "type": "header",
-      "content": "t:sections.ingredients.colors"
+      "content": "t:sections.ingredients.section_colors"
     },
     {
       "type": "color",
@@ -294,7 +378,47 @@
     },
     {
       "type": "header",
-      "content": "t:sections.ingredients.layout"
+      "content": "t:sections.ingredients.section_padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "t:sections.ingredients.padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "t:sections.ingredients.padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "t:sections.ingredients.padding_top_desktop",
+      "min": 0,
+      "max": 150,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "t:sections.ingredients.padding_bottom_desktop",
+      "min": 0,
+      "max": 150,
+      "step": 4,
+      "default": 64,
+      "unit": "px"
     },
     {
       "type": "range",
@@ -308,16 +432,85 @@
     },
     {
       "type": "header",
-      "content": "t:sections.ingredients.heading_typography"
+      "content": "t:sections.ingredients.element_spacing"
+    },
+    {
+      "type": "range",
+      "id": "heading_spacing_mobile",
+      "label": "t:sections.ingredients.heading_to_subheading_mobile",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "default": 8,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_spacing_desktop",
+      "label": "t:sections.ingredients.heading_to_subheading_desktop",
+      "min": 0,
+      "max": 64,
+      "step": 2,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "subheading_spacing_mobile",
+      "label": "t:sections.ingredients.subheading_to_grid_mobile",
+      "min": 0,
+      "max": 64,
+      "step": 2,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "subheading_spacing_desktop",
+      "label": "t:sections.ingredients.subheading_to_grid_desktop",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "footer_spacing_mobile",
+      "label": "t:sections.ingredients.grid_to_footer_mobile",
+      "min": 0,
+      "max": 64,
+      "step": 2,
+      "default": 24,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "footer_spacing_desktop",
+      "label": "t:sections.ingredients.grid_to_footer_desktop",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.ingredients.heading_style"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "t:sections.ingredients.color"
     },
     {
       "type": "range",
       "id": "heading_size_mobile",
       "label": "t:sections.ingredients.size_mobile",
       "min": 14,
-      "max": 36,
+      "max": 48,
       "step": 1,
-      "default": 18,
+      "default": 20,
       "unit": "px"
     },
     {
@@ -325,9 +518,9 @@
       "id": "heading_size_desktop",
       "label": "t:sections.ingredients.size_desktop",
       "min": 16,
-      "max": 48,
+      "max": 64,
       "step": 1,
-      "default": 22,
+      "default": 28,
       "unit": "px"
     },
     {
@@ -345,7 +538,52 @@
     },
     {
       "type": "header",
-      "content": "t:sections.ingredients.name_typography"
+      "content": "t:sections.ingredients.subheading_style"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "t:sections.ingredients.color"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_mobile",
+      "label": "t:sections.ingredients.size_mobile",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 14,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_desktop",
+      "label": "t:sections.ingredients.size_desktop",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "subheading_weight",
+      "label": "t:sections.ingredients.font_weight",
+      "options": [
+        { "value": "300", "label": "t:settings.typography.weight_light" },
+        { "value": "400", "label": "t:settings.typography.weight_regular" },
+        { "value": "500", "label": "t:settings.typography.weight_medium" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.ingredients.name_style"
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "t:sections.ingredients.color"
     },
     {
       "type": "range",
@@ -382,16 +620,31 @@
     },
     {
       "type": "header",
-      "content": "t:sections.ingredients.link_typography"
+      "content": "t:sections.ingredients.link_style"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "t:sections.ingredients.color"
     },
     {
       "type": "range",
-      "id": "link_size",
-      "label": "t:sections.ingredients.font_size",
+      "id": "link_size_mobile",
+      "label": "t:sections.ingredients.size_mobile",
       "min": 8,
       "max": 14,
       "step": 1,
       "default": 9,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "link_size_desktop",
+      "label": "t:sections.ingredients.size_desktop",
+      "min": 9,
+      "max": 16,
+      "step": 1,
+      "default": 10,
       "unit": "px"
     },
     {
@@ -407,16 +660,31 @@
     },
     {
       "type": "header",
-      "content": "t:sections.ingredients.cta_typography"
+      "content": "t:sections.ingredients.cta_style"
+    },
+    {
+      "type": "color",
+      "id": "cta_color",
+      "label": "t:sections.ingredients.color"
     },
     {
       "type": "range",
-      "id": "cta_size",
-      "label": "t:sections.ingredients.font_size",
+      "id": "cta_size_mobile",
+      "label": "t:sections.ingredients.size_mobile",
       "min": 12,
-      "max": 18,
+      "max": 20,
       "step": 1,
       "default": 14,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "cta_size_desktop",
+      "label": "t:sections.ingredients.size_desktop",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "default": 15,
       "unit": "px"
     },
     {
@@ -470,7 +738,7 @@
           "type": "text",
           "id": "link_text",
           "label": "t:sections.ingredients.link_text",
-          "default": "View details"
+          "default": "Details"
         }
       ]
     }
