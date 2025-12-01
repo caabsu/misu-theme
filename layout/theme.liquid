@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
   <head>
+    {% # Custom fonts (must be loaded before other CSS) %}
+    {{ 'custom-fonts.css' | asset_url | stylesheet_tag }}
+
     {% # Inlined CSS Variables %}
     {% render 'css-variables' %}
 

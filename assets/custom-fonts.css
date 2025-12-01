@@ -1,0 +1,16 @@
+/* Custom font: STIX Two Text */
+@font-face {
+  font-family: "STIX Two Text";
+  src: url("https://cdn.shopify.com/s/files/1/0726/7788/3951/files/STIXTwoText-VariableFont_wght.woff2?v=1764568174") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "STIX Two Text";
+  src: url("https://cdn.shopify.com/s/files/1/0726/7788/3951/files/STIXTwoText-Italic-VariableFont_wght.woff2?v=1764568174") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
