@@ -74,9 +74,9 @@
       "settings": {
         "subheading": "What's inside",
         "heading": "8 Grain Complex",
-        "background_color": "",
-        "text_color": "",
-        "accent_color": "",
+        "background_color": "#f5f0ea",
+        "text_color": "#3e2723",
+        "accent_color": "#3e2723",
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40,
         "padding_top_desktop": 60,
