@@ -47,13 +47,15 @@
             {% endif %}
 
             <div class="ingredients__overlay">
-              <div class="ingredients__text-wrap">
-                <span class="ingredients__name">{{ block.settings.title }}</span>
-                <span class="ingredients__line"></span>
+              <div class="ingredients__row">
+                <div class="ingredients__text-wrap">
+                  <span class="ingredients__name">{{ block.settings.title }}</span>
+                  <span class="ingredients__line"></span>
+                </div>
+                <a href="{{ block.settings.link | default: '#' }}" class="ingredients__link">
+                  {{ block.settings.link_text | default: 'Details' }}
+                </a>
               </div>
-              <a href="{{ block.settings.link | default: '#' }}" class="ingredients__link">
-                {{ block.settings.link_text | default: 'View details' }}
-              </a>
             </div>
           </div>
         </article>
@@ -163,13 +165,20 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    align-items: flex-start;
     padding: var(--space-md);
     background: linear-gradient(
       to top,
-      rgba(0, 0, 0, 0.5) 0%,
-      transparent 60%
+      rgba(0, 0, 0, 0.45) 0%,
+      transparent 55%
     );
+  }
+
+  .ingredients__row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+    gap: var(--space-md);
   }
 
   .ingredients__text-wrap {
@@ -187,50 +196,32 @@
 
   .ingredients__line {
     display: block;
-    width: 24px;
-    height: 1px;
-    background: #fff;
-    margin-top: 6px;
-    opacity: 0.5;
-    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.3) 100%);
+    margin-top: 8px;
+    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .ingredients__item:hover .ingredients__line {
-    width: 48px;
-    opacity: 0.9;
+    width: 100%;
   }
 
   .ingredients__link {
     font-size: var(--ing-link-size);
     font-weight: var(--ing-link-weight);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     color: #fff;
     text-decoration: none;
-    opacity: 0.6;
-    margin-top: var(--space-sm);
-    position: relative;
-    padding-bottom: 2px;
+    opacity: 0.5;
+    white-space: nowrap;
+    flex-shrink: 0;
     transition: opacity 0.3s ease;
   }
 
-  .ingredients__link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: #fff;
-    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
   .ingredients__item:hover .ingredients__link {
-    opacity: 0.85;
-  }
-
-  .ingredients__item:hover .ingredients__link::after {
-    width: 100%;
+    opacity: 0.8;
   }
 
   .ingredients__link:hover {
@@ -361,20 +352,20 @@
       "type": "range",
       "id": "name_size_mobile",
       "label": "t:sections.ingredients.size_mobile",
-      "min": 12,
-      "max": 28,
+      "min": 14,
+      "max": 32,
       "step": 1,
-      "default": 16,
+      "default": 20,
       "unit": "px"
     },
     {
       "type": "range",
       "id": "name_size_desktop",
       "label": "t:sections.ingredients.size_desktop",
-      "min": 14,
-      "max": 36,
+      "min": 16,
+      "max": 42,
       "step": 1,
-      "default": 18,
+      "default": 24,
       "unit": "px"
     },
     {
@@ -398,10 +389,10 @@
       "type": "range",
       "id": "link_size",
       "label": "t:sections.ingredients.font_size",
-      "min": 9,
-      "max": 16,
+      "min": 8,
+      "max": 14,
       "step": 1,
-      "default": 11,
+      "default": 9,
       "unit": "px"
     },
     {
