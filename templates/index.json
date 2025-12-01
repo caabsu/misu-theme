@@ -24,8 +24,16 @@
         "text_alignment": "center",
         "content_position": "center",
         "show_scroll_indicator": true,
-        "heading_weight": "default",
-        "body_weight": "default"
+        "heading_size_mobile": 40,
+        "heading_size_desktop": 64,
+        "heading_weight": "300",
+        "subheading_size_mobile": 16,
+        "subheading_size_desktop": 20,
+        "body_weight": "300",
+        "eyebrow_size_mobile": 10,
+        "eyebrow_size_desktop": 13,
+        "button_color": "#b45f06",
+        "button_text_color": "#ffffff"
       }
     },
     "grain_complex_Q8LKzi": {
