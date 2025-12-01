@@ -47,12 +47,13 @@
             {% endif %}
 
             <div class="ingredients__overlay">
-              <span class="ingredients__name">{{ block.settings.title }}</span>
-              {% if block.settings.link != blank %}
-                <a href="{{ block.settings.link }}" class="ingredients__link">
-                  {{ block.settings.link_text | default: 'View details' }}
-                </a>
-              {% endif %}
+              <div class="ingredients__text-wrap">
+                <span class="ingredients__name">{{ block.settings.title }}</span>
+                <span class="ingredients__line"></span>
+              </div>
+              <a href="{{ block.settings.link | default: '#' }}" class="ingredients__link">
+                {{ block.settings.link_text | default: 'View details' }}
+              </a>
             </div>
           </div>
         </article>
@@ -166,9 +167,15 @@
     padding: var(--space-md);
     background: linear-gradient(
       to top,
-      rgba(0, 0, 0, 0.55) 0%,
-      transparent 50%
+      rgba(0, 0, 0, 0.5) 0%,
+      transparent 60%
     );
+  }
+
+  .ingredients__text-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .ingredients__name {
@@ -176,39 +183,58 @@
     font-size: var(--ing-name-size-mobile);
     font-weight: var(--ing-name-weight);
     color: #fff;
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .ingredients__item:hover .ingredients__name {
-    opacity: 1;
-    transform: translateY(0);
+  .ingredients__line {
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: #fff;
+    margin-top: 6px;
+    opacity: 0.5;
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  }
+
+  .ingredients__item:hover .ingredients__line {
+    width: 48px;
+    opacity: 0.9;
   }
 
   .ingredients__link {
     font-size: var(--ing-link-size);
     font-weight: var(--ing-link-weight);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     color: #fff;
     text-decoration: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-    padding-bottom: 2px;
+    opacity: 0.6;
     margin-top: var(--space-sm);
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.5s ease 0.08s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.08s, border-color 0.3s ease;
+    position: relative;
+    padding-bottom: 2px;
+    transition: opacity 0.3s ease;
+  }
+
+  .ingredients__link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #fff;
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .ingredients__item:hover .ingredients__link {
-    opacity: 0.75;
-    transform: translateY(0);
+    opacity: 0.85;
+  }
+
+  .ingredients__item:hover .ingredients__link::after {
+    width: 100%;
   }
 
   .ingredients__link:hover {
     opacity: 1;
-    border-bottom-color: #fff;
   }
 
   .ingredients__footer {
