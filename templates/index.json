@@ -51,6 +51,42 @@
     "grain_complex_Q8LKzi": {
       "type": "grain-complex",
       "blocks": {
+        "ingredient_aWT9gz": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/custom_nano-banana-pro_1764586031885.png",
+            "overlay_tag": "Organic",
+            "name": "Black Sesame",
+            "description": "Rich in anthocyanins and sesamin for cellular defense.",
+            "tag_1": "Antioxidant",
+            "tag_2": "",
+            "tag_3": ""
+          }
+        },
+        "ingredient_DPVwD7": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/custom_nano-banana-pro_1764585755879.png",
+            "overlay_tag": "Organic",
+            "name": "Black Sesame",
+            "description": "Rich in anthocyanins and sesamin for cellular defense.",
+            "tag_1": "Antioxidant",
+            "tag_2": "",
+            "tag_3": ""
+          }
+        },
+        "ingredient_ziLnpk": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/custom_nano-banana-pro_1764585326096.png",
+            "overlay_tag": "Organic",
+            "name": "Black Sesame",
+            "description": "Rich in anthocyanins and sesamin for cellular defense.",
+            "tag_1": "Antioxidant",
+            "tag_2": "",
+            "tag_3": ""
+          }
+        },
         "ingredient_8X6GTT": {
           "type": "ingredient",
           "settings": {
@@ -113,6 +149,9 @@
         }
       },
       "block_order": [
+        "ingredient_aWT9gz",
+        "ingredient_DPVwD7",
+        "ingredient_ziLnpk",
         "ingredient_8X6GTT",
         "ingredient_U6ikVe",
         "ingredient_eyd9Dg",
