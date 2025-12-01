@@ -54,6 +54,7 @@
         "ingredient_8X6GTT": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/custom_nano-banana-pro_1764586035612.png",
             "overlay_tag": "Organic",
             "name": "Black Sesame",
             "description": "Rich in anthocyanins and sesamin for cellular defense.",
@@ -65,6 +66,7 @@
         "ingredient_U6ikVe": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/custom_nano-banana-pro_1764586026422.png",
             "overlay_tag": "Organic",
             "name": "Black Sesame",
             "description": "Rich in anthocyanins and sesamin for cellular defense.",
