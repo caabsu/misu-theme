@@ -27,6 +27,95 @@
         "body_weight": "default"
       }
     },
+    "grain_complex_Q8LKzi": {
+      "type": "grain-complex",
+      "blocks": {
+        "ingredient_eyd9Dg": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/nano-banana-v1_1763359004134.png",
+            "overlay_tag": "Organic",
+            "name": "Black Sesame",
+            "description": "Rich in anthocyanins and sesamin for cellular defense.",
+            "tag_1": "Antioxidant",
+            "tag_2": "",
+            "tag_3": ""
+          }
+        },
+        "ingredient_3rqzhw": {
+          "type": "ingredient",
+          "settings": {
+            "overlay_tag": "Organic",
+            "name": "Black Sesame",
+            "description": "Rich in anthocyanins and sesamin for cellular defense.",
+            "tag_1": "Antioxidant",
+            "tag_2": "",
+            "tag_3": ""
+          }
+        },
+        "ingredient_YCgRTE": {
+          "type": "ingredient",
+          "settings": {
+            "overlay_tag": "Organic",
+            "name": "Black Sesame",
+            "description": "Rich in anthocyanins and sesamin for cellular defense.",
+            "tag_1": "Antioxidant",
+            "tag_2": "",
+            "tag_3": ""
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_eyd9Dg",
+        "ingredient_3rqzhw",
+        "ingredient_YCgRTE"
+      ],
+      "name": "Grain Complex",
+      "settings": {
+        "subheading": "What's inside",
+        "heading": "8 Grain Complex",
+        "background_color": "",
+        "text_color": "",
+        "accent_color": "",
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "header_spacing_mobile": 24,
+        "header_spacing_desktop": 32,
+        "gap": 20,
+        "subheading_color": "",
+        "subheading_size_mobile": 12,
+        "subheading_size_desktop": 13,
+        "subheading_weight": "500",
+        "heading_color": "",
+        "heading_size_mobile": 24,
+        "heading_size_desktop": 32,
+        "heading_weight": "600",
+        "arrow_color": "",
+        "arrow_size": 40,
+        "name_color": "",
+        "name_size_mobile": 18,
+        "name_size_desktop": 20,
+        "name_weight": "500",
+        "name_spacing_mobile": 12,
+        "name_spacing_desktop": 16,
+        "desc_color": "",
+        "desc_size_mobile": 13,
+        "desc_size_desktop": 14,
+        "desc_weight": "400",
+        "desc_spacing_mobile": 8,
+        "desc_spacing_desktop": 10,
+        "overlay_tag_bg": "",
+        "overlay_tag_text": "",
+        "overlay_tag_size_mobile": 10,
+        "overlay_tag_size_desktop": 11,
+        "bottom_tag_border": "",
+        "bottom_tag_text": "",
+        "bottom_tag_size_mobile": 9,
+        "bottom_tag_size_desktop": 10
+      }
+    },
     "rich_text_tN6MWa": {
       "type": "rich-text",
       "settings": {
@@ -46,6 +135,7 @@
   },
   "order": [
     "hero_banner",
+    "grain_complex_Q8LKzi",
     "rich_text_tN6MWa"
   ]
 }
