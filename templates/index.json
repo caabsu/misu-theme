@@ -34,19 +34,25 @@
           "type": "ingredient",
           "settings": {
             "image": "shopify://shop_images/nano-banana-v1_1763359004134.png",
-            "title": "Organic oats"
+            "title": "Organic oats",
+            "link": "",
+            "link_text": "View details"
           }
         },
         "ingredient_e6Hq3D": {
           "type": "ingredient",
           "settings": {
-            "title": "Black sesame"
+            "title": "Black sesame",
+            "link": "",
+            "link_text": "View details"
           }
         },
         "ingredient_W6tP6f": {
           "type": "ingredient",
           "settings": {
-            "title": "Red dates"
+            "title": "Red dates",
+            "link": "",
+            "link_text": "View details"
           }
         }
       },
@@ -58,9 +64,20 @@
       "name": "t:sections.ingredients.name",
       "settings": {
         "heading": "Natural ingredients",
-        "background_color": "#F8F6F3",
+        "background_color": "#f8f6f3",
         "text_color": "#1a1a1a",
-        "accent_color": "#6B7F5E",
+        "accent_color": "#3e2723",
+        "gap": 12,
+        "heading_size_mobile": 27,
+        "heading_size_desktop": 22,
+        "heading_weight": "500",
+        "name_size_mobile": 20,
+        "name_size_desktop": 24,
+        "name_weight": "500",
+        "link_size": 9,
+        "link_weight": "500",
+        "cta_size": 14,
+        "cta_weight": "500",
         "cta_text": "Learn more about our ingredients",
         "cta_url": ""
       }
