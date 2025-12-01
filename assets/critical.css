@@ -272,10 +272,9 @@ a {
   margin-top: 0;
 }
 
-/* Header section needs special handling for sticky positioning */
-.shopify-section:has(.header--sticky) {
-  position: sticky;
-  top: 0;
+/* Header section needs z-index context for proper stacking */
+.shopify-section:has(.header) {
+  position: relative;
   z-index: 100;
 }
 
