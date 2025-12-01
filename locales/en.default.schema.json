@@ -31,9 +31,6 @@
     },
     "typography": {
       "name": "Typography",
-      "custom_font": "Custom font",
-      "use_custom_font": "Use STIX Two Text font",
-      "custom_font_info": "Enables the custom STIX Two Text font for headings and body text",
       "headings": "Headings",
       "heading_font": "Heading font",
       "heading_size": "Heading size scale",
