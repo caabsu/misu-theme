@@ -183,7 +183,7 @@
 
   .header__inner {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     height: var(--header-height-mobile);
     padding: 0 var(--space-sm);
@@ -202,6 +202,7 @@
     flex-shrink: 0;
     transition: color 0.3s ease;
     justify-self: center;
+    grid-column: 2;
   }
 
   .header__logo-text {
@@ -225,7 +226,7 @@
   }
 
   .header__icon-btn--desktop {
-    display: none;
+    display: none !important;
   }
 
   .header__nav-link {
@@ -270,16 +271,28 @@
     height: 2rem;
     color: var(--color-foreground);
     text-decoration: none;
-    border-radius: 50%;
-    transition: color 0.3s ease, background-color 0.2s ease;
+    position: relative;
+    transition: color 0.3s ease;
   }
 
-  .header__icon-btn:hover {
-    background-color: var(--color-secondary);
+  .header__icon-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 1.5px;
+    background-color: var(--color-primary);
+    transition: width var(--transition-base);
   }
 
-  .header--transparent .header__icon-btn:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+  .header__icon-btn:hover::after {
+    width: 100%;
+  }
+
+  .header--transparent .header__icon-btn::after {
+    background-color: var(--color-primary-text);
   }
 
   .header__icon-btn svg {
@@ -474,7 +487,7 @@
     }
 
     .header__icon-btn--desktop {
-      display: flex;
+      display: flex !important;
     }
 
     .header__cart-count {
