@@ -13,10 +13,18 @@
   "sections": {
     "header": {
       "type": "header",
-      "settings": {}
+      "settings": {
+        "menu": "main-menu",
+        "show_account": true,
+        "show_cart": true,
+        "enable_sticky": true,
+        "logo_transparent": "shopify://shop_images/misu_white.png",
+        "header_height_desktop": 72,
+        "header_height_mobile": 64
+      }
     }
   },
   "order": [
     "header"
-  ],
+  ]
 }
