@@ -19,10 +19,12 @@
         "button_url": "/collections/all",
         "overlay_opacity": 40,
         "min_height_desktop": 100,
-        "min_height_mobile": 90,
+        "min_height_mobile": 50,
         "text_alignment": "center",
         "content_position": "center",
-        "show_scroll_indicator": true
+        "show_scroll_indicator": true,
+        "heading_weight": "default",
+        "body_weight": "default"
       }
     },
     "rich_text_tN6MWa": {
@@ -36,7 +38,9 @@
         "button_style": "primary",
         "text_alignment_desktop": "center",
         "content_width": 60,
-        "text_alignment_mobile": "center"
+        "text_alignment_mobile": "center",
+        "heading_weight": "default",
+        "body_weight": "default"
       }
     }
   },
