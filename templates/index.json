@@ -33,7 +33,10 @@
         "eyebrow_size_mobile": 10,
         "eyebrow_size_desktop": 13,
         "button_color": "#b45f06",
-        "button_text_color": "#ffffff"
+        "button_text_color": "#ffffff",
+        "button_font_size": 14,
+        "button_font_weight": "600",
+        "button_radius": 20
       }
     },
     "grain_complex_Q8LKzi": {
