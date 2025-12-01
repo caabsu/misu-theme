@@ -7,7 +7,9 @@
       "Bash(git commit -m \"$(cat <<''EOF''\nAdd comprehensive theme settings and content sections\n\nTheme Settings:\n- Logo settings with image picker and width control\n- Complete color palette (background, text, primary, secondary, borders, error, success)\n- Typography settings with heading and body font pickers plus size scales\n- Layout settings (page width, margins, section spacing)\n- Button and input styling options\n- Product card display settings (vendor, secondary image, badges)\n- Cart settings (type, free shipping bar)\n- Social media account fields\n\nNew Sections:\n- Featured collection with configurable product grid\n- Image with text with flexible layout options\n- Rich text with alignment and width controls\n- Newsletter with email signup form\n\nNew Snippets:\n- Product card with sale/soldout badges and hover effects\n\nUpdates:\n- CSS variables now use all theme settings\n- Comprehensive English translations for all settings and sections\n- Header uses global logo settings\n- Critical CSS includes form inputs and grid utilities\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
       "Bash(git commit:*)",
       "Bash(git pull:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(cat:*)",
+      "Bash(python:*)"
     ],
     "deny": [],
     "ask": []
