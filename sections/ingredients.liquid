@@ -12,6 +12,16 @@
     --ing-text: {{ text_color }};
     --ing-accent: {{ accent }};
     --ing-gap: {{ gap }}px;
+    --ing-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --ing-heading-size-desktop: {{ section.settings.heading_size_desktop }}px;
+    --ing-heading-weight: {{ section.settings.heading_weight }};
+    --ing-name-size-mobile: {{ section.settings.name_size_mobile }}px;
+    --ing-name-size-desktop: {{ section.settings.name_size_desktop }}px;
+    --ing-name-weight: {{ section.settings.name_weight }};
+    --ing-link-size: {{ section.settings.link_size }}px;
+    --ing-link-weight: {{ section.settings.link_weight }};
+    --ing-cta-size: {{ section.settings.cta_size }}px;
+    --ing-cta-weight: {{ section.settings.cta_weight }};
   "
 >
   {% if section.settings.heading != blank %}
@@ -63,7 +73,7 @@
   .ingredients {
     background: var(--ing-bg);
     color: var(--ing-text);
-    padding: var(--space-xl) var(--page-margin) var(--space-2xl);
+    padding: var(--space-lg) var(--page-margin) var(--space-xl);
     text-align: center;
   }
 
@@ -73,8 +83,8 @@
 
   .ingredients__title {
     font-family: var(--font-heading-family);
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-heading-weight);
+    font-size: var(--ing-heading-size-mobile);
+    font-weight: var(--ing-heading-weight);
     letter-spacing: -0.01em;
     color: var(--ing-accent);
     margin: 0;
@@ -128,7 +138,7 @@
     width: 100%;
     aspect-ratio: 5 / 3;
     object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .ingredients__placeholder {
@@ -156,47 +166,49 @@
     padding: var(--space-md);
     background: linear-gradient(
       to top,
-      rgba(0, 0, 0, 0.5) 0%,
-      transparent 60%
+      rgba(0, 0, 0, 0.55) 0%,
+      transparent 50%
     );
   }
 
   .ingredients__name {
     font-family: var(--font-heading-family);
-    font-size: var(--font-size-base);
-    font-weight: 500;
+    font-size: var(--ing-name-size-mobile);
+    font-weight: var(--ing-name-weight);
     color: #fff;
-    transform: translateY(4px);
-    opacity: 0.9;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .ingredients__item:hover .ingredients__name {
-    transform: translateY(0);
     opacity: 1;
+    transform: translateY(0);
   }
 
   .ingredients__link {
-    font-size: var(--font-size-xs);
-    font-weight: 500;
+    font-size: var(--ing-link-size);
+    font-weight: var(--ing-link-weight);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     color: #fff;
     text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    padding-bottom: 2px;
+    margin-top: var(--space-sm);
     opacity: 0;
-    transform: translateY(8px);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    margin-top: var(--space-xs);
-    padding-bottom: 1px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    transform: translateY(12px);
+    transition: opacity 0.5s ease 0.08s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.08s, border-color 0.3s ease;
   }
 
   .ingredients__item:hover .ingredients__link {
-    opacity: 0.85;
+    opacity: 0.75;
     transform: translateY(0);
-    transition-delay: 0.05s;
   }
 
   .ingredients__link:hover {
     opacity: 1;
+    border-bottom-color: #fff;
   }
 
   .ingredients__footer {
@@ -205,8 +217,8 @@
 
   .ingredients__cta {
     display: inline-block;
-    font-size: var(--font-size-sm);
-    font-weight: 500;
+    font-size: var(--ing-cta-size);
+    font-weight: var(--ing-cta-weight);
     color: var(--ing-text);
     text-decoration: none;
     padding-bottom: 2px;
@@ -221,7 +233,15 @@
 
   @media (min-width: 768px) {
     .ingredients {
-      padding: var(--space-2xl) var(--page-margin) var(--space-3xl);
+      padding: var(--space-xl) var(--page-margin) var(--space-2xl);
+    }
+
+    .ingredients__title {
+      font-size: var(--ing-heading-size-desktop);
+    }
+
+    .ingredients__name {
+      font-size: var(--ing-name-size-desktop);
     }
   }
 {% endstylesheet %}
@@ -264,11 +284,135 @@
       "type": "range",
       "id": "gap",
       "label": "t:sections.ingredients.gap",
-      "min": 8,
+      "min": 4,
       "max": 48,
-      "step": 4,
+      "step": 2,
       "default": 16,
       "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.ingredients.heading_typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "t:sections.ingredients.size_mobile",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "default": 18,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "t:sections.ingredients.size_desktop",
+      "min": 16,
+      "max": 48,
+      "step": 1,
+      "default": 22,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "t:sections.ingredients.font_weight",
+      "options": [
+        { "value": "300", "label": "t:settings.typography.weight_light" },
+        { "value": "400", "label": "t:settings.typography.weight_regular" },
+        { "value": "500", "label": "t:settings.typography.weight_medium" },
+        { "value": "600", "label": "t:settings.typography.weight_semibold" },
+        { "value": "700", "label": "t:settings.typography.weight_bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.ingredients.name_typography"
+    },
+    {
+      "type": "range",
+      "id": "name_size_mobile",
+      "label": "t:sections.ingredients.size_mobile",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "name_size_desktop",
+      "label": "t:sections.ingredients.size_desktop",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "default": 18,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "name_weight",
+      "label": "t:sections.ingredients.font_weight",
+      "options": [
+        { "value": "300", "label": "t:settings.typography.weight_light" },
+        { "value": "400", "label": "t:settings.typography.weight_regular" },
+        { "value": "500", "label": "t:settings.typography.weight_medium" },
+        { "value": "600", "label": "t:settings.typography.weight_semibold" },
+        { "value": "700", "label": "t:settings.typography.weight_bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.ingredients.link_typography"
+    },
+    {
+      "type": "range",
+      "id": "link_size",
+      "label": "t:sections.ingredients.font_size",
+      "min": 9,
+      "max": 16,
+      "step": 1,
+      "default": 11,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "link_weight",
+      "label": "t:sections.ingredients.font_weight",
+      "options": [
+        { "value": "400", "label": "t:settings.typography.weight_regular" },
+        { "value": "500", "label": "t:settings.typography.weight_medium" },
+        { "value": "600", "label": "t:settings.typography.weight_semibold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.ingredients.cta_typography"
+    },
+    {
+      "type": "range",
+      "id": "cta_size",
+      "label": "t:sections.ingredients.font_size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "default": 14,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "cta_weight",
+      "label": "t:sections.ingredients.font_weight",
+      "options": [
+        { "value": "400", "label": "t:settings.typography.weight_regular" },
+        { "value": "500", "label": "t:settings.typography.weight_medium" },
+        { "value": "600", "label": "t:settings.typography.weight_semibold" }
+      ],
+      "default": "500"
     },
     {
       "type": "header",
