@@ -120,8 +120,8 @@
         "overlay_tag_text": "#f5f0ea",
         "overlay_tag_size_mobile": 9,
         "overlay_tag_size_desktop": 11,
-        "bottom_tag_border": "#3e2723",
-        "bottom_tag_text": "#6B6B6B",
+        "bottom_tag_border": "#b45f06",
+        "bottom_tag_text": "#b45f06",
         "bottom_tag_size_mobile": 9,
         "bottom_tag_size_desktop": 10
       }
