@@ -6,28 +6,17 @@
     --hero-min-height-mobile: {{ section.settings.min_height_mobile }}vh;
     --hero-text-align: {{ section.settings.text_alignment }};
     --hero-content-position: {{ section.settings.content_position }};
+    {% if section.settings.heading_weight != 'default' %}--hero-heading-weight: {{ section.settings.heading_weight }};{% endif %}
     {% if section.settings.body_weight != 'default' %}--hero-body-weight: {{ section.settings.body_weight }};{% endif %}
+    --hero-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --hero-heading-size-desktop: {{ section.settings.heading_size_desktop }}px;
     --hero-subheading-size-mobile: {{ section.settings.subheading_size_mobile }}px;
     --hero-subheading-size-desktop: {{ section.settings.subheading_size_desktop }}px;
     --hero-eyebrow-size-mobile: {{ section.settings.eyebrow_size_mobile }}px;
     --hero-eyebrow-size-desktop: {{ section.settings.eyebrow_size_desktop }}px;
     --hero-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --hero-heading-color: {{ section.settings.heading_color }};
     --hero-subheading-color: {{ section.settings.subheading_color }};
-    --hero-heading-1-color: {{ section.settings.heading_1_color }};
-    --hero-heading-1-weight: {{ section.settings.heading_1_weight }};
-    --hero-heading-1-style: {{ section.settings.heading_1_style }};
-    --hero-heading-1-size-mobile: {{ section.settings.heading_1_size_mobile }}px;
-    --hero-heading-1-size-desktop: {{ section.settings.heading_1_size_desktop }}px;
-    --hero-heading-2-color: {{ section.settings.heading_2_color }};
-    --hero-heading-2-weight: {{ section.settings.heading_2_weight }};
-    --hero-heading-2-style: {{ section.settings.heading_2_style }};
-    --hero-heading-2-size-mobile: {{ section.settings.heading_2_size_mobile }}px;
-    --hero-heading-2-size-desktop: {{ section.settings.heading_2_size_desktop }}px;
-    --hero-heading-3-color: {{ section.settings.heading_3_color }};
-    --hero-heading-3-weight: {{ section.settings.heading_3_weight }};
-    --hero-heading-3-style: {{ section.settings.heading_3_style }};
-    --hero-heading-3-size-mobile: {{ section.settings.heading_3_size_mobile }}px;
-    --hero-heading-3-size-desktop: {{ section.settings.heading_3_size_desktop }}px;
     --hero-btn-bg: {{ section.settings.button_color | default: settings.color_primary }};
     --hero-btn-text: {{ section.settings.button_text_color | default: '#ffffff' }};
     --hero-btn-radius: {{ section.settings.button_radius }}px;
@@ -52,19 +41,9 @@
         <span class="hero-banner__eyebrow">{{ section.settings.eyebrow }}</span>
       {% endif %}
 
-      {% if section.settings.heading_1 != blank or section.settings.heading_2 != blank or section.settings.heading_3 != blank %}
+      {% if section.settings.heading != blank %}
         <h1 class="hero-banner__heading">
-          <span class="hero-banner__heading-line">
-            {%- if section.settings.heading_1 != blank -%}
-              <span class="hero-banner__heading-part hero-banner__heading-part--1">{{ section.settings.heading_1 }}</span>
-            {%- endif -%}
-            {%- if section.settings.heading_2 != blank -%}
-              <span class="hero-banner__heading-part hero-banner__heading-part--2">{{ section.settings.heading_2 }}</span>
-            {%- endif -%}
-            {%- if section.settings.heading_3 != blank -%}
-              <span class="hero-banner__heading-part hero-banner__heading-part--3">{{ section.settings.heading_3 }}</span>
-            {%- endif -%}
-          </span>
+          <span class="hero-banner__heading-line">{{ section.settings.heading }}</span>
         </h1>
       {% endif %}
 
@@ -175,8 +154,11 @@
 
   .hero-banner__heading {
     font-family: var(--font-heading-family);
+    font-size: var(--hero-heading-size-mobile);
+    font-weight: var(--hero-heading-weight, var(--font-heading-weight));
     line-height: 1.05;
     letter-spacing: -0.03em;
+    color: var(--hero-heading-color);
     margin: 0;
     overflow: hidden;
   }
@@ -186,31 +168,6 @@
     opacity: 0;
     transform: translateY(100%);
     animation: heroReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.4s;
-  }
-
-  .hero-banner__heading-part {
-    display: inline;
-  }
-
-  .hero-banner__heading-part--1 {
-    color: var(--hero-heading-1-color);
-    font-weight: var(--hero-heading-1-weight);
-    font-style: var(--hero-heading-1-style);
-    font-size: var(--hero-heading-1-size-mobile);
-  }
-
-  .hero-banner__heading-part--2 {
-    color: var(--hero-heading-2-color);
-    font-weight: var(--hero-heading-2-weight);
-    font-style: var(--hero-heading-2-style);
-    font-size: var(--hero-heading-2-size-mobile);
-  }
-
-  .hero-banner__heading-part--3 {
-    color: var(--hero-heading-3-color);
-    font-weight: var(--hero-heading-3-weight);
-    font-style: var(--hero-heading-3-style);
-    font-size: var(--hero-heading-3-size-mobile);
   }
 
   .hero-banner__subheading {
@@ -326,16 +283,8 @@
       font-size: var(--hero-eyebrow-size-desktop);
     }
 
-    .hero-banner__heading-part--1 {
-      font-size: var(--hero-heading-1-size-desktop);
-    }
-
-    .hero-banner__heading-part--2 {
-      font-size: var(--hero-heading-2-size-desktop);
-    }
-
-    .hero-banner__heading-part--3 {
-      font-size: var(--hero-heading-3-size-desktop);
+    .hero-banner__heading {
+      font-size: var(--hero-heading-size-desktop);
     }
 
     .hero-banner__subheading {
@@ -364,26 +313,10 @@
       "default": "Welcome"
     },
     {
-      "type": "header",
-      "content": "Heading"
-    },
-    {
-      "type": "text",
-      "id": "heading_1",
-      "label": "Heading part 1",
-      "default": "Discover"
-    },
-    {
-      "type": "text",
-      "id": "heading_2",
-      "label": "Heading part 2",
-      "default": "something"
-    },
-    {
-      "type": "text",
-      "id": "heading_3",
-      "label": "Heading part 3",
-      "default": "extraordinary"
+      "type": "textarea",
+      "id": "heading",
+      "label": "t:sections.hero_banner.heading",
+      "default": "Discover something extraordinary"
     },
     {
       "type": "textarea",
@@ -475,19 +408,13 @@
     },
     {
       "type": "header",
-      "content": "Heading part 1 style"
-    },
-    {
-      "type": "color",
-      "id": "heading_1_color",
-      "label": "Color",
-      "default": "#ffffff"
+      "content": "t:sections.hero_banner.typography"
     },
     {
       "type": "range",
-      "id": "heading_1_size_mobile",
-      "label": "Size (mobile)",
-      "min": 24,
+      "id": "heading_size_mobile",
+      "label": "Heading size (mobile)",
+      "min": 28,
       "max": 64,
       "step": 2,
       "default": 40,
@@ -495,9 +422,9 @@
     },
     {
       "type": "range",
-      "id": "heading_1_size_desktop",
-      "label": "Size (desktop)",
-      "min": 32,
+      "id": "heading_size_desktop",
+      "label": "Heading size (desktop)",
+      "min": 36,
       "max": 96,
       "step": 2,
       "default": 64,
@@ -505,136 +432,23 @@
     },
     {
       "type": "select",
-      "id": "heading_1_weight",
-      "label": "Weight",
+      "id": "heading_weight",
+      "label": "t:sections.hero_banner.heading_weight",
       "options": [
-        { "value": "300", "label": "Light" },
-        { "value": "400", "label": "Regular" },
-        { "value": "500", "label": "Medium" },
-        { "value": "600", "label": "Semibold" },
-        { "value": "700", "label": "Bold" }
+        { "value": "default", "label": "t:sections.hero_banner.use_theme_settings" },
+        { "value": "300", "label": "t:settings.typography.weight_light" },
+        { "value": "400", "label": "t:settings.typography.weight_regular" },
+        { "value": "500", "label": "t:settings.typography.weight_medium" },
+        { "value": "600", "label": "t:settings.typography.weight_semibold" },
+        { "value": "700", "label": "t:settings.typography.weight_bold" }
       ],
-      "default": "600"
-    },
-    {
-      "type": "select",
-      "id": "heading_1_style",
-      "label": "Style",
-      "options": [
-        { "value": "normal", "label": "Normal" },
-        { "value": "italic", "label": "Italic" }
-      ],
-      "default": "normal"
-    },
-    {
-      "type": "header",
-      "content": "Heading part 2 style"
+      "default": "default"
     },
     {
       "type": "color",
-      "id": "heading_2_color",
-      "label": "Color",
+      "id": "heading_color",
+      "label": "Heading color",
       "default": "#ffffff"
-    },
-    {
-      "type": "range",
-      "id": "heading_2_size_mobile",
-      "label": "Size (mobile)",
-      "min": 24,
-      "max": 64,
-      "step": 2,
-      "default": 40,
-      "unit": "px"
-    },
-    {
-      "type": "range",
-      "id": "heading_2_size_desktop",
-      "label": "Size (desktop)",
-      "min": 32,
-      "max": 96,
-      "step": 2,
-      "default": 64,
-      "unit": "px"
-    },
-    {
-      "type": "select",
-      "id": "heading_2_weight",
-      "label": "Weight",
-      "options": [
-        { "value": "300", "label": "Light" },
-        { "value": "400", "label": "Regular" },
-        { "value": "500", "label": "Medium" },
-        { "value": "600", "label": "Semibold" },
-        { "value": "700", "label": "Bold" }
-      ],
-      "default": "600"
-    },
-    {
-      "type": "select",
-      "id": "heading_2_style",
-      "label": "Style",
-      "options": [
-        { "value": "normal", "label": "Normal" },
-        { "value": "italic", "label": "Italic" }
-      ],
-      "default": "normal"
-    },
-    {
-      "type": "header",
-      "content": "Heading part 3 style"
-    },
-    {
-      "type": "color",
-      "id": "heading_3_color",
-      "label": "Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "range",
-      "id": "heading_3_size_mobile",
-      "label": "Size (mobile)",
-      "min": 24,
-      "max": 64,
-      "step": 2,
-      "default": 40,
-      "unit": "px"
-    },
-    {
-      "type": "range",
-      "id": "heading_3_size_desktop",
-      "label": "Size (desktop)",
-      "min": 32,
-      "max": 96,
-      "step": 2,
-      "default": 64,
-      "unit": "px"
-    },
-    {
-      "type": "select",
-      "id": "heading_3_weight",
-      "label": "Weight",
-      "options": [
-        { "value": "300", "label": "Light" },
-        { "value": "400", "label": "Regular" },
-        { "value": "500", "label": "Medium" },
-        { "value": "600", "label": "Semibold" },
-        { "value": "700", "label": "Bold" }
-      ],
-      "default": "600"
-    },
-    {
-      "type": "select",
-      "id": "heading_3_style",
-      "label": "Style",
-      "options": [
-        { "value": "normal", "label": "Normal" },
-        { "value": "italic", "label": "Italic" }
-      ],
-      "default": "normal"
-    },
-    {
-      "type": "header",
-      "content": "Subheading style"
     },
     {
       "type": "range",
