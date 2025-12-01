@@ -61,8 +61,8 @@
     align-items: var(--hero-content-position, center);
     justify-content: center;
     overflow: hidden;
-    margin-top: calc(-1 * var(--header-height-mobile));
-    padding-top: var(--header-height-mobile);
+    margin-top: calc(-1 * var(--header-height));
+    padding-top: var(--header-height);
   }
 
   .hero-banner__background {
@@ -241,8 +241,6 @@
   @media (min-width: 768px) {
     .hero-banner {
       min-height: var(--hero-min-height-desktop);
-      margin-top: calc(-1 * var(--header-height-desktop));
-      padding-top: var(--header-height-desktop);
     }
 
     .hero-banner__content {

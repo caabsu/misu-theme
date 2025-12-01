@@ -105,6 +105,11 @@
     --section-spacing: var(--section-spacing-mobile);
     --logo-width: var(--logo-width-mobile);
 
+    /* Header height defaults (can be overridden by header section) */
+    --header-height-desktop: 72px;
+    --header-height-mobile: 64px;
+    --header-height: var(--header-height-mobile);
+
     /* ========================================
        UI Elements
        ======================================== */
@@ -148,6 +153,7 @@
       --page-margin: var(--page-margin-desktop);
       --section-spacing: var(--section-spacing-desktop);
       --logo-width: var(--logo-width-desktop);
+      --header-height: var(--header-height-desktop);
     }
   }
 {% endstyle %}

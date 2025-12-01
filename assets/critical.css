@@ -263,6 +263,15 @@ a {
   margin-top: var(--section-spacing);
 }
 
+/* Remove section spacing when hero-banner is present */
+.shopify-section:has(.hero-banner) {
+  margin-top: 0;
+}
+
+.shopify-section:has(.hero-banner) + .shopify-section {
+  margin-top: 0;
+}
+
 /** Container utility */
 .container {
   width: 100%;

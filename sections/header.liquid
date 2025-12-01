@@ -1,9 +1,12 @@
-<header
-  class="header {% if section.settings.enable_sticky %}header--sticky{% endif %}"
-  style="
+{% style %}
+  :root {
     --header-height-desktop: {{ section.settings.header_height_desktop }}px;
     --header-height-mobile: {{ section.settings.header_height_mobile }}px;
-  "
+  }
+{% endstyle %}
+
+<header
+  class="header {% if section.settings.enable_sticky %}header--sticky{% endif %}"
   data-header
 >
   <div class="header__inner">
@@ -185,7 +188,7 @@
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    height: var(--header-height-mobile);
+    height: var(--header-height);
     padding: 0 var(--space-sm);
     max-width: var(--page-width);
     margin: 0 auto;
@@ -365,7 +368,7 @@
   .header__mobile-menu {
     display: none;
     position: fixed;
-    top: var(--header-height-mobile);
+    top: var(--header-height);
     left: 0;
     right: 0;
     bottom: 0;
@@ -449,7 +452,7 @@
     .header__inner {
       display: flex;
       grid-template-columns: unset;
-      height: var(--header-height-desktop);
+      height: var(--header-height);
       padding: 0 var(--page-margin);
       gap: var(--space-xl);
     }
