@@ -268,16 +268,15 @@
       "colors": "Colors",
       "background_color": "Background color",
       "text_color": "Text color",
-      "card_background": "Card background",
-      "card_text_color": "Card text color",
       "accent_color": "Accent color",
+      "layout": "Layout",
+      "gap": "Gap between items",
       "cta": "Call to action",
       "cta_text": "Button text",
       "cta_url": "Button URL",
       "ingredient": "Ingredient",
       "image": "Image",
       "title": "Title",
-      "description": "Description",
       "link": "Link URL",
       "link_text": "Link text"
     }

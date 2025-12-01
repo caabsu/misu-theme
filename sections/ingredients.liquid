@@ -2,6 +2,7 @@
   assign bg_color = section.settings.background_color | default: settings.color_background
   assign text_color = section.settings.text_color | default: settings.color_text
   assign accent = section.settings.accent_color | default: settings.color_primary
+  assign gap = section.settings.gap | default: 16
 -%}
 
 <section
@@ -10,6 +11,7 @@
     --ing-bg: {{ bg_color }};
     --ing-text: {{ text_color }};
     --ing-accent: {{ accent }};
+    --ing-gap: {{ gap }}px;
   "
 >
   {% if section.settings.heading != blank %}
@@ -21,15 +23,11 @@
   {% if section.blocks.size > 0 %}
     <div class="ingredients__grid">
       {% for block in section.blocks %}
-        <a
-          href="{{ block.settings.link | default: '#' }}"
-          class="ingredients__item"
-          {{ block.shopify_attributes }}
-        >
-          <figure class="ingredients__figure">
+        <article class="ingredients__item" {{ block.shopify_attributes }}>
+          <div class="ingredients__visual">
             {% if block.settings.image != blank %}
               <img
-                src="{{ block.settings.image | image_url: width: 800 }}"
+                src="{{ block.settings.image | image_url: width: 900 }}"
                 alt="{{ block.settings.title | escape }}"
                 loading="lazy"
                 class="ingredients__img"
@@ -37,17 +35,17 @@
             {% else %}
               <div class="ingredients__placeholder"></div>
             {% endif %}
-            <div class="ingredients__frame">
-              <span class="ingredients__line ingredients__line--top"></span>
-              <span class="ingredients__line ingredients__line--right"></span>
-              <span class="ingredients__line ingredients__line--bottom"></span>
-              <span class="ingredients__line ingredients__line--left"></span>
+
+            <div class="ingredients__overlay">
+              <span class="ingredients__name">{{ block.settings.title }}</span>
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link }}" class="ingredients__link">
+                  {{ block.settings.link_text | default: 'View details' }}
+                </a>
+              {% endif %}
             </div>
-          </figure>
-          <figcaption class="ingredients__caption">
-            <span class="ingredients__name">{{ block.settings.title }}</span>
-          </figcaption>
-        </a>
+          </div>
+        </article>
       {% endfor %}
     </div>
   {% endif %}
@@ -65,12 +63,12 @@
   .ingredients {
     background: var(--ing-bg);
     color: var(--ing-text);
-    padding: var(--space-4xl) var(--page-margin);
+    padding: var(--space-xl) var(--page-margin) var(--space-2xl);
     text-align: center;
   }
 
   .ingredients__header {
-    margin-bottom: var(--space-2xl);
+    margin-bottom: var(--space-lg);
   }
 
   .ingredients__title {
@@ -84,12 +82,11 @@
 
   .ingredients__grid {
     display: flex;
-    gap: var(--space-lg);
+    gap: var(--ing-gap);
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding: var(--space-md) 0;
   }
 
   .ingredients__grid::-webkit-scrollbar {
@@ -101,135 +98,109 @@
       justify-content: center;
       overflow-x: visible;
       flex-wrap: wrap;
-      gap: var(--space-xl);
     }
   }
 
   .ingredients__item {
-    flex: 0 0 260px;
-    scroll-snap-align: center;
-    text-decoration: none;
-    color: inherit;
+    flex: 0 0 280px;
+    scroll-snap-align: start;
   }
 
   @media (min-width: 768px) {
-    .ingredients__item {
-      flex: 0 0 280px;
-    }
-  }
-
-  @media (min-width: 1024px) {
     .ingredients__item {
       flex: 0 0 300px;
     }
   }
 
-  .ingredients__figure {
+  @media (min-width: 1024px) {
+    .ingredients__item {
+      flex: 0 0 340px;
+    }
+  }
+
+  .ingredients__visual {
     position: relative;
-    margin: 0;
     overflow: hidden;
   }
 
   .ingredients__img {
     display: block;
     width: 100%;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 5 / 3;
     object-fit: cover;
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .ingredients__placeholder {
     width: 100%;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 5 / 3;
     background: linear-gradient(
-      160deg,
-      transparent 40%,
-      var(--ing-accent) 100%
+      135deg,
+      var(--ing-accent) 0%,
+      transparent 80%
     );
-    opacity: 0.08;
-  }
-
-  .ingredients__frame {
-    position: absolute;
-    inset: 12px;
-    pointer-events: none;
-  }
-
-  .ingredients__line {
-    position: absolute;
-    background: var(--ing-accent);
-    opacity: 0;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .ingredients__line--top,
-  .ingredients__line--bottom {
-    height: 1px;
-    width: 0;
-  }
-
-  .ingredients__line--left,
-  .ingredients__line--right {
-    width: 1px;
-    height: 0;
-  }
-
-  .ingredients__line--top {
-    top: 0;
-    left: 0;
-  }
-
-  .ingredients__line--right {
-    top: 0;
-    right: 0;
-  }
-
-  .ingredients__line--bottom {
-    bottom: 0;
-    right: 0;
-  }
-
-  .ingredients__line--left {
-    bottom: 0;
-    left: 0;
-  }
-
-  .ingredients__item:hover .ingredients__line {
-    opacity: 0.6;
-  }
-
-  .ingredients__item:hover .ingredients__line--top,
-  .ingredients__item:hover .ingredients__line--bottom {
-    width: 40px;
-  }
-
-  .ingredients__item:hover .ingredients__line--left,
-  .ingredients__item:hover .ingredients__line--right {
-    height: 40px;
+    opacity: 0.1;
   }
 
   .ingredients__item:hover .ingredients__img {
-    transform: scale(1.03);
+    transform: scale(1.02);
   }
 
-  .ingredients__caption {
-    padding-top: var(--space-md);
+  .ingredients__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: var(--space-md);
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.5) 0%,
+      transparent 60%
+    );
   }
 
   .ingredients__name {
-    font-size: var(--font-size-sm);
+    font-family: var(--font-heading-family);
+    font-size: var(--font-size-base);
     font-weight: 500;
-    color: var(--ing-accent);
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
+    color: #fff;
+    transform: translateY(4px);
+    opacity: 0.9;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .ingredients__item:hover .ingredients__name {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .ingredients__link {
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-top: var(--space-xs);
+    padding-bottom: 1px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  }
+
+  .ingredients__item:hover .ingredients__link {
+    opacity: 0.85;
+    transform: translateY(0);
+    transition-delay: 0.05s;
+  }
+
+  .ingredients__link:hover {
     opacity: 1;
   }
 
   .ingredients__footer {
-    margin-top: var(--space-3xl);
+    margin-top: var(--space-xl);
   }
 
   .ingredients__cta {
@@ -250,7 +221,7 @@
 
   @media (min-width: 768px) {
     .ingredients {
-      padding: var(--space-5xl) var(--page-margin);
+      padding: var(--space-2xl) var(--page-margin) var(--space-3xl);
     }
   }
 {% endstylesheet %}
@@ -287,6 +258,20 @@
     },
     {
       "type": "header",
+      "content": "t:sections.ingredients.layout"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "t:sections.ingredients.gap",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "header",
       "content": "t:sections.ingredients.cta"
     },
     {
@@ -320,6 +305,12 @@
           "type": "url",
           "id": "link",
           "label": "t:sections.ingredients.link"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "t:sections.ingredients.link_text",
+          "default": "View details"
         }
       ]
     }
