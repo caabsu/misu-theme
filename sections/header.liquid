@@ -93,14 +93,28 @@
     const menuToggle = document.querySelector('.header__menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const header = document.querySelector('[data-header]');
+    let menuOpen = false;
 
     // Mobile menu toggle
-    if (menuToggle && mobileMenu) {
+    if (menuToggle && mobileMenu && header) {
       menuToggle.addEventListener('click', () => {
         const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
-        menuToggle.setAttribute('aria-expanded', !isOpen);
-        mobileMenu.setAttribute('aria-hidden', isOpen);
-        document.body.style.overflow = isOpen ? '' : 'hidden';
+        menuOpen = !isOpen;
+        menuToggle.setAttribute('aria-expanded', menuOpen);
+        mobileMenu.setAttribute('aria-hidden', !menuOpen);
+        document.body.style.overflow = menuOpen ? 'hidden' : '';
+
+        // When menu opens, make header solid
+        if (menuOpen) {
+          header.classList.add('header--menu-open');
+          header.classList.remove('header--transparent');
+        } else {
+          header.classList.remove('header--menu-open');
+          // Re-evaluate transparency based on scroll position
+          if (typeof updateHeaderTransparency === 'function') {
+            updateHeaderTransparency();
+          }
+        }
       });
     }
 
@@ -109,7 +123,10 @@
       const heroBanner = document.querySelector('[data-hero-banner]');
 
       if (heroBanner) {
-        const updateHeaderTransparency = () => {
+        window.updateHeaderTransparency = () => {
+          // Don't change transparency if menu is open
+          if (menuOpen) return;
+
           const scrollY = window.scrollY;
           const heroHeight = heroBanner.offsetHeight;
           const headerHeight = header.offsetHeight;
@@ -121,17 +138,12 @@
           if (scrollY < transitionStart) {
             // Fully transparent at top
             header.classList.add('header--transparent');
-            header.style.setProperty('--header-opacity', '0');
           } else if (scrollY >= transitionEnd) {
             // Fully solid after hero
             header.classList.remove('header--transparent');
-            header.style.setProperty('--header-opacity', '1');
           } else {
-            // Transitioning - calculate progress
+            // Transitioning - switch class at 50%
             const progress = (scrollY - transitionStart) / (transitionEnd - transitionStart);
-            header.style.setProperty('--header-opacity', progress.toFixed(2));
-
-            // Switch class at 50% for text color
             if (progress > 0.5) {
               header.classList.remove('header--transparent');
             } else {
@@ -142,7 +154,6 @@
 
         // Initial state - make header transparent
         header.classList.add('header--transparent');
-        header.style.setProperty('--header-opacity', '0');
         updateHeaderTransparency();
 
         // Scroll handler with requestAnimationFrame
@@ -191,6 +202,29 @@
     background-color: transparent;
     border-bottom-color: transparent;
     box-shadow: none;
+  }
+
+  .header--menu-open {
+    background-color: var(--color-background);
+    border-bottom-color: var(--color-border);
+  }
+
+  .header--menu-open .header__logo-text,
+  .header--menu-open .header__nav-link,
+  .header--menu-open .header__icon-btn {
+    color: var(--color-foreground);
+  }
+
+  .header--menu-open .header__menu-icon span {
+    background-color: var(--color-foreground);
+  }
+
+  .header--menu-open .header__logo-image--default {
+    opacity: 1;
+  }
+
+  .header--menu-open .header__logo-image--transparent {
+    opacity: 0;
   }
 
   .header--transparent .header__logo-text,
