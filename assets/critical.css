@@ -278,6 +278,12 @@ a {
   z-index: 100;
 }
 
+/* Sticky header - parent section handles sticky positioning */
+.shopify-section:has(.header--sticky) {
+  position: sticky;
+  top: 0;
+}
+
 /** Container utility */
 .container {
   width: 100%;
