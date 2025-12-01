@@ -172,6 +172,8 @@
         "header_spacing_mobile": 24,
         "header_spacing_desktop": 32,
         "gap": 20,
+        "card_size_mobile": 80,
+        "card_size_desktop": 270,
         "subheading_color": "#b45f06",
         "subheading_size_mobile": 11,
         "subheading_size_desktop": 15,
