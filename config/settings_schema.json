@@ -133,6 +133,17 @@
     "settings": [
       {
         "type": "header",
+        "content": "t:settings.typography.custom_font"
+      },
+      {
+        "type": "checkbox",
+        "id": "custom_font_enabled",
+        "label": "t:settings.typography.use_custom_font",
+        "default": false,
+        "info": "t:settings.typography.custom_font_info"
+      },
+      {
+        "type": "header",
         "content": "t:settings.typography.headings"
       },
       {
