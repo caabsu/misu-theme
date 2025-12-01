@@ -19,7 +19,7 @@
         "button_url": "/collections/all",
         "overlay_opacity": 40,
         "min_height_desktop": 100,
-        "min_height_mobile": 75,
+        "min_height_mobile": 50,
         "text_alignment": "center",
         "content_position": "center",
         "show_scroll_indicator": true,
