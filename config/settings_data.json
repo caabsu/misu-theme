@@ -16,6 +16,7 @@
     "color_primary_text": "#f5f0ea",
     "color_secondary": "#d4af37",
     "color_secondary_text": "#f5f0ea",
+    "font_body": "space_grotesk_n4",
     "content_for_index": []
   }
 }
