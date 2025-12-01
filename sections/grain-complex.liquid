@@ -156,14 +156,14 @@
 
   .ingredients__header {
     display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: var(--space-lg);
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
     margin-bottom: var(--ing-header-spacing-mobile);
   }
 
   .ingredients__header-text {
-    text-align: left;
+    text-align: center;
   }
 
   .ingredients__subheading {
@@ -223,12 +223,6 @@
     animation: ingredientsFadeUp 0.5s ease forwards;
   }
 
-  .ingredients__nav {
-    display: flex;
-    gap: 4px;
-    flex-shrink: 0;
-  }
-
   .ingredients__arrow {
     display: flex;
     align-items: center;
@@ -262,22 +256,16 @@
   }
 
   .ingredients__grid {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--ing-gap);
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    scroll-behavior: smooth;
-  }
-
-  .ingredients__grid::-webkit-scrollbar {
-    display: none;
+    justify-items: center;
+    max-width: 100%;
   }
 
   .ingredients__card {
-    flex: 0 0 220px;
-    scroll-snap-align: start;
+    width: 100%;
+    max-width: 200px;
     opacity: 0;
     transform: translateY(20px);
     animation: ingredientsCardIn 0.6s ease forwards;
@@ -300,14 +288,22 @@
   }
 
   @media (min-width: 768px) {
+    .ingredients__grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
     .ingredients__card {
-      flex: 0 0 260px;
+      flex: 0 0 220px;
+      max-width: 220px;
     }
   }
 
   @media (min-width: 1024px) {
     .ingredients__card {
-      flex: 0 0 280px;
+      flex: 0 0 260px;
+      max-width: 260px;
     }
   }
 
@@ -351,7 +347,11 @@
   }
 
   .ingredients__content {
-    text-align: left;
+    text-align: center;
+  }
+
+  .ingredients__nav {
+    display: none;
   }
 
   .ingredients__name {
@@ -376,6 +376,7 @@
   .ingredients__tags {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 6px;
   }
 
