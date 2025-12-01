@@ -64,7 +64,7 @@
       "name": "t:sections.ingredients.name",
       "settings": {
         "heading": "Our Ingredients",
-        "background_color": "#f8f6f3",
+        "background_color": "#f5f0ea",
         "text_color": "#1a1a1a",
         "accent_color": "#3e2723",
         "gap": 12,
