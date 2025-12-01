@@ -1,8 +1,6 @@
 {%- liquid
   assign bg_color = section.settings.background_color | default: settings.color_background
   assign text_color = section.settings.text_color | default: settings.color_text
-  assign card_bg = section.settings.card_background | default: settings.color_background
-  assign card_text = section.settings.card_text_color | default: settings.color_text
   assign accent = section.settings.accent_color | default: settings.color_primary
 -%}
 
@@ -10,415 +8,250 @@
   class="ingredients full-width"
   data-ingredients
   style="
-    --ingredients-bg: {{ bg_color }};
-    --ingredients-text: {{ text_color }};
-    --ingredients-card-bg: {{ card_bg }};
-    --ingredients-card-text: {{ card_text }};
-    --ingredients-accent: {{ accent }};
+    --ing-bg: {{ bg_color }};
+    --ing-text: {{ text_color }};
+    --ing-accent: {{ accent }};
   "
 >
-  <div class="ingredients__container">
-    {%- comment -%} Header {%- endcomment -%}
-    {% if section.settings.heading != blank %}
-      <div class="ingredients__header">
-        <h2 class="ingredients__heading">{{ section.settings.heading }}</h2>
-      </div>
-    {% endif %}
+  {% if section.settings.heading != blank %}
+    <header class="ingredients__header">
+      <h2 class="ingredients__title">{{ section.settings.heading }}</h2>
+      <div class="ingredients__line"></div>
+    </header>
+  {% endif %}
 
-    {%- comment -%} Slider {%- endcomment -%}
-    {% if section.blocks.size > 0 %}
-      <div class="ingredients__slider-wrapper">
-        <div class="ingredients__track" data-ingredients-track>
-          {% for block in section.blocks %}
-            <article class="ingredients__card" {{ block.shopify_attributes }}>
-              <div class="ingredients__card-image">
-                {% if block.settings.image != blank %}
-                  <img
-                    src="{{ block.settings.image | image_url: width: 800 }}"
-                    alt="{{ block.settings.title | escape }}"
-                    width="800"
-                    height="500"
-                    loading="lazy"
-                    class="ingredients__image"
-                  >
-                {% else %}
-                  <div class="ingredients__placeholder">
-                    <svg viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="2" y="2" width="76" height="56" rx="4" stroke="currentColor" stroke-width="1.5" opacity="0.3"/>
-                      <circle cx="28" cy="22" r="8" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
-                      <path d="M8 46L24 30L36 42L52 26L72 46" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>
-                    </svg>
-                  </div>
-                {% endif %}
-
-                {%- comment -%} View details overlay {%- endcomment -%}
-                {% if block.settings.link != blank %}
-                  <a href="{{ block.settings.link }}" class="ingredients__card-link">
-                    <span class="ingredients__card-link-text">{{ block.settings.link_text | default: 'View details' }}</span>
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                      <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </a>
-                {% endif %}
-              </div>
-
-              <div class="ingredients__card-content">
-                {% if block.settings.title != blank %}
-                  <h3 class="ingredients__card-title">{{ block.settings.title }}</h3>
-                {% endif %}
-                {% if block.settings.description != blank %}
-                  <p class="ingredients__card-description">{{ block.settings.description }}</p>
-                {% endif %}
-              </div>
-            </article>
-          {% endfor %}
-        </div>
-
-        {%- comment -%} Navigation {%- endcomment -%}
-        {% if section.blocks.size > 3 %}
-          <div class="ingredients__nav">
-            <button class="ingredients__nav-btn ingredients__nav-btn--prev" data-prev aria-label="Previous">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M12 15L7 10L12 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-            <button class="ingredients__nav-btn ingredients__nav-btn--next" data-next aria-label="Next">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M8 5L13 10L8 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
+  {% if section.blocks.size > 0 %}
+    <div class="ingredients__track" data-track>
+      {% for block in section.blocks %}
+        <a
+          href="{{ block.settings.link | default: '#' }}"
+          class="ingredients__item"
+          {{ block.shopify_attributes }}
+        >
+          <div class="ingredients__visual">
+            {% if block.settings.image != blank %}
+              <img
+                src="{{ block.settings.image | image_url: width: 600 }}"
+                alt="{{ block.settings.title | escape }}"
+                loading="lazy"
+                class="ingredients__img"
+              >
+            {% else %}
+              <div class="ingredients__placeholder"></div>
+            {% endif %}
+            <div class="ingredients__ring"></div>
           </div>
-        {% endif %}
-      </div>
-    {% endif %}
-
-    {%- comment -%} CTA {%- endcomment -%}
-    {% if section.settings.cta_text != blank %}
-      <div class="ingredients__cta">
-        <a href="{{ section.settings.cta_url }}" class="ingredients__cta-btn">
-          {{ section.settings.cta_text }}
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M4 9H14M14 9L10 5M14 9L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <span class="ingredients__name">{{ block.settings.title }}</span>
         </a>
-      </div>
-    {% endif %}
-  </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if section.settings.cta_text != blank %}
+    <footer class="ingredients__footer">
+      <a href="{{ section.settings.cta_url }}" class="ingredients__cta">
+        {{ section.settings.cta_text }}
+      </a>
+    </footer>
+  {% endif %}
 </section>
-
-{% javascript %}
-(function() {
-  function initIngredients() {
-    const sections = document.querySelectorAll('[data-ingredients]');
-
-    sections.forEach(section => {
-      const track = section.querySelector('[data-ingredients-track]');
-      const prevBtn = section.querySelector('[data-prev]');
-      const nextBtn = section.querySelector('[data-next]');
-
-      if (!track) return;
-
-      const cards = track.querySelectorAll('.ingredients__card');
-      if (cards.length === 0) return;
-
-      let isDown = false;
-      let startX;
-      let scrollLeft;
-
-      // Mouse drag
-      track.addEventListener('mousedown', (e) => {
-        isDown = true;
-        track.classList.add('ingredients__track--dragging');
-        startX = e.pageX - track.offsetLeft;
-        scrollLeft = track.scrollLeft;
-      });
-
-      track.addEventListener('mouseleave', () => {
-        isDown = false;
-        track.classList.remove('ingredients__track--dragging');
-      });
-
-      track.addEventListener('mouseup', () => {
-        isDown = false;
-        track.classList.remove('ingredients__track--dragging');
-      });
-
-      track.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - track.offsetLeft;
-        const walk = (x - startX) * 1.5;
-        track.scrollLeft = scrollLeft - walk;
-      });
-
-      // Navigation buttons
-      if (prevBtn && nextBtn) {
-        const cardWidth = cards[0].offsetWidth + 24; // card + gap
-
-        prevBtn.addEventListener('click', () => {
-          track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
-        });
-
-        nextBtn.addEventListener('click', () => {
-          track.scrollBy({ left: cardWidth, behavior: 'smooth' });
-        });
-      }
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initIngredients);
-  } else {
-    initIngredients();
-  }
-})();
-{% endjavascript %}
 
 {% stylesheet %}
   .ingredients {
-    background-color: var(--ingredients-bg);
-    color: var(--ingredients-text);
-    padding: var(--space-3xl) 0;
-  }
-
-  .ingredients__container {
-    max-width: var(--page-width);
-    margin: 0 auto;
+    --ring-size: 140px;
+    background: var(--ing-bg);
+    color: var(--ing-text);
+    padding: var(--space-4xl) var(--page-margin);
+    text-align: center;
   }
 
   .ingredients__header {
-    padding: 0 var(--page-margin);
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-3xl);
   }
 
-  .ingredients__heading {
+  .ingredients__title {
     font-family: var(--font-heading-family);
-    font-size: clamp(1.5rem, 4vw, 2.25rem);
-    font-weight: var(--font-heading-weight);
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    margin: 0;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ing-accent);
+    margin: 0 0 var(--space-lg);
   }
 
-  .ingredients__slider-wrapper {
-    position: relative;
+  .ingredients__line {
+    width: 60px;
+    height: 1px;
+    background: var(--ing-accent);
+    margin: 0 auto;
+    opacity: 0.4;
   }
 
   .ingredients__track {
     display: flex;
-    gap: var(--space-lg);
+    gap: var(--space-2xl);
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding: var(--space-sm) var(--page-margin);
-    cursor: grab;
+    padding: var(--space-xl) var(--space-lg);
+    justify-content: flex-start;
   }
 
   .ingredients__track::-webkit-scrollbar {
     display: none;
   }
 
-  .ingredients__track--dragging {
-    cursor: grabbing;
-    scroll-behavior: auto;
-    scroll-snap-type: none;
+  @media (min-width: 768px) {
+    .ingredients__track {
+      justify-content: center;
+      overflow-x: visible;
+      flex-wrap: wrap;
+    }
   }
 
-  .ingredients__card {
-    flex: 0 0 280px;
-    scroll-snap-align: start;
-    background: var(--ingredients-card-bg);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  .ingredients__item {
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    text-decoration: none;
+    color: inherit;
   }
 
-  .ingredients__card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  }
-
-  .ingredients__card-image {
+  .ingredients__visual {
     position: relative;
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    background: linear-gradient(135deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.06) 100%);
+    width: var(--ring-size);
+    height: var(--ring-size);
   }
 
-  .ingredients__image {
-    width: 100%;
-    height: 100%;
+  .ingredients__img {
+    position: absolute;
+    inset: 10%;
+    width: 80%;
+    height: 80%;
     object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-
-  .ingredients__card:hover .ingredients__image {
-    transform: scale(1.05);
+    border-radius: 50%;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .ingredients__placeholder {
     position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--ingredients-card-text);
-    opacity: 0.25;
-  }
-
-  .ingredients__placeholder svg {
-    width: 60%;
-    height: auto;
-  }
-
-  .ingredients__card-link {
-    position: absolute;
-    bottom: var(--space-sm);
-    left: var(--space-sm);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(8px);
-    color: var(--ingredients-card-text);
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-decoration: none;
-    border-radius: 100px;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: all 0.3s ease;
-  }
-
-  .ingredients__card:hover .ingredients__card-link {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .ingredients__card-link:hover {
-    background: var(--ingredients-accent);
-    color: #fff;
-  }
-
-  .ingredients__card-link svg {
-    transition: transform 0.2s ease;
-  }
-
-  .ingredients__card-link:hover svg {
-    transform: translateX(2px);
-  }
-
-  .ingredients__card-content {
-    padding: var(--space-md);
-    color: var(--ingredients-card-text);
-  }
-
-  .ingredients__card-title {
-    font-family: var(--font-heading-family);
-    font-size: var(--font-size-base);
-    font-weight: 600;
-    margin: 0 0 var(--space-xs);
-    letter-spacing: -0.01em;
-  }
-
-  .ingredients__card-description {
-    font-size: var(--font-size-sm);
-    line-height: 1.5;
-    margin: 0;
-    opacity: 0.7;
-  }
-
-  .ingredients__nav {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
-    justify-content: space-between;
-    padding: 0 var(--space-sm);
-    pointer-events: none;
-  }
-
-  .ingredients__nav-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: var(--ingredients-card-bg);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    inset: 10%;
+    width: 80%;
+    height: 80%;
     border-radius: 50%;
-    color: var(--ingredients-text);
-    cursor: pointer;
-    pointer-events: auto;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    background: linear-gradient(
+      135deg,
+      var(--ing-accent) 0%,
+      transparent 60%
+    );
+    opacity: 0.15;
   }
 
-  .ingredients__nav-btn:hover {
-    background: var(--ingredients-accent);
-    color: #fff;
-    border-color: var(--ingredients-accent);
+  .ingredients__ring {
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--ing-accent);
+    border-radius: 50%;
+    opacity: 0.3;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .ingredients__ring::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    background: var(--ing-accent);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    opacity: 0.6;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: orbit 8s linear infinite;
+  }
+
+  .ingredients__item:hover .ingredients__ring {
+    opacity: 0.6;
+    transform: scale(1.08);
+  }
+
+  .ingredients__item:hover .ingredients__ring::before {
+    opacity: 1;
+    animation-duration: 4s;
+  }
+
+  .ingredients__item:hover .ingredients__img {
+    transform: scale(1.05);
+  }
+
+  .ingredients__name {
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ing-accent);
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+  }
+
+  .ingredients__item:hover .ingredients__name {
+    opacity: 1;
+  }
+
+  .ingredients__footer {
+    margin-top: var(--space-3xl);
   }
 
   .ingredients__cta {
-    display: flex;
-    justify-content: center;
-    padding: 0 var(--page-margin);
-    margin-top: var(--space-xl);
-  }
-
-  .ingredients__cta-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-xs);
-    padding: var(--space-sm) var(--space-lg);
-    background: transparent;
-    color: var(--ingredients-accent);
-    font-size: var(--font-size-sm);
+    display: inline-block;
+    font-size: var(--font-size-xs);
     font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ing-text);
     text-decoration: none;
-    border: 1.5px solid var(--ingredients-accent);
-    border-radius: 100px;
-    transition: all 0.3s ease;
+    padding-bottom: 4px;
+    border-bottom: 1px solid currentColor;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
   }
 
-  .ingredients__cta-btn:hover {
-    background: var(--ingredients-accent);
-    color: #fff;
+  .ingredients__cta:hover {
+    opacity: 1;
   }
 
-  .ingredients__cta-btn svg {
-    transition: transform 0.2s ease;
-  }
-
-  .ingredients__cta-btn:hover svg {
-    transform: translateX(3px);
+  @keyframes orbit {
+    from {
+      transform: translateX(-50%) rotate(0deg) translateY(-70px) rotate(0deg);
+    }
+    to {
+      transform: translateX(-50%) rotate(360deg) translateY(-70px) rotate(-360deg);
+    }
   }
 
   @media (min-width: 768px) {
     .ingredients {
-      padding: var(--space-4xl) 0;
+      --ring-size: 160px;
+      padding: var(--space-5xl) var(--page-margin);
     }
 
-    .ingredients__card {
-      flex: 0 0 320px;
-    }
-
-    .ingredients__nav {
-      display: flex;
+    .ingredients__track {
+      gap: var(--space-3xl);
     }
   }
 
   @media (min-width: 1024px) {
-    .ingredients__card {
-      flex: 0 0 360px;
+    .ingredients {
+      --ring-size: 180px;
+    }
+
+    .ingredients__track {
+      gap: var(--space-4xl);
     }
   }
 {% endstylesheet %}
@@ -432,7 +265,7 @@
       "type": "text",
       "id": "heading",
       "label": "t:sections.ingredients.heading",
-      "default": "Our ingredients"
+      "default": "Ingredients"
     },
     {
       "type": "header",
@@ -447,16 +280,6 @@
       "type": "color",
       "id": "text_color",
       "label": "t:sections.ingredients.text_color"
-    },
-    {
-      "type": "color",
-      "id": "card_background",
-      "label": "t:sections.ingredients.card_background"
-    },
-    {
-      "type": "color",
-      "id": "card_text_color",
-      "label": "t:sections.ingredients.card_text_color"
     },
     {
       "type": "color",
@@ -495,21 +318,9 @@
           "default": "Ingredient"
         },
         {
-          "type": "textarea",
-          "id": "description",
-          "label": "t:sections.ingredients.description",
-          "default": "A brief description of this ingredient."
-        },
-        {
           "type": "url",
           "id": "link",
           "label": "t:sections.ingredients.link"
-        },
-        {
-          "type": "text",
-          "id": "link_text",
-          "label": "t:sections.ingredients.link_text",
-          "default": "View details"
         }
       ]
     }
@@ -518,34 +329,10 @@
     {
       "name": "t:sections.ingredients.name",
       "blocks": [
-        {
-          "type": "ingredient",
-          "settings": {
-            "title": "Organic oats",
-            "description": "Rich in fiber and nutrients for sustained energy."
-          }
-        },
-        {
-          "type": "ingredient",
-          "settings": {
-            "title": "Black sesame",
-            "description": "Packed with antioxidants and healthy fats."
-          }
-        },
-        {
-          "type": "ingredient",
-          "settings": {
-            "title": "Red dates",
-            "description": "Natural sweetness with iron and vitamins."
-          }
-        },
-        {
-          "type": "ingredient",
-          "settings": {
-            "title": "Walnuts",
-            "description": "Brain-boosting omega-3 fatty acids."
-          }
-        }
+        { "type": "ingredient", "settings": { "title": "Oats" } },
+        { "type": "ingredient", "settings": { "title": "Sesame" } },
+        { "type": "ingredient", "settings": { "title": "Dates" } },
+        { "type": "ingredient", "settings": { "title": "Walnuts" } }
       ]
     }
   ]
