@@ -14,6 +14,9 @@
     --hero-subheading-size-desktop: {{ section.settings.subheading_size_desktop }}px;
     --hero-eyebrow-size-mobile: {{ section.settings.eyebrow_size_mobile }}px;
     --hero-eyebrow-size-desktop: {{ section.settings.eyebrow_size_desktop }}px;
+    --hero-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --hero-heading-color: {{ section.settings.heading_color }};
+    --hero-subheading-color: {{ section.settings.subheading_color }};
     --hero-btn-bg: {{ section.settings.button_color | default: settings.color_primary }};
     --hero-btn-text: {{ section.settings.button_text_color | default: '#ffffff' }};
     --hero-btn-radius: {{ section.settings.button_radius }}px;
@@ -139,7 +142,7 @@
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--hero-eyebrow-color);
     padding: var(--space-xs) var(--space-md);
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
@@ -155,7 +158,7 @@
     font-weight: var(--hero-heading-weight, var(--font-heading-weight));
     line-height: 1.05;
     letter-spacing: -0.03em;
-    color: #fff;
+    color: var(--hero-heading-color);
     margin: 0;
     overflow: hidden;
   }
@@ -172,7 +175,7 @@
     font-size: var(--hero-subheading-size-mobile);
     font-weight: var(--hero-body-weight, var(--font-body-weight));
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--hero-subheading-color);
     margin: 0;
     max-width: 50ch;
     opacity: 0;
@@ -442,6 +445,12 @@
       "default": "default"
     },
     {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#ffffff"
+    },
+    {
       "type": "range",
       "id": "subheading_size_mobile",
       "label": "Subheading size (mobile)",
@@ -475,6 +484,12 @@
       "default": "default"
     },
     {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "default": "#ffffffd9"
+    },
+    {
       "type": "range",
       "id": "eyebrow_size_mobile",
       "label": "Eyebrow size (mobile)",
@@ -493,6 +508,12 @@
       "step": 1,
       "default": 13,
       "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow color",
+      "default": "#ffffffd9"
     },
     {
       "type": "header",
