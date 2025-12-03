@@ -336,7 +336,7 @@
         "dot_gap": 20,
         "divider_style": "line",
         "divider_color": "#2a2624",
-        "btn_desktop_padding": 12,
+        "btn_desktop_padding": 13,
         "btn_desktop_margin": 8,
         "btn_primary_bg": "#2a2624",
         "btn_primary_text_color": "#ffffff",
