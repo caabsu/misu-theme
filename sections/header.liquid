@@ -130,27 +130,14 @@
           if (menuOpen) return;
 
           const scrollY = window.scrollY;
-          const heroHeight = heroBanner.offsetHeight;
-          const headerHeight = header.offsetHeight;
 
-          // Start transitioning when scrolled 100px, complete at hero end
-          const transitionStart = 100;
-          const transitionEnd = heroHeight - headerHeight - 50;
-
-          if (scrollY < transitionStart) {
+          // Transition to solid immediately when scrolling starts
+          if (scrollY <= 0) {
             // Fully transparent at top
             header.classList.add('header--transparent');
-          } else if (scrollY >= transitionEnd) {
-            // Fully solid after hero
-            header.classList.remove('header--transparent');
           } else {
-            // Transitioning - switch class at 50%
-            const progress = (scrollY - transitionStart) / (transitionEnd - transitionStart);
-            if (progress > 0.5) {
-              header.classList.remove('header--transparent');
-            } else {
-              header.classList.add('header--transparent');
-            }
+            // Solid as soon as any scroll occurs
+            header.classList.remove('header--transparent');
           }
         };
 
