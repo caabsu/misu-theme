@@ -26,6 +26,12 @@
     --dr-padding-top: {{ section.settings.padding_top }}px;
     --dr-padding-bottom: {{ section.settings.padding_bottom }}px;
     --dr-first-card-offset: {{ section.settings.first_card_offset }}px;
+    --dr-header-size-desktop: {{ section.settings.header_size_desktop }}px;
+    --dr-subheader-size-desktop: {{ section.settings.subheader_size_desktop }}px;
+    --dr-step-size-desktop: {{ section.settings.step_size_desktop }}px;
+    --dr-card-subtitle-size-desktop: {{ section.settings.card_subtitle_size_desktop }}px;
+    --dr-card-title-size-desktop: {{ section.settings.card_title_size_desktop }}px;
+    --dr-card-body-size-desktop: {{ section.settings.card_body_size_desktop }}px;
   }
 {% endstyle %}
 
@@ -127,7 +133,17 @@
 
       const slideWidth = slides[0].offsetWidth;
       const gap = parseInt(getComputedStyle(track).gap) || 0;
-      const offset = currentIndex * (slideWidth + gap);
+      const containerWidth = section.offsetWidth;
+
+      let offset;
+      if (currentIndex === 0) {
+        // First card: use the left offset setting
+        offset = 0;
+      } else {
+        // Center the card on screen
+        const centerOffset = (containerWidth - slideWidth) / 2;
+        offset = (currentIndex * (slideWidth + gap)) - centerOffset;
+      }
 
       track.style.transition = animate ? 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
       track.style.transform = `translateX(-${offset}px)`;
@@ -456,6 +472,14 @@
       margin-bottom: var(--space-3xl);
     }
 
+    .daily-ritual__title {
+      font-size: var(--dr-header-size-desktop);
+    }
+
+    .daily-ritual__subtitle {
+      font-size: var(--dr-subheader-size-desktop);
+    }
+
     .daily-ritual__carousel {
       margin: 0;
       padding: 0;
@@ -473,6 +497,22 @@
     .daily-ritual__slide {
       flex: 0 0 280px;
       cursor: pointer;
+    }
+
+    .daily-ritual__step {
+      font-size: var(--dr-step-size-desktop);
+    }
+
+    .daily-ritual__card-subtitle {
+      font-size: var(--dr-card-subtitle-size-desktop);
+    }
+
+    .daily-ritual__card-title {
+      font-size: var(--dr-card-title-size-desktop);
+    }
+
+    .daily-ritual__card-body {
+      font-size: var(--dr-card-body-size-desktop);
     }
 
     .daily-ritual__content {
@@ -773,6 +813,70 @@
       "max": 200,
       "step": 5,
       "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Desktop typography"
+    },
+    {
+      "type": "range",
+      "id": "header_size_desktop",
+      "label": "Header size",
+      "min": 28,
+      "max": 80,
+      "step": 2,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "subheader_size_desktop",
+      "label": "Subheader size",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "default": 18,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "step_size_desktop",
+      "label": "Step number size",
+      "min": 60,
+      "max": 160,
+      "step": 4,
+      "default": 88,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_subtitle_size_desktop",
+      "label": "Card subtitle size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_title_size_desktop",
+      "label": "Card title size",
+      "min": 16,
+      "max": 36,
+      "step": 1,
+      "default": 22,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_body_size_desktop",
+      "label": "Card body size",
+      "min": 14,
+      "max": 22,
+      "step": 1,
+      "default": 16,
       "unit": "px"
     }
   ],
