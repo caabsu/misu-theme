@@ -51,9 +51,11 @@
     --faq-actions-height-desktop: {{ section.settings.actions_height_desktop }}px;
     --faq-feature-subtitle-color: {{ section.settings.feature_subtitle_color }};
     --faq-feature-subtitle-size: {{ section.settings.feature_subtitle_size }}px;
+    --faq-feature-subtitle-size-desktop: {{ section.settings.feature_subtitle_size_desktop }}px;
     --faq-feature-subtitle-weight: {{ section.settings.feature_subtitle_weight }};
     --faq-feature-title-color: {{ section.settings.feature_title_color }};
     --faq-feature-title-size: {{ section.settings.feature_title_size }}px;
+    --faq-feature-title-size-desktop: {{ section.settings.feature_title_size_desktop }}px;
     --faq-feature-title-weight: {{ section.settings.feature_title_weight }};
     --faq-feature-btn-color: {{ section.settings.feature_btn_color }};
     --faq-feature-btn-size: {{ section.settings.feature_btn_size }}px;
@@ -817,6 +819,13 @@
       font-weight: var(--faq-mini-text-weight-desktop);
     }
 
+    .faq__feature-subtitle {
+      font-size: var(--faq-feature-subtitle-size-desktop);
+    }
+
+    .faq__feature-title {
+      font-size: var(--faq-feature-title-size-desktop);
+    }
   }
 {% endstylesheet %}
 
@@ -1271,11 +1280,21 @@
     {
       "type": "range",
       "id": "feature_subtitle_size",
-      "label": "Subtitle size",
+      "label": "Subtitle size (mobile)",
       "min": 8,
       "max": 14,
       "step": 1,
       "default": 10,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "feature_subtitle_size_desktop",
+      "label": "Subtitle size (desktop)",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "default": 11,
       "unit": "px"
     },
     {
@@ -1298,11 +1317,21 @@
     {
       "type": "range",
       "id": "feature_title_size",
-      "label": "Title size",
+      "label": "Title size (mobile)",
       "min": 16,
       "max": 32,
       "step": 1,
       "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "feature_title_size_desktop",
+      "label": "Title size (desktop)",
+      "min": 18,
+      "max": 40,
+      "step": 1,
+      "default": 24,
       "unit": "px"
     },
     {
