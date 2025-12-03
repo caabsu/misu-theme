@@ -466,6 +466,12 @@
         "label": "t:settings.footer.border"
       },
       {
+        "type": "color",
+        "id": "footer_button",
+        "default": "#FFFFFF",
+        "label": "t:settings.footer.button"
+      },
+      {
         "type": "header",
         "content": "t:settings.footer.background_text_header"
       },

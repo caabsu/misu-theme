@@ -5,7 +5,9 @@
     --footer-text-muted: {{ settings.footer_text_muted }};
     --footer-accent: {{ settings.footer_accent }};
     --footer-border: {{ settings.footer_border }};
+    --footer-button: {{ settings.footer_button }};
     --footer-watermark: {{ settings.footer_watermark_color }};
+    --footer-title-weight: {{ section.settings.title_font_weight }};
   }
 {% endstyle %}
 
@@ -33,9 +35,9 @@
     {%- comment -%} Navigation columns {%- endcomment -%}
     <div class="footer__nav-columns">
       {%- comment -%} Shop menu {%- endcomment -%}
-      {% if section.settings.menu_shop.links.size > 0 %}
-        <nav class="footer__nav-column" aria-label="{{ section.settings.menu_shop_title }}">
-          <h3 class="footer__nav-title">{{ section.settings.menu_shop_title }}</h3>
+      <nav class="footer__nav-column" aria-label="{{ section.settings.menu_shop_title }}">
+        <h3 class="footer__nav-title">{{ section.settings.menu_shop_title }}</h3>
+        {% if section.settings.menu_shop.links.size > 0 %}
           <ul class="footer__nav-list">
             {% for link in section.settings.menu_shop.links %}
               <li>
@@ -43,13 +45,13 @@
               </li>
             {% endfor %}
           </ul>
-        </nav>
-      {% endif %}
+        {% endif %}
+      </nav>
 
       {%- comment -%} Journal menu {%- endcomment -%}
-      {% if section.settings.menu_journal.links.size > 0 %}
-        <nav class="footer__nav-column" aria-label="{{ section.settings.menu_journal_title }}">
-          <h3 class="footer__nav-title">{{ section.settings.menu_journal_title }}</h3>
+      <nav class="footer__nav-column" aria-label="{{ section.settings.menu_journal_title }}">
+        <h3 class="footer__nav-title">{{ section.settings.menu_journal_title }}</h3>
+        {% if section.settings.menu_journal.links.size > 0 %}
           <ul class="footer__nav-list">
             {% for link in section.settings.menu_journal.links %}
               <li>
@@ -57,8 +59,22 @@
               </li>
             {% endfor %}
           </ul>
-        </nav>
-      {% endif %}
+        {% endif %}
+      </nav>
+
+      {%- comment -%} Contact menu {%- endcomment -%}
+      <nav class="footer__nav-column" aria-label="{{ section.settings.menu_contact_title }}">
+        <h3 class="footer__nav-title">{{ section.settings.menu_contact_title }}</h3>
+        {% if section.settings.menu_contact.links.size > 0 %}
+          <ul class="footer__nav-list">
+            {% for link in section.settings.menu_contact.links %}
+              <li>
+                <a href="{{ link.url }}" class="footer__link">{{ link.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </nav>
     </div>
 
     {%- comment -%} Newsletter signup {%- endcomment -%}
@@ -90,12 +106,63 @@
     </div>
   </div>
 
-  {%- comment -%} Bottom bar with copyright {%- endcomment -%}
+  {%- comment -%} Bottom bar with copyright and social {%- endcomment -%}
   <div class="footer__bottom">
     <div class="footer__bottom-inner">
       <p class="footer__copyright">
         &copy; {{ 'now' | date: '%Y' }} {{ shop.name | upcase }}
       </p>
+
+      <div class="footer__social">
+        {% if settings.social_instagram != blank %}
+          <a href="{{ settings.social_instagram }}" class="footer__social-link" aria-label="Instagram" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+        {% endif %}
+        {% if settings.social_facebook != blank %}
+          <a href="{{ settings.social_facebook }}" class="footer__social-link" aria-label="Facebook" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg>
+          </a>
+        {% endif %}
+        {% if settings.social_twitter != blank %}
+          <a href="{{ settings.social_twitter }}" class="footer__social-link" aria-label="X" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+              <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+            </svg>
+          </a>
+        {% endif %}
+        {% if settings.social_tiktok != blank %}
+          <a href="{{ settings.social_tiktok }}" class="footer__social-link" aria-label="TikTok" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 7.917v4.034A9.948 9.948 0 0 1 16 10v4.5a6.5 6.5 0 1 1-8-6.326V12.5a2.5 2.5 0 1 0 4 2V3h4a4 4 0 0 0 5 3.917Z"></path>
+            </svg>
+          </a>
+        {% endif %}
+        {% if settings.social_youtube != blank %}
+          <a href="{{ settings.social_youtube }}" class="footer__social-link" aria-label="YouTube" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+              <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+            </svg>
+          </a>
+        {% endif %}
+        {% if settings.social_pinterest != blank %}
+          <a href="{{ settings.social_pinterest }}" class="footer__social-link" aria-label="Pinterest" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 20l4-9"></path>
+              <path d="M10.7 14c.437 1.263 1.43 2 2.55 2 2.071 0 3.75-1.554 3.75-4a5 5 0 1 0-9.7 1.7"></path>
+              <circle cx="12" cy="12" r="10"></circle>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
     </div>
   </div>
 </footer>
@@ -112,10 +179,10 @@
 
   .footer__watermark {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: var(--space-xl);
+    left: var(--page-margin);
     font-family: var(--font-heading-family);
-    font-size: clamp(180px, 35vw, 400px);
+    font-size: clamp(160px, 30vw, 380px);
     font-weight: 700;
     line-height: 0.8;
     color: var(--footer-watermark);
@@ -131,6 +198,7 @@
     max-width: var(--page-width);
     margin: 0 auto;
     padding: var(--space-3xl) var(--page-margin) var(--space-2xl);
+    padding-left: calc(var(--page-margin) + var(--space-md));
     display: flex;
     flex-direction: column;
     gap: var(--space-2xl);
@@ -169,21 +237,23 @@
   }
 
   .footer__nav-columns {
-    display: flex;
-    gap: var(--space-3xl);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+    width: 100%;
   }
 
   .footer__nav-column {
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
+    gap: var(--space-sm);
   }
 
   .footer__nav-title {
     font-family: var(--font-body-family);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.15em;
+    font-size: 0.6875rem;
+    font-weight: var(--footer-title-weight);
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--footer-text);
     margin: 0;
@@ -195,11 +265,11 @@
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
+    gap: var(--space-xs);
   }
 
   .footer__link {
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     color: var(--footer-text-muted);
     text-decoration: none;
     transition: color var(--transition-fast);
@@ -217,9 +287,9 @@
 
   .footer__newsletter-title {
     font-family: var(--font-body-family);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.15em;
+    font-size: 0.6875rem;
+    font-weight: var(--footer-title-weight);
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--footer-text);
     margin: 0;
@@ -233,40 +303,33 @@
 
   .footer__newsletter-input-wrap {
     display: flex;
-    align-items: center;
-    gap: var(--space-md);
+    align-items: stretch;
+    border-bottom: 1px solid var(--footer-border);
   }
 
   .footer__newsletter-input {
     flex: 1;
     min-width: 0;
-    padding: 0.5rem 0;
+    padding: 0.625rem 0;
     font-size: 0.875rem;
     color: var(--footer-text);
     background-color: transparent;
     border: none;
-    border-bottom: 1px solid var(--footer-border);
-    border-radius: 0;
     outline: none;
-    transition: border-color var(--transition-fast);
   }
 
   .footer__newsletter-input::placeholder {
     color: var(--footer-text-muted);
   }
 
-  .footer__newsletter-input:focus {
-    border-bottom-color: var(--footer-text);
-  }
-
   .footer__newsletter-btn {
-    padding: 0.5rem 0;
+    padding: 0.625rem 0 0.625rem 1rem;
     font-family: var(--font-body-family);
-    font-size: 0.75rem;
+    font-size: 0.6875rem;
     font-weight: 500;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--footer-text);
+    color: var(--footer-button);
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -279,13 +342,13 @@
   }
 
   .footer__newsletter-success {
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     color: var(--color-success);
     margin: 0;
   }
 
   .footer__newsletter-error {
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     color: var(--color-error);
     margin: 0;
   }
@@ -299,34 +362,108 @@
   .footer__bottom-inner {
     max-width: var(--page-width);
     margin: 0 auto;
-    padding: var(--space-lg) var(--page-margin);
+    padding: var(--space-md) var(--page-margin);
+    padding-left: calc(var(--page-margin) + var(--space-md));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
   }
 
   .footer__copyright {
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
     color: var(--footer-text-muted);
     margin: 0;
   }
 
+  .footer__social {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .footer__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--footer-text-muted);
+    transition: color var(--transition-fast);
+  }
+
+  .footer__social-link:hover {
+    color: var(--footer-text);
+  }
+
+  .footer__social-link svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
   @media (min-width: 768px) {
+    .footer__watermark {
+      top: var(--space-2xl);
+      left: var(--page-margin);
+    }
+
     .footer__inner {
       display: grid;
-      grid-template-columns: 1fr auto auto;
+      grid-template-columns: 1.2fr 1fr 1fr;
       gap: var(--space-3xl);
       align-items: start;
+      padding: var(--space-4xl) var(--page-margin) var(--space-3xl);
+      padding-left: calc(var(--page-margin) + var(--space-lg));
     }
 
     .footer__brand {
-      max-width: 280px;
+      max-width: 320px;
+      gap: var(--space-lg);
+    }
+
+    .footer__tagline {
+      font-size: 0.9375rem;
+      line-height: 1.7;
     }
 
     .footer__nav-columns {
+      display: flex;
       gap: var(--space-3xl);
     }
 
+    .footer__nav-column {
+      gap: var(--space-md);
+    }
+
+    .footer__nav-title {
+      font-size: 0.6875rem;
+      margin-bottom: var(--space-xs);
+    }
+
+    .footer__nav-list {
+      gap: var(--space-sm);
+    }
+
+    .footer__link {
+      font-size: 0.875rem;
+    }
+
     .footer__newsletter {
-      min-width: 280px;
+      min-width: 260px;
+      gap: var(--space-lg);
+    }
+
+    .footer__newsletter-title {
+      font-size: 0.6875rem;
+    }
+
+    .footer__bottom-inner {
+      padding: var(--space-lg) var(--page-margin);
+      padding-left: calc(var(--page-margin) + var(--space-lg));
+    }
+
+    .footer__social-link svg {
+      width: 1.125rem;
+      height: 1.125rem;
     }
   }
 {% endstylesheet %}
@@ -383,6 +520,17 @@
       "label": "t:sections.footer.menu_journal"
     },
     {
+      "type": "text",
+      "id": "menu_contact_title",
+      "label": "t:sections.footer.menu_contact_title",
+      "default": "CONTACT"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_contact",
+      "label": "t:sections.footer.menu_contact"
+    },
+    {
       "type": "header",
       "content": "t:sections.footer.newsletter_header"
     },
@@ -397,6 +545,22 @@
       "id": "newsletter_button_text",
       "label": "t:sections.footer.newsletter_button_text",
       "default": "JOIN"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.typography_header"
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "t:sections.footer.title_font_weight",
+      "options": [
+        { "value": "300", "label": "t:settings.typography.weight_light" },
+        { "value": "400", "label": "t:settings.typography.weight_regular" },
+        { "value": "500", "label": "t:settings.typography.weight_medium" },
+        { "value": "600", "label": "t:settings.typography.weight_semibold" }
+      ],
+      "default": "500"
     }
   ]
 }

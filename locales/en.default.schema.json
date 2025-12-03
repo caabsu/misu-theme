@@ -149,6 +149,7 @@
       "text_muted": "Muted text",
       "accent": "Accent",
       "border": "Border",
+      "button": "Button text",
       "background_text_header": "Background text",
       "watermark_color": "Watermark color"
     }
@@ -168,9 +169,13 @@
       "menu_shop": "Shop menu",
       "menu_journal_title": "Journal column title",
       "menu_journal": "Journal menu",
+      "menu_contact_title": "Contact column title",
+      "menu_contact": "Contact menu",
       "newsletter_header": "Newsletter",
       "newsletter_title": "Newsletter title",
-      "newsletter_button_text": "Button text"
+      "newsletter_button_text": "Button text",
+      "typography_header": "Typography",
+      "title_font_weight": "Title font weight"
     },
     "hero": {
       "name": "Hero",
