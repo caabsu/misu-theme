@@ -272,6 +272,11 @@ a {
   margin-top: 0;
 }
 
+/* Remove section spacing for FAQ section */
+.shopify-section:has(.faq) {
+  margin-top: 0;
+}
+
 /* Header section needs z-index context for proper stacking */
 .shopify-section:has(.header) {
   position: relative;
