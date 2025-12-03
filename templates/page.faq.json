@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "faq": {
@@ -44,9 +53,28 @@
           }
         }
       },
-      "block_order": ["q1", "q2", "q3", "q4", "q5"],
-      "settings": {}
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "settings": {
+        "title": "INQUIRIES",
+        "subtitle": "Find answers to commonly asked questions",
+        "search_placeholder": "Search questions...",
+        "no_results_text": "No questions found. Try a different search term.",
+        "categories": "General, Nutrition, Subscription, Shipping",
+        "background_color": "#f5f0ea",
+        "text_color": "#4e332e",
+        "text_muted_color": "#b45f06",
+        "border_color": "#e5e5e5",
+        "accent_color": "#2d5a47"
+      }
     }
   },
-  "order": ["faq"]
+  "order": [
+    "faq"
+  ]
 }
