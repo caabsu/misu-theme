@@ -1,3 +1,14 @@
+{% style %}
+  .footer {
+    --footer-bg: {{ settings.footer_background }};
+    --footer-text: {{ settings.footer_text }};
+    --footer-text-muted: {{ settings.footer_text_muted }};
+    --footer-accent: {{ settings.footer_accent }};
+    --footer-border: {{ settings.footer_border }};
+    --footer-watermark: {{ settings.footer_watermark_color }};
+  }
+{% endstyle %}
+
 <footer class="footer full-width">
   {%- comment -%} Background watermark text {%- endcomment -%}
   <div class="footer__watermark" aria-hidden="true">
@@ -95,8 +106,8 @@
     overflow: hidden;
     margin-top: auto;
     width: 100%;
-    background-color: {{ settings.footer_background }};
-    color: {{ settings.footer_text }};
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
   }
 
   .footer__watermark {
@@ -107,7 +118,7 @@
     font-size: clamp(180px, 35vw, 400px);
     font-weight: 700;
     line-height: 0.8;
-    color: {{ settings.footer_watermark_color }};
+    color: var(--footer-watermark);
     pointer-events: none;
     user-select: none;
     z-index: 0;
@@ -135,7 +146,7 @@
     font-family: var(--font-heading-family);
     font-weight: 600;
     font-size: 1.5rem;
-    color: {{ settings.footer_text }};
+    color: var(--footer-text);
     text-decoration: none;
     letter-spacing: -0.02em;
     display: inline-block;
@@ -150,7 +161,7 @@
   }
 
   .footer__tagline {
-    color: {{ settings.footer_text_muted }};
+    color: var(--footer-text-muted);
     font-size: 0.875rem;
     line-height: 1.6;
     margin: 0;
@@ -169,12 +180,12 @@
   }
 
   .footer__nav-title {
-    font-family: var(--font-heading-family);
+    font-family: var(--font-body-family);
     font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    font-weight: 500;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: {{ settings.footer_text }};
+    color: var(--footer-text);
     margin: 0;
   }
 
@@ -189,13 +200,13 @@
 
   .footer__link {
     font-size: 0.875rem;
-    color: {{ settings.footer_text_muted }};
+    color: var(--footer-text-muted);
     text-decoration: none;
     transition: color var(--transition-fast);
   }
 
   .footer__link:hover {
-    color: {{ settings.footer_text }};
+    color: var(--footer-text);
   }
 
   .footer__newsletter {
@@ -205,12 +216,12 @@
   }
 
   .footer__newsletter-title {
-    font-family: var(--font-heading-family);
+    font-family: var(--font-body-family);
     font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    font-weight: 500;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: {{ settings.footer_text }};
+    color: var(--footer-text);
     margin: 0;
   }
 
@@ -222,47 +233,49 @@
 
   .footer__newsletter-input-wrap {
     display: flex;
-    gap: var(--space-sm);
+    align-items: center;
+    gap: var(--space-md);
   }
 
   .footer__newsletter-input {
     flex: 1;
     min-width: 0;
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 0;
     font-size: 0.875rem;
-    color: {{ settings.footer_text }};
+    color: var(--footer-text);
     background-color: transparent;
-    border: 1px solid {{ settings.footer_border }};
+    border: none;
+    border-bottom: 1px solid var(--footer-border);
     border-radius: 0;
     outline: none;
     transition: border-color var(--transition-fast);
   }
 
   .footer__newsletter-input::placeholder {
-    color: {{ settings.footer_text_muted }};
+    color: var(--footer-text-muted);
   }
 
   .footer__newsletter-input:focus {
-    border-color: {{ settings.footer_text }};
+    border-bottom-color: var(--footer-text);
   }
 
   .footer__newsletter-btn {
-    padding: 0.75rem 1.5rem;
+    padding: 0.5rem 0;
+    font-family: var(--font-body-family);
     font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    font-weight: 500;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: {{ settings.footer_background }};
-    background-color: {{ settings.footer_text }};
-    border: 1px solid {{ settings.footer_text }};
+    color: var(--footer-text);
+    background-color: transparent;
+    border: none;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: opacity var(--transition-fast);
     white-space: nowrap;
   }
 
   .footer__newsletter-btn:hover {
-    background-color: transparent;
-    color: {{ settings.footer_text }};
+    opacity: 0.7;
   }
 
   .footer__newsletter-success {
@@ -280,7 +293,7 @@
   .footer__bottom {
     position: relative;
     z-index: 1;
-    border-top: 1px solid {{ settings.footer_border }};
+    border-top: 1px solid var(--footer-border);
   }
 
   .footer__bottom-inner {
@@ -292,7 +305,7 @@
   .footer__copyright {
     font-size: 0.75rem;
     letter-spacing: 0.05em;
-    color: {{ settings.footer_text_muted }};
+    color: var(--footer-text-muted);
     margin: 0;
   }
 
