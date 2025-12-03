@@ -267,14 +267,7 @@
 
   .daily-ritual__slide {
     flex: 0 0 280px;
-    opacity: 0.6;
-    transform: scale(0.95);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-
-  .daily-ritual__slide--active {
-    opacity: 1;
-    transform: scale(1);
+    transition: transform 0.4s ease;
   }
 
   .daily-ritual__card {
@@ -287,16 +280,15 @@
 
   .daily-ritual__step {
     position: absolute;
-    top: -0.5rem;
-    left: -0.25rem;
+    top: 0;
+    left: 0;
     font-family: var(--font-heading-family);
     font-size: var(--dr-step-size);
     font-weight: var(--dr-step-weight);
     color: var(--dr-step-color);
-    line-height: 1;
+    line-height: 0.8;
     z-index: 2;
-    opacity: 0.9;
-    transform: translateY(-30%);
+    transform: translate(-25%, -40%);
   }
 
   .daily-ritual__image {
@@ -401,7 +393,7 @@
     }
 
     .daily-ritual__step {
-      left: -0.5rem;
+      transform: translate(-30%, -45%);
     }
 
     .daily-ritual__track {
