@@ -60,6 +60,9 @@
     --faq-feature-btn-weight: {{ section.settings.feature_btn_weight }};
     --faq-feature-padding: {{ section.settings.feature_padding }}px;
     --faq-feature-radius: {{ section.settings.feature_radius }}px;
+    --faq-feature-margin-top: {{ section.settings.feature_margin_top }}px;
+    --faq-feature-margin-bottom: {{ section.settings.feature_margin_bottom }}px;
+    --faq-feature-gap: {{ section.settings.feature_gap }}px;
   }
 {% endstyle %}
 
@@ -669,15 +672,16 @@
   /* Feature cards */
   .faq__features {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    margin: var(--space-lg) 0;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--faq-feature-gap);
+    margin-top: var(--faq-feature-margin-top);
+    margin-bottom: var(--faq-feature-margin-bottom);
   }
 
   .faq__feature-card {
     position: relative;
     display: block;
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 4 / 3;
     border-radius: var(--faq-feature-radius);
     overflow: hidden;
     text-decoration: none;
@@ -798,10 +802,6 @@
       font-weight: var(--faq-mini-text-weight-desktop);
     }
 
-    .faq__features {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.25rem;
-    }
   }
 {% endstylesheet %}
 
@@ -1201,10 +1201,40 @@
       "type": "range",
       "id": "feature_padding",
       "label": "Content padding",
-      "min": 12,
-      "max": 40,
+      "min": 8,
+      "max": 32,
       "step": 2,
-      "default": 20,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "feature_margin_top",
+      "label": "Space above cards",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "feature_margin_bottom",
+      "label": "Space below cards",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "feature_gap",
+      "label": "Gap between cards",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "default": 12,
       "unit": "px"
     },
     {
