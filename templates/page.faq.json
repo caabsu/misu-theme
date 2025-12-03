@@ -61,7 +61,7 @@
         "q5"
       ],
       "settings": {
-        "title": "Inquiries.",
+        "title": "Support Hub",
         "subtitle": "Find answers to commonly asked questions",
         "search_placeholder": "Search questions...",
         "no_results_text": "No questions found. Try a different search term.",
@@ -76,9 +76,9 @@
         "hero_image": "shopify://shop_images/custom_nano-banana-pro_1764585631716.png",
         "hero_opacity": 20,
         "padding_top": 60,
-        "eyebrow": "FREQUENTLY ASKED QUESTIONS",
+        "eyebrow": "wisdom & inquiries",
         "eyebrow_color": "#b45f06",
-        "eyebrow_size": 11,
+        "eyebrow_size": 12,
         "title_color": "#2a2624",
         "title_size": 42,
         "title_weight": "600",
