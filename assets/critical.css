@@ -277,6 +277,11 @@ a {
   margin-top: 0;
 }
 
+/* Remove section spacing before footer */
+.shopify-section:has(.footer) {
+  margin-top: 0;
+}
+
 /* Header section needs z-index context for proper stacking */
 .shopify-section:has(.header) {
   position: relative;
