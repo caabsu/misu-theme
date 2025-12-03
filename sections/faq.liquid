@@ -1,0 +1,494 @@
+{% style %}
+  .faq {
+    --faq-bg: {{ section.settings.background_color }};
+    --faq-text: {{ section.settings.text_color }};
+    --faq-text-muted: {{ section.settings.text_muted_color }};
+    --faq-border: {{ section.settings.border_color }};
+    --faq-accent: {{ section.settings.accent_color }};
+  }
+{% endstyle %}
+
+<section class="faq full-width" data-faq-section>
+  <div class="faq__inner">
+    {%- comment -%} Header {%- endcomment -%}
+    <header class="faq__header">
+      <h1 class="faq__title">{{ section.settings.title }}</h1>
+      {% if section.settings.subtitle != blank %}
+        <p class="faq__subtitle">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </header>
+
+    {%- comment -%} Search {%- endcomment -%}
+    <div class="faq__search">
+      <div class="faq__search-wrap">
+        <svg class="faq__search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </svg>
+        <input
+          type="text"
+          class="faq__search-input"
+          placeholder="{{ section.settings.search_placeholder }}"
+          data-faq-search
+        >
+      </div>
+    </div>
+
+    {%- comment -%} FAQ Categories {%- endcomment -%}
+    <div class="faq__content">
+      {%- liquid
+        assign categories = section.settings.categories | split: ','
+        for category in categories
+          assign category_handle = category | strip | handleize
+          assign category_name = category | strip
+      -%}
+        <div class="faq__category" data-faq-category="{{ category_handle }}">
+          <h2 class="faq__category-title">{{ category_name }}</h2>
+          <div class="faq__list">
+            {%- for block in section.blocks -%}
+              {%- assign block_category = block.settings.category | handleize -%}
+              {%- if block_category == category_handle -%}
+                <div class="faq__item" data-faq-item {{ block.shopify_attributes }}>
+                  <button class="faq__question" data-faq-toggle aria-expanded="false">
+                    <span class="faq__question-text">{{ block.settings.question }}</span>
+                    <span class="faq__question-icon">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 5v14M5 12h14"/>
+                      </svg>
+                    </span>
+                  </button>
+                  <div class="faq__answer" data-faq-answer>
+                    <div class="faq__answer-inner">
+                      {{ block.settings.answer }}
+                    </div>
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endfor -%}
+
+      {%- comment -%} No results message {%- endcomment -%}
+      <p class="faq__no-results" data-faq-no-results>{{ section.settings.no_results_text }}</p>
+    </div>
+  </div>
+</section>
+
+{% javascript %}
+  function initFAQ() {
+    const section = document.querySelector('[data-faq-section]');
+    if (!section) return;
+
+    const searchInput = section.querySelector('[data-faq-search]');
+    const items = section.querySelectorAll('[data-faq-item]');
+    const categories = section.querySelectorAll('[data-faq-category]');
+    const noResults = section.querySelector('[data-faq-no-results]');
+    const toggles = section.querySelectorAll('[data-faq-toggle]');
+
+    // Toggle FAQ items
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const item = toggle.closest('[data-faq-item]');
+        const answer = item.querySelector('[data-faq-answer]');
+        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+        // Close other open items (optional - remove for multi-open)
+        toggles.forEach(otherToggle => {
+          if (otherToggle !== toggle) {
+            otherToggle.setAttribute('aria-expanded', 'false');
+            otherToggle.closest('[data-faq-item]').classList.remove('faq__item--open');
+          }
+        });
+
+        toggle.setAttribute('aria-expanded', !isOpen);
+        item.classList.toggle('faq__item--open', !isOpen);
+      });
+    });
+
+    // Search functionality
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        let visibleCount = 0;
+
+        items.forEach(item => {
+          const question = item.querySelector('.faq__question-text').textContent.toLowerCase();
+          const answer = item.querySelector('.faq__answer-inner').textContent.toLowerCase();
+          const matches = question.includes(query) || answer.includes(query);
+
+          item.style.display = matches ? '' : 'none';
+          if (matches) visibleCount++;
+        });
+
+        // Show/hide categories based on visible items
+        categories.forEach(category => {
+          const visibleItems = category.querySelectorAll('[data-faq-item]:not([style*="display: none"])');
+          category.style.display = visibleItems.length > 0 ? '' : 'none';
+        });
+
+        // Show no results message
+        noResults.style.display = visibleCount === 0 && query.length > 0 ? '' : 'none';
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFAQ);
+  } else {
+    initFAQ();
+  }
+{% endjavascript %}
+
+{% stylesheet %}
+  .faq {
+    background-color: var(--faq-bg);
+    color: var(--faq-text);
+    min-height: 100vh;
+  }
+
+  .faq__inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: var(--space-4xl) var(--page-margin);
+  }
+
+  .faq__header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+  }
+
+  .faq__title {
+    font-family: var(--font-body-family);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--faq-text);
+    margin: 0 0 var(--space-sm);
+  }
+
+  .faq__subtitle {
+    font-size: 0.875rem;
+    color: var(--faq-text-muted);
+    margin: 0;
+  }
+
+  .faq__search {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .faq__search-wrap {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .faq__search-icon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--faq-text-muted);
+    pointer-events: none;
+  }
+
+  .faq__search-input {
+    width: 100%;
+    padding: 0.75rem 0 0.75rem 1.75rem;
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    color: var(--faq-text);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--faq-border);
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .faq__search-input::placeholder {
+    color: var(--faq-text-muted);
+  }
+
+  .faq__search-input:focus {
+    border-bottom-color: var(--faq-text);
+  }
+
+  .faq__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xl);
+  }
+
+  .faq__category {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .faq__category-title {
+    font-family: var(--font-body-family);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--faq-text-muted);
+    margin: 0;
+    padding-bottom: var(--space-sm);
+  }
+
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq__item {
+    border-bottom: 1px solid var(--faq-border);
+  }
+
+  .faq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    width: 100%;
+    padding: var(--space-md) 0;
+    font-family: var(--font-body-family);
+    font-size: 0.9375rem;
+    font-weight: 400;
+    color: var(--faq-text);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: color 0.2s ease;
+  }
+
+  .faq__question:hover {
+    color: var(--faq-accent);
+  }
+
+  .faq__question-text {
+    flex: 1;
+  }
+
+  .faq__question-icon {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--faq-text-muted);
+    transition: transform 0.3s ease, color 0.2s ease;
+  }
+
+  .faq__question-icon svg {
+    transition: transform 0.3s ease;
+  }
+
+  .faq__item--open .faq__question-icon svg {
+    transform: rotate(45deg);
+  }
+
+  .faq__item--open .faq__question-icon {
+    color: var(--faq-accent);
+  }
+
+  .faq__answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+  }
+
+  .faq__item--open .faq__answer {
+    grid-template-rows: 1fr;
+  }
+
+  .faq__answer-inner {
+    overflow: hidden;
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--faq-text-muted);
+  }
+
+  .faq__item--open .faq__answer-inner {
+    padding-bottom: var(--space-lg);
+  }
+
+  .faq__no-results {
+    display: none;
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--faq-text-muted);
+    padding: var(--space-2xl) 0;
+  }
+
+  @media (min-width: 768px) {
+    .faq__inner {
+      padding: var(--space-5xl) var(--page-margin);
+    }
+
+    .faq__question {
+      font-size: 1rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.faq.name",
+  "tag": "section",
+  "class": "section-faq",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.faq.content_header"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.faq.title",
+      "default": "INQUIRIES"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "t:sections.faq.subtitle",
+      "default": "Find answers to commonly asked questions"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "t:sections.faq.search_placeholder",
+      "default": "Search questions..."
+    },
+    {
+      "type": "text",
+      "id": "no_results_text",
+      "label": "t:sections.faq.no_results_text",
+      "default": "No questions found. Try a different search term."
+    },
+    {
+      "type": "textarea",
+      "id": "categories",
+      "label": "t:sections.faq.categories",
+      "info": "t:sections.faq.categories_info",
+      "default": "General, Nutrition, Subscription, Shipping"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.faq.colors_header"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:sections.faq.background_color",
+      "default": "#FAFAF8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:sections.faq.text_color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "text_muted_color",
+      "label": "t:sections.faq.text_muted_color",
+      "default": "#6B6B6B"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "t:sections.faq.border_color",
+      "default": "#E5E5E5"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "t:sections.faq.accent_color",
+      "default": "#2D5A47"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "t:sections.faq.blocks.question.name",
+      "settings": [
+        {
+          "type": "select",
+          "id": "category",
+          "label": "t:sections.faq.blocks.question.category",
+          "options": [
+            { "value": "General", "label": "General" },
+            { "value": "Nutrition", "label": "Nutrition" },
+            { "value": "Subscription", "label": "Subscription" },
+            { "value": "Shipping", "label": "Shipping" }
+          ],
+          "default": "General"
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "t:sections.faq.blocks.question.question",
+          "default": "What is your question?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "t:sections.faq.blocks.question.answer",
+          "default": "<p>Your answer goes here.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.faq.name",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "category": "General",
+            "question": "What is MISU?",
+            "answer": "<p>MISU is a modern wellness brand offering premium grain-based drinks inspired by traditional Korean recipes, crafted for the conscious, health-focused individual.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "category": "General",
+            "question": "Where are your products made?",
+            "answer": "<p>Our products are rooted in Seoul's rich culinary heritage and crafted in Los Angeles using carefully sourced, high-quality ingredients.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "category": "Nutrition",
+            "question": "Are your drinks vegan-friendly?",
+            "answer": "<p>Yes, all MISU drinks are 100% plant-based and suitable for vegan diets. We use no animal-derived ingredients in any of our formulations.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "category": "Subscription",
+            "question": "How do I manage my subscription?",
+            "answer": "<p>You can manage your subscription through your account dashboard. There you can pause, skip, or cancel at any time with no penalties.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "category": "Shipping",
+            "question": "How long does shipping take?",
+            "answer": "<p>Standard shipping takes 3-5 business days within the US. Express shipping options are available at checkout for faster delivery.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

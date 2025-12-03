@@ -1,0 +1,58 @@
+{
+  "sections": {
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "question-1": {
+          "type": "question",
+          "settings": {
+            "category": "General",
+            "question": "What is MISU?",
+            "answer": "<p>MISU is a modern wellness brand offering premium grain-based drinks inspired by traditional Korean recipes, crafted for the conscious, health-focused individual.</p>"
+          }
+        },
+        "question-2": {
+          "type": "question",
+          "settings": {
+            "category": "General",
+            "question": "Where are your products made?",
+            "answer": "<p>Our products are rooted in Seoul's rich culinary heritage and crafted in Los Angeles using carefully sourced, high-quality ingredients.</p>"
+          }
+        },
+        "question-3": {
+          "type": "question",
+          "settings": {
+            "category": "Nutrition",
+            "question": "Are your drinks vegan-friendly?",
+            "answer": "<p>Yes, all MISU drinks are 100% plant-based and suitable for vegan diets. We use no animal-derived ingredients in any of our formulations.</p>"
+          }
+        },
+        "question-4": {
+          "type": "question",
+          "settings": {
+            "category": "Subscription",
+            "question": "How do I manage my subscription?",
+            "answer": "<p>You can manage your subscription through your account dashboard. There you can pause, skip, or cancel at any time with no penalties.</p>"
+          }
+        },
+        "question-5": {
+          "type": "question",
+          "settings": {
+            "category": "Shipping",
+            "question": "How long does shipping take?",
+            "answer": "<p>Standard shipping takes 3-5 business days within the US. Express shipping options are available at checkout for faster delivery.</p>"
+          }
+        }
+      },
+      "block_order": ["question-1", "question-2", "question-3", "question-4", "question-5"],
+      "settings": {
+        "title": "INQUIRIES",
+        "subtitle": "Find answers to commonly asked questions",
+        "search_placeholder": "Search questions...",
+        "no_results_text": "No questions found. Try a different search term.",
+        "categories": "General, Nutrition, Subscription, Shipping"
+      }
+    }
+  },
+  "order": ["faq"]
+}
