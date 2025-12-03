@@ -130,6 +130,8 @@
     let currentX = 0;
     let isDragging = false;
     let isHorizontalSwipe = null; // null = undetermined, true = horizontal, false = vertical
+    let lastMoveTime = 0;
+    let velocity = 0;
 
     function isDesktop() {
       return window.innerWidth >= 1024;
@@ -173,7 +175,7 @@
         offset = cardPosition - centerOffset;
       }
 
-      track.style.transition = animate ? 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
+      track.style.transition = animate ? 'transform 0.35s cubic-bezier(0.23, 1, 0.32, 1)' : 'none';
       track.style.transform = `translateX(-${offset}px)`;
 
       updateFocus(currentIndex);
@@ -184,8 +186,11 @@
       if (isDesktop()) return;
       startX = e.touches[0].clientX;
       startY = e.touches[0].clientY;
+      currentX = startX;
       isDragging = true;
-      isHorizontalSwipe = null; // Reset direction detection
+      isHorizontalSwipe = null;
+      velocity = 0;
+      lastMoveTime = Date.now();
       track.style.transition = 'none';
     }, { passive: true });
 
@@ -197,23 +202,51 @@
       const diffX = Math.abs(touchX - startX);
       const diffY = Math.abs(touchY - startY);
 
-      // Determine swipe direction on first significant movement
-      if (isHorizontalSwipe === null && (diffX > 10 || diffY > 10)) {
-        isHorizontalSwipe = diffX > diffY;
+      // Determine swipe direction on first significant movement (reduced threshold for responsiveness)
+      if (isHorizontalSwipe === null && (diffX > 5 || diffY > 5)) {
+        isHorizontalSwipe = diffX > diffY * 1.2; // Slight bias toward vertical to avoid accidental horizontal
       }
 
       // Only handle horizontal swipes
       if (isHorizontalSwipe === false) {
-        return; // Let vertical scrolling happen naturally
+        return;
       }
 
       if (isHorizontalSwipe === true) {
+        // Track velocity for momentum
+        const now = Date.now();
+        const timeDelta = now - lastMoveTime;
+        if (timeDelta > 0) {
+          velocity = (touchX - currentX) / timeDelta;
+        }
+        lastMoveTime = now;
         currentX = touchX;
+
         const diff = currentX - startX;
         const slideWidth = slides[0].offsetWidth;
         const gap = parseInt(getComputedStyle(track).gap) || 0;
-        const baseOffset = currentIndex * (slideWidth + gap);
-        track.style.transform = `translateX(${-baseOffset + diff}px)`;
+        const paddingLeft = parseInt(getComputedStyle(track).paddingLeft) || 0;
+        const containerWidth = section.offsetWidth;
+
+        // Calculate base offset for current position
+        let baseOffset;
+        if (currentIndex === 0) {
+          baseOffset = 0;
+        } else {
+          const cardPosition = paddingLeft + (currentIndex * (slideWidth + gap));
+          const centerOffset = (containerWidth - slideWidth) / 2;
+          baseOffset = cardPosition - centerOffset;
+        }
+
+        // Apply rubber-banding at edges
+        let adjustedDiff = diff;
+        const isAtStart = currentIndex === 0 && diff > 0;
+        const isAtEnd = currentIndex === slides.length - 1 && diff < 0;
+        if (isAtStart || isAtEnd) {
+          adjustedDiff = diff * 0.3; // Resistance at edges
+        }
+
+        track.style.transform = `translateX(${-baseOffset + adjustedDiff}px)`;
       }
     }, { passive: true });
 
@@ -224,11 +257,17 @@
       // Only process swipe if it was horizontal
       if (isHorizontalSwipe === true) {
         const diff = currentX - startX;
-        const threshold = 50;
+        const slideWidth = slides[0].offsetWidth;
+        // Use both distance and velocity to determine if we should change slides
+        const threshold = slideWidth * 0.15; // 15% of slide width
+        const velocityThreshold = 0.3; // pixels per millisecond
 
-        if (diff > threshold && currentIndex > 0) {
+        const shouldGoNext = (diff < -threshold || velocity < -velocityThreshold) && currentIndex < slides.length - 1;
+        const shouldGoPrev = (diff > threshold || velocity > velocityThreshold) && currentIndex > 0;
+
+        if (shouldGoPrev) {
           updateCarousel(currentIndex - 1);
-        } else if (diff < -threshold && currentIndex < slides.length - 1) {
+        } else if (shouldGoNext) {
           updateCarousel(currentIndex + 1);
         } else {
           updateCarousel(currentIndex);
@@ -240,6 +279,7 @@
       startY = 0;
       currentX = 0;
       isHorizontalSwipe = null;
+      velocity = 0;
     });
 
     // Mouse drag support (mobile only)

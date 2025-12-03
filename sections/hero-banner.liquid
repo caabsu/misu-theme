@@ -85,8 +85,8 @@
     align-items: var(--hero-content-position, center);
     justify-content: center;
     overflow: hidden;
-    margin-top: calc(-1 * var(--header-height));
-    padding-top: var(--header-height);
+    margin-top: calc(-1 * var(--header-height) - 1px);
+    padding-top: calc(var(--header-height) + 1px);
   }
 
   .hero-banner__background {

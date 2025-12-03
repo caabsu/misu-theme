@@ -296,9 +296,10 @@ a {
   top: 0;
 }
 
-/* Transparent header - make parent section also transparent */
+/* Transparent header - make parent section also transparent with slight overlap */
 .shopify-section:has(.header--transparent) {
   background-color: transparent;
+  margin-bottom: -1px;
 }
 
 /** Container utility */
