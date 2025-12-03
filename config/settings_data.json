@@ -22,6 +22,7 @@
     "font_body": "space_grotesk_n4",
     "font_body_weight": "300",
     "body_size_scale": "100",
+    "footer_text": "#f5f0ea",
     "content_for_index": []
   }
 }

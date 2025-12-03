@@ -15,8 +15,13 @@
       "type": "footer",
       "settings": {
         "tagline": "Premium grain-mix drinks for everyday wellness.",
-        "menu": "footer",
-        "show_payment_icons": true
+        "watermark_text": "Mi",
+        "menu_shop_title": "SHOP",
+        "menu_shop": "main-menu",
+        "menu_journal_title": "JOURNAL",
+        "menu_journal": "main-menu",
+        "newsletter_title": "JOIN THE INNER CIRCLE",
+        "newsletter_button_text": "JOIN"
       }
     }
   },
