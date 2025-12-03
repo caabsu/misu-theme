@@ -266,19 +266,19 @@
         "card_bg": "#35312f",
         "card_radius": 12,
         "header_color": "#f5f0ea",
-        "header_size": 42,
+        "header_size": 36,
         "header_weight": "400",
         "subheader_color": "#888888",
         "subheader_size": 16,
         "subheader_weight": "400",
         "step_color": "#c5a059",
-        "step_size": 76,
+        "step_size": 56,
         "step_weight": "500",
         "card_subtitle_color": "#b45f06",
-        "card_subtitle_size": 10,
+        "card_subtitle_size": 9,
         "card_subtitle_weight": "600",
         "card_title_color": "#f5f0ea",
-        "card_title_size": 25,
+        "card_title_size": 24,
         "card_title_weight": "400",
         "card_body_color": "#e6e0d8",
         "card_body_size": 13,
@@ -294,7 +294,7 @@
   "order": [
     "hero_banner",
     "grain_complex_Q8LKzi",
-    "rich_text_tN6MWa",
-    "daily_ritual_dnjyGL"
+    "daily_ritual_dnjyGL",
+    "rich_text_tN6MWa"
   ]
 }
