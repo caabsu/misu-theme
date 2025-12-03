@@ -160,7 +160,7 @@
       ],
       "name": "Grain Complex",
       "settings": {
-        "subheading": "NOTHING HIDDEN, JUST NATURE",
+        "subheading": "WHAT'S INSIDE",
         "heading": "8 Grain Complex",
         "background_color": "#f5f0ea",
         "text_color": "#2a2624",
@@ -177,7 +177,7 @@
         "subheading_color": "#b45f06",
         "subheading_size_mobile": 11,
         "subheading_size_desktop": 15,
-        "subheading_weight": "400",
+        "subheading_weight": "500",
         "heading_color": "#2a2624",
         "heading_size_mobile": 30,
         "heading_size_desktop": 48,
