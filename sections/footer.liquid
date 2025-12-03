@@ -377,7 +377,24 @@
   .footer__bottom {
     position: relative;
     z-index: 1;
-    border-top: 1px solid var(--footer-border);
+  }
+
+  .footer__bottom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(100%, 600px);
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--footer-border) 20%,
+      var(--footer-border) 80%,
+      transparent 100%
+    );
+    opacity: 0.6;
   }
 
   .footer__bottom-inner {
