@@ -270,10 +270,10 @@
       {
         "type": "range",
         "id": "section_spacing",
-        "min": 24,
+        "min": 0,
         "max": 120,
         "step": 8,
-        "default": 64,
+        "default": 0,
         "unit": "px",
         "label": "t:settings.layout.section_spacing"
       },
@@ -294,10 +294,10 @@
       {
         "type": "range",
         "id": "section_spacing_mobile",
-        "min": 16,
+        "min": 0,
         "max": 80,
         "step": 8,
-        "default": 40,
+        "default": 0,
         "unit": "px",
         "label": "t:settings.layout.section_spacing"
       }
