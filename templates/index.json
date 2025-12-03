@@ -317,7 +317,7 @@
         "background_image": "shopify://shop_images/custom_nano-banana-pro_1764585331803.png",
         "image_opacity": 25,
         "icon_style": "question",
-        "icon_bg": "#2a2624",
+        "icon_bg": "#ffffff",
         "icon_color": "#ffffff",
         "icon_size": 56,
         "header_color_mobile": "#2a2624",
