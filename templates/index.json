@@ -274,7 +274,13 @@
         "indicator_active_color": "#b45f06",
         "padding_top": 40,
         "padding_bottom": 45,
-        "first_card_offset": 20
+        "first_card_offset": 20,
+        "header_size_desktop": 54,
+        "subheader_size_desktop": 19,
+        "step_size_desktop": 88,
+        "card_subtitle_size_desktop": 12,
+        "card_title_size_desktop": 22,
+        "card_body_size_desktop": 16
       }
     },
     "rich_text_tN6MWa": {
