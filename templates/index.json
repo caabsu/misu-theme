@@ -286,7 +286,8 @@
         "indicator_color": "#4d4b4a",
         "indicator_active_color": "#b45f06",
         "padding_top": 40,
-        "padding_bottom": 45
+        "padding_bottom": 45,
+        "first_card_offset": 20
       }
     }
   },
