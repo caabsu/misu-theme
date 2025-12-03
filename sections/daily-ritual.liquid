@@ -100,8 +100,30 @@
     let currentX = 0;
     let isDragging = false;
 
+    function isDesktop() {
+      return window.innerWidth >= 1024;
+    }
+
+    function updateFocus(index) {
+      currentIndex = Math.max(0, Math.min(index, slides.length - 1));
+
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('daily-ritual__slide--active', i === currentIndex);
+      });
+
+      indicators.forEach((indicator, i) => {
+        indicator.classList.toggle('daily-ritual__indicator--active', i === currentIndex);
+      });
+    }
+
     function updateCarousel(index, animate = true) {
       currentIndex = Math.max(0, Math.min(index, slides.length - 1));
+
+      // On desktop, just update focus without sliding
+      if (isDesktop()) {
+        updateFocus(currentIndex);
+        return;
+      }
 
       const slideWidth = slides[0].offsetWidth;
       const gap = parseInt(getComputedStyle(track).gap) || 0;
@@ -110,24 +132,19 @@
       track.style.transition = animate ? 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
       track.style.transform = `translateX(-${offset}px)`;
 
-      indicators.forEach((indicator, i) => {
-        indicator.classList.toggle('daily-ritual__indicator--active', i === currentIndex);
-      });
-
-      slides.forEach((slide, i) => {
-        slide.classList.toggle('daily-ritual__slide--active', i === currentIndex);
-      });
+      updateFocus(currentIndex);
     }
 
-    // Touch/Mouse events for swipe
+    // Touch events for swipe (mobile only)
     track.addEventListener('touchstart', (e) => {
+      if (isDesktop()) return;
       startX = e.touches[0].clientX;
       isDragging = true;
       track.style.transition = 'none';
     }, { passive: true });
 
     track.addEventListener('touchmove', (e) => {
-      if (!isDragging) return;
+      if (isDesktop() || !isDragging) return;
       currentX = e.touches[0].clientX;
       const diff = currentX - startX;
       const slideWidth = slides[0].offsetWidth;
@@ -137,7 +154,7 @@
     }, { passive: true });
 
     track.addEventListener('touchend', () => {
-      if (!isDragging) return;
+      if (isDesktop() || !isDragging) return;
       isDragging = false;
       const diff = currentX - startX;
       const threshold = 50;
@@ -153,8 +170,9 @@
       currentX = 0;
     });
 
-    // Mouse drag support
+    // Mouse drag support (mobile only)
     track.addEventListener('mousedown', (e) => {
+      if (isDesktop()) return;
       startX = e.clientX;
       isDragging = true;
       track.style.transition = 'none';
@@ -162,7 +180,7 @@
     });
 
     window.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
+      if (isDesktop() || !isDragging) return;
       currentX = e.clientX;
       const diff = currentX - startX;
       const slideWidth = slides[0].offsetWidth;
@@ -172,7 +190,7 @@
     });
 
     window.addEventListener('mouseup', () => {
-      if (!isDragging) return;
+      if (isDesktop() || !isDragging) return;
       isDragging = false;
       track.style.cursor = 'grab';
       const diff = currentX - startX;
@@ -187,6 +205,15 @@
       }
       startX = 0;
       currentX = 0;
+    });
+
+    // Click on slides to focus (desktop)
+    slides.forEach((slide, index) => {
+      slide.addEventListener('click', () => {
+        if (isDesktop()) {
+          updateFocus(index);
+        }
+      });
     });
 
     // Indicator clicks
@@ -207,8 +234,21 @@
     });
 
     // Initial setup
-    track.style.cursor = 'grab';
+    if (!isDesktop()) {
+      track.style.cursor = 'grab';
+    }
     updateCarousel(0, false);
+
+    // Handle resize
+    window.addEventListener('resize', () => {
+      if (isDesktop()) {
+        track.style.transform = 'none';
+        track.style.cursor = 'default';
+      } else {
+        track.style.cursor = 'grab';
+        updateCarousel(currentIndex, false);
+      }
+    });
   }
 
   if (document.readyState === 'loading') {
@@ -411,16 +451,36 @@
   }
 
   @media (min-width: 1024px) {
-    .daily-ritual__slide {
-      flex: 0 0 300px;
+    .daily-ritual__header {
+      text-align: center;
+      margin-bottom: var(--space-3xl);
+    }
+
+    .daily-ritual__carousel {
+      margin: 0;
+      padding: 0;
+      overflow: visible;
     }
 
     .daily-ritual__track {
-      gap: 2.25rem;
+      justify-content: center;
+      gap: 2.5rem;
+      padding-left: 0;
+      transform: none !important;
+      cursor: default;
     }
 
-    .daily-ritual__header {
-      margin-bottom: var(--space-3xl);
+    .daily-ritual__slide {
+      flex: 0 0 280px;
+      cursor: pointer;
+    }
+
+    .daily-ritual__content {
+      text-align: center;
+    }
+
+    .daily-ritual__indicators {
+      display: none;
     }
   }
 {% endstylesheet %}
