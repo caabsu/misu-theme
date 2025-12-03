@@ -40,7 +40,7 @@
 
     /* Buttons */
     --scta-btn-desktop-padding: {{ section.settings.btn_desktop_padding }}px;
-    --scta-btn-edge-gap: {{ section.settings.btn_edge_gap }}px;
+    --scta-btn-edge-gap: {{ section.settings.btn_desktop_edge_gap }}px;
     --scta-btn-primary-bg: {{ section.settings.btn_primary_bg }};
     --scta-btn-primary-text: {{ section.settings.btn_primary_text_color }};
     --scta-btn-secondary-bg: {{ section.settings.btn_secondary_bg }};
@@ -118,16 +118,18 @@
 
     {%- comment -%} Desktop Layout {%- endcomment -%}
     <div class="support-cta__desktop">
-      <div class="support-cta__left">
-        <span class="support-cta__dot support-cta__dot--{{ section.settings.dot_style }}"></span>
-        <span class="support-cta__title">{{ section.settings.desktop_title }}</span>
-      </div>
-      <span class="support-cta__divider support-cta__divider--{{ section.settings.divider_style }}"></span>
-      <p class="support-cta__body">{{ section.settings.desktop_body }}</p>
-      <div class="support-cta__actions">
+      <div class="support-cta__desktop-content">
+        <div class="support-cta__left">
+          <span class="support-cta__dot support-cta__dot--{{ section.settings.dot_style }}"></span>
+          <span class="support-cta__title">{{ section.settings.desktop_title }}</span>
+        </div>
+        <span class="support-cta__divider support-cta__divider--{{ section.settings.divider_style }}"></span>
+        <p class="support-cta__body">{{ section.settings.desktop_body }}</p>
         <a href="{{ section.settings.contact_url }}" class="support-cta__contact">
           {{ section.settings.btn_contact_text }}
         </a>
+      </div>
+      <div class="support-cta__open-wrapper">
         <a href="{{ section.settings.hub_url }}" class="support-cta__open">
           <span>{{ section.settings.btn_open_text }}</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -279,6 +281,11 @@
       padding: var(--scta-section-pt-desktop) var(--scta-margin-x) var(--scta-section-pb-desktop);
     }
 
+    .support-cta__card {
+      border-radius: var(--scta-radius);
+      position: relative;
+    }
+
     .support-cta__mobile {
       display: none;
     }
@@ -288,7 +295,15 @@
       z-index: 2;
       display: flex;
       align-items: center;
+      padding: var(--scta-padding-y) var(--scta-padding-x);
+    }
+
+    .support-cta__desktop-content {
+      display: flex;
+      align-items: center;
       gap: 1.25rem;
+      flex: 1;
+      padding-right: 1rem;
     }
 
     /* Desktop: horizontal fade from left */
@@ -409,14 +424,6 @@
       flex: 1;
     }
 
-    .support-cta__actions {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      flex-shrink: 0;
-      margin-left: auto;
-    }
-
     .support-cta__contact {
       font-family: var(--font-body-family);
       font-size: 0.6875rem;
@@ -427,13 +434,24 @@
       text-decoration: none;
       padding: 0.5rem;
       transition: opacity 0.2s ease;
+      flex-shrink: 0;
     }
 
     .support-cta__contact:hover {
       opacity: 0.7;
     }
 
-    /* OPEN HUB button - positioned at edge with gap control */
+    /* OPEN HUB button wrapper - absolutely positioned for equal edge gaps */
+    .support-cta__open-wrapper {
+      position: absolute;
+      top: var(--scta-btn-edge-gap);
+      right: var(--scta-btn-edge-gap);
+      bottom: var(--scta-btn-edge-gap);
+      display: flex;
+      align-items: center;
+      z-index: 3;
+    }
+
     .support-cta__open {
       display: inline-flex;
       align-items: center;
@@ -450,8 +468,6 @@
       border-radius: 50px;
       transition: opacity 0.2s ease;
       white-space: nowrap;
-      margin: var(--scta-btn-edge-gap);
-      margin-left: 0;
     }
 
     .support-cta__open:hover {
@@ -461,17 +477,6 @@
     .support-cta__open svg {
       width: 12px;
       height: 12px;
-    }
-
-    /* Card layout for desktop */
-    .support-cta__card {
-      border-radius: var(--scta-radius);
-    }
-
-    .support-cta__desktop {
-      width: 100%;
-      padding: var(--scta-padding-y) var(--scta-padding-x);
-      padding-right: 0;
     }
   }
 {% endstylesheet %}
@@ -899,13 +904,14 @@
     },
     {
       "type": "range",
-      "id": "btn_edge_gap",
-      "label": "Button gap from section edge",
+      "id": "btn_desktop_edge_gap",
+      "label": "Button edge gap (equal on all sides)",
       "min": 0,
       "max": 20,
       "step": 1,
       "default": 6,
-      "unit": "px"
+      "unit": "px",
+      "info": "Gap between button and section border (top, right, bottom)"
     },
     {
       "type": "header",
