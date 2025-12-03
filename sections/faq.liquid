@@ -33,6 +33,7 @@
     --faq-mini1-text: {{ section.settings.mini_1_text }};
     --faq-mini2-bg: {{ section.settings.mini_2_bg }};
     --faq-mini2-text: {{ section.settings.mini_2_text }};
+    --faq-main-padding: {{ section.settings.main_padding }}px;
   }
 {% endstyle %}
 
@@ -312,20 +313,20 @@
     max-width: 480px;
   }
 
-  /* Main subscription button - square with icon top-right, text bottom-left */
+  /* Main subscription button - large square with icon top-right, text bottom-left */
   .faq__action-main {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    width: 140px;
-    height: 120px;
-    padding: 1rem;
+    flex: 1;
+    aspect-ratio: 1 / 1;
+    max-width: 50%;
+    padding: var(--faq-main-padding);
     background: var(--faq-main-bg);
-    border-radius: 10px;
+    border-radius: 12px;
     text-decoration: none;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    flex-shrink: 0;
   }
 
   .faq__action-main:hover {
@@ -335,8 +336,8 @@
 
   .faq__action-main-icon {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: var(--faq-main-padding);
+    right: var(--faq-main-padding);
     width: 24px;
     height: 24px;
     color: var(--faq-main-icon-color);
@@ -373,17 +374,17 @@
   .faq__action-stack {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    flex: 1;
+    gap: 0.375rem;
+    width: 100px;
+    flex-shrink: 0;
   }
 
   .faq__action-mini {
-    flex: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 1rem;
-    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
     text-decoration: none;
     transition: transform 0.15s ease;
   }
@@ -398,15 +399,15 @@
 
   .faq__action-mini-text {
     font-family: var(--font-body-family);
-    font-size: 0.6875rem;
+    font-size: 0.625rem;
     font-weight: 500;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
   }
 
   .faq__action-mini-arrow {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     flex-shrink: 0;
     opacity: 0.5;
     transition: transform 0.15s ease, opacity 0.15s ease;
@@ -433,13 +434,16 @@
   }
 
   @media (max-width: 480px) {
-    .faq__action-main {
-      width: 110px;
-      height: 100px;
+    .faq__action-stack {
+      width: 80px;
     }
 
-    .faq__action-main-title {
-      font-size: 0.8125rem;
+    .faq__action-mini {
+      padding: 0.375rem 0.5rem;
+    }
+
+    .faq__action-mini-text {
+      font-size: 0.5625rem;
     }
   }
 
@@ -700,6 +704,16 @@
       "id": "main_icon_color",
       "label": "Icon color",
       "default": "#2D5A47"
+    },
+    {
+      "type": "range",
+      "id": "main_padding",
+      "label": "Padding",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "default": 16,
+      "unit": "px"
     },
     {
       "type": "header",
