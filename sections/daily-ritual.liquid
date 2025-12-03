@@ -260,14 +260,21 @@
 
   .daily-ritual__track {
     display: flex;
-    gap: 1.5rem;
+    gap: 2.5rem;
     will-change: transform;
     user-select: none;
   }
 
   .daily-ritual__slide {
-    flex: 0 0 280px;
-    transition: transform 0.4s ease;
+    flex: 0 0 240px;
+    opacity: 0.5;
+    transform: scale(0.92);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .daily-ritual__slide--active {
+    opacity: 1;
+    transform: scale(1);
   }
 
   .daily-ritual__card {
@@ -383,13 +390,13 @@
   }
 
   .daily-ritual__indicator--active {
-    width: 24px;
+    width: 32px;
     background: var(--dr-indicator-active);
   }
 
   @media (min-width: 768px) {
     .daily-ritual__slide {
-      flex: 0 0 320px;
+      flex: 0 0 280px;
     }
 
     .daily-ritual__step {
@@ -397,13 +404,17 @@
     }
 
     .daily-ritual__track {
-      gap: 2rem;
+      gap: 3rem;
     }
   }
 
   @media (min-width: 1024px) {
     .daily-ritual__slide {
-      flex: 0 0 360px;
+      flex: 0 0 300px;
+    }
+
+    .daily-ritual__track {
+      gap: 3.5rem;
     }
 
     .daily-ritual__header {
