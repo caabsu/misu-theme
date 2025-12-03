@@ -24,9 +24,13 @@
     "body_size_scale": "100",
     "footer_background": "#3e2723",
     "footer_text": "#f5f0ea",
-    "footer_text_muted": "#f5f0ea",
+    "footer_text_muted": "#afafaf",
     "footer_border": "#f5f0ea",
     "footer_watermark_color": "#4e332e",
+    "social_instagram": "https://instagram.com/shopify",
+    "social_facebook": "https://facebook.com/shopify",
+    "social_youtube": "https://youtube.com/shopify",
+    "social_pinterest": "https://pinterest.com/shopify",
     "content_for_index": []
   }
 }
