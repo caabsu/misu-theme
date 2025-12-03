@@ -429,6 +429,55 @@
     ]
   },
   {
+    "name": "t:settings.footer.name",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:settings.footer.colors_header"
+      },
+      {
+        "type": "color",
+        "id": "footer_background",
+        "default": "#1A1A1A",
+        "label": "t:settings.footer.background"
+      },
+      {
+        "type": "color",
+        "id": "footer_text",
+        "default": "#FFFFFF",
+        "label": "t:settings.footer.text"
+      },
+      {
+        "type": "color",
+        "id": "footer_text_muted",
+        "default": "#8A8A8A",
+        "label": "t:settings.footer.text_muted"
+      },
+      {
+        "type": "color",
+        "id": "footer_accent",
+        "default": "#FFFFFF",
+        "label": "t:settings.footer.accent"
+      },
+      {
+        "type": "color",
+        "id": "footer_border",
+        "default": "#333333",
+        "label": "t:settings.footer.border"
+      },
+      {
+        "type": "header",
+        "content": "t:settings.footer.background_text_header"
+      },
+      {
+        "type": "color",
+        "id": "footer_watermark_color",
+        "default": "#2A2A2A",
+        "label": "t:settings.footer.watermark_color"
+      }
+    ]
+  },
+  {
     "name": "t:settings.social.name",
     "settings": [
       {

@@ -140,6 +140,17 @@
       "desktop_layout": "Desktop layout",
       "mobile_layout": "Mobile layout",
       "header_height": "Header height"
+    },
+    "footer": {
+      "name": "Footer",
+      "colors_header": "Colors",
+      "background": "Background",
+      "text": "Text",
+      "text_muted": "Muted text",
+      "accent": "Accent",
+      "border": "Border",
+      "background_text_header": "Background text",
+      "watermark_color": "Watermark color"
     }
   },
   "sections": {
@@ -148,9 +159,18 @@
     },
     "footer": {
       "name": "Footer",
+      "brand_header": "Brand",
       "tagline": "Tagline",
-      "menu": "Menu",
-      "show_payment_icons": "Show payment icons"
+      "background_text_header": "Background text",
+      "watermark_text": "Watermark text",
+      "navigation_header": "Navigation",
+      "menu_shop_title": "Shop column title",
+      "menu_shop": "Shop menu",
+      "menu_journal_title": "Journal column title",
+      "menu_journal": "Journal menu",
+      "newsletter_header": "Newsletter",
+      "newsletter_title": "Newsletter title",
+      "newsletter_button_text": "Button text"
     },
     "hero": {
       "name": "Hero",

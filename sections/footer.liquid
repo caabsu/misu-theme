@@ -1,135 +1,319 @@
 <footer class="footer full-width">
+  {%- comment -%} Background watermark text {%- endcomment -%}
+  <div class="footer__watermark" aria-hidden="true">
+    {{ section.settings.watermark_text }}
+  </div>
+
   <div class="footer__inner">
+    {%- comment -%} Logo and tagline {%- endcomment -%}
     <div class="footer__brand">
       <a href="{{ routes.root_url }}" class="footer__logo">
-        {{ shop.name }}
+        {% if settings.logo %}
+          {{ settings.logo | image_url: width: settings.logo_width | image_tag: alt: shop.name, class: 'footer__logo-image' }}
+        {% else %}
+          {{ shop.name }}
+        {% endif %}
       </a>
       {% if section.settings.tagline != blank %}
         <p class="footer__tagline">{{ section.settings.tagline }}</p>
       {% endif %}
     </div>
 
-    {% if section.settings.menu.links.size > 0 %}
-      <nav class="footer__nav" aria-label="{{ 'general.navigation' | t }}">
-        {% for link in section.settings.menu.links %}
-          <a href="{{ link.url }}" class="footer__link">
-            {{ link.title }}
-          </a>
-        {% endfor %}
-      </nav>
-    {% endif %}
-  </div>
+    {%- comment -%} Navigation columns {%- endcomment -%}
+    <div class="footer__nav-columns">
+      {%- comment -%} Shop menu {%- endcomment -%}
+      {% if section.settings.menu_shop.links.size > 0 %}
+        <nav class="footer__nav-column" aria-label="{{ section.settings.menu_shop_title }}">
+          <h3 class="footer__nav-title">{{ section.settings.menu_shop_title }}</h3>
+          <ul class="footer__nav-list">
+            {% for link in section.settings.menu_shop.links %}
+              <li>
+                <a href="{{ link.url }}" class="footer__link">{{ link.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      {% endif %}
 
-  <div class="footer__bottom">
-    <div class="footer__copyright">
-      &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
+      {%- comment -%} Journal menu {%- endcomment -%}
+      {% if section.settings.menu_journal.links.size > 0 %}
+        <nav class="footer__nav-column" aria-label="{{ section.settings.menu_journal_title }}">
+          <h3 class="footer__nav-title">{{ section.settings.menu_journal_title }}</h3>
+          <ul class="footer__nav-list">
+            {% for link in section.settings.menu_journal.links %}
+              <li>
+                <a href="{{ link.url }}" class="footer__link">{{ link.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      {% endif %}
     </div>
 
-    {% if section.settings.show_payment_icons %}
-      <div class="footer__payment">
-        {% for type in shop.enabled_payment_types %}
-          {{ type | payment_type_svg_tag }}
-        {% endfor %}
-      </div>
-    {% endif %}
+    {%- comment -%} Newsletter signup {%- endcomment -%}
+    <div class="footer__newsletter">
+      <h3 class="footer__newsletter-title">{{ section.settings.newsletter_title }}</h3>
+      {% form 'customer', class: 'footer__newsletter-form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="footer__newsletter-input-wrap">
+          <input
+            type="email"
+            name="contact[email]"
+            class="footer__newsletter-input"
+            placeholder="{{ 'sections.newsletter.placeholder' | t }}"
+            required
+            autocomplete="email"
+            aria-label="{{ 'sections.newsletter.placeholder' | t }}"
+          >
+          <button type="submit" class="footer__newsletter-btn">
+            {{ section.settings.newsletter_button_text }}
+          </button>
+        </div>
+        {% if form.posted_successfully? %}
+          <p class="footer__newsletter-success">{{ 'sections.newsletter.success' | t }}</p>
+        {% endif %}
+        {% if form.errors %}
+          <p class="footer__newsletter-error">{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</p>
+        {% endif %}
+      {% endform %}
+    </div>
+  </div>
+
+  {%- comment -%} Bottom bar with copyright {%- endcomment -%}
+  <div class="footer__bottom">
+    <div class="footer__bottom-inner">
+      <p class="footer__copyright">
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name | upcase }}
+      </p>
+    </div>
   </div>
 </footer>
 
 {% stylesheet %}
   .footer {
+    position: relative;
+    overflow: hidden;
     margin-top: auto;
     width: 100%;
-    background-color: var(--color-secondary);
-    padding: var(--space-3xl) 0 var(--space-xl);
+    background-color: {{ settings.footer_background }};
+    color: {{ settings.footer_text }};
+  }
+
+  .footer__watermark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: var(--font-heading-family);
+    font-size: clamp(180px, 35vw, 400px);
+    font-weight: 700;
+    line-height: 0.8;
+    color: {{ settings.footer_watermark_color }};
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    letter-spacing: -0.04em;
   }
 
   .footer__inner {
+    position: relative;
+    z-index: 1;
     max-width: var(--page-width);
     margin: 0 auto;
-    padding: 0 var(--page-margin);
+    padding: var(--space-3xl) var(--page-margin) var(--space-2xl);
     display: flex;
     flex-direction: column;
-    gap: var(--space-xl);
-    padding-bottom: var(--space-xl);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    gap: var(--space-2xl);
   }
 
   .footer__brand {
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
+    gap: var(--space-md);
   }
 
   .footer__logo {
-    font-family: var(--font-heading--family);
+    font-family: var(--font-heading-family);
     font-weight: 600;
-    font-size: 1.25rem;
-    color: var(--color-foreground);
+    font-size: 1.5rem;
+    color: {{ settings.footer_text }};
     text-decoration: none;
     letter-spacing: -0.02em;
+    display: inline-block;
+  }
+
+  .footer__logo-image {
+    height: auto;
+    width: auto;
+    max-height: 2.5rem;
+    max-width: 100px;
+    filter: brightness(0) invert(1);
   }
 
   .footer__tagline {
-    color: var(--color-foreground-muted);
+    color: {{ settings.footer_text_muted }};
     font-size: 0.875rem;
+    line-height: 1.6;
     margin: 0;
-    max-width: 30ch;
+    max-width: 32ch;
   }
 
-  .footer__nav {
+  .footer__nav-columns {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-md) var(--space-xl);
+    gap: var(--space-3xl);
   }
 
-  .footer__link {
-    font-size: 0.875rem;
-    color: var(--color-foreground);
-    text-decoration: none;
-    transition: color var(--transition-fast);
-  }
-
-  .footer__link:hover {
-    color: var(--color-primary);
-  }
-
-  .footer__bottom {
-    max-width: var(--page-width);
-    margin: 0 auto;
-    padding: var(--space-xl) var(--page-margin) 0;
+  .footer__nav-column {
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
   }
 
-  .footer__copyright {
-    font-size: 0.8125rem;
-    color: var(--color-foreground-muted);
+  .footer__nav-title {
+    font-family: var(--font-heading-family);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: {{ settings.footer_text }};
+    margin: 0;
   }
 
-  .footer__payment {
+  .footer__nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: var(--space-sm);
   }
 
-  .footer__payment svg {
-    height: 1.5rem;
-    width: auto;
-    opacity: 0.7;
+  .footer__link {
+    font-size: 0.875rem;
+    color: {{ settings.footer_text_muted }};
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .footer__link:hover {
+    color: {{ settings.footer_text }};
+  }
+
+  .footer__newsletter {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .footer__newsletter-title {
+    font-family: var(--font-heading-family);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: {{ settings.footer_text }};
+    margin: 0;
+  }
+
+  .footer__newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .footer__newsletter-input-wrap {
+    display: flex;
+    gap: var(--space-sm);
+  }
+
+  .footer__newsletter-input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    color: {{ settings.footer_text }};
+    background-color: transparent;
+    border: 1px solid {{ settings.footer_border }};
+    border-radius: 0;
+    outline: none;
+    transition: border-color var(--transition-fast);
+  }
+
+  .footer__newsletter-input::placeholder {
+    color: {{ settings.footer_text_muted }};
+  }
+
+  .footer__newsletter-input:focus {
+    border-color: {{ settings.footer_text }};
+  }
+
+  .footer__newsletter-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: {{ settings.footer_background }};
+    background-color: {{ settings.footer_text }};
+    border: 1px solid {{ settings.footer_text }};
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+  }
+
+  .footer__newsletter-btn:hover {
+    background-color: transparent;
+    color: {{ settings.footer_text }};
+  }
+
+  .footer__newsletter-success {
+    font-size: 0.875rem;
+    color: var(--color-success);
+    margin: 0;
+  }
+
+  .footer__newsletter-error {
+    font-size: 0.875rem;
+    color: var(--color-error);
+    margin: 0;
+  }
+
+  .footer__bottom {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid {{ settings.footer_border }};
+  }
+
+  .footer__bottom-inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: var(--space-lg) var(--page-margin);
+  }
+
+  .footer__copyright {
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: {{ settings.footer_text_muted }};
+    margin: 0;
   }
 
   @media (min-width: 768px) {
     .footer__inner {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-start;
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: var(--space-3xl);
+      align-items: start;
     }
 
-    .footer__bottom {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
+    .footer__brand {
+      max-width: 280px;
+    }
+
+    .footer__nav-columns {
+      gap: var(--space-3xl);
+    }
+
+    .footer__newsletter {
+      min-width: 280px;
     }
   }
 {% endstylesheet %}
@@ -139,22 +323,67 @@
   "name": "t:sections.footer.name",
   "settings": [
     {
-      "type": "text",
+      "type": "header",
+      "content": "t:sections.footer.brand_header"
+    },
+    {
+      "type": "textarea",
       "id": "tagline",
       "label": "t:sections.footer.tagline",
-      "default": "Premium grain-mix drinks for everyday wellness."
+      "default": "Modern rituals for the conscious mind. Rooted in Seoul, crafted in Los Angeles."
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.background_text_header"
+    },
+    {
+      "type": "text",
+      "id": "watermark_text",
+      "label": "t:sections.footer.watermark_text",
+      "default": "Mi"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.navigation_header"
+    },
+    {
+      "type": "text",
+      "id": "menu_shop_title",
+      "label": "t:sections.footer.menu_shop_title",
+      "default": "SHOP"
     },
     {
       "type": "link_list",
-      "id": "menu",
-      "label": "t:sections.footer.menu",
-      "default": "footer"
+      "id": "menu_shop",
+      "label": "t:sections.footer.menu_shop",
+      "default": "main-menu"
     },
     {
-      "type": "checkbox",
-      "id": "show_payment_icons",
-      "label": "t:sections.footer.show_payment_icons",
-      "default": true
+      "type": "text",
+      "id": "menu_journal_title",
+      "label": "t:sections.footer.menu_journal_title",
+      "default": "JOURNAL"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_journal",
+      "label": "t:sections.footer.menu_journal"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.newsletter_header"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "t:sections.footer.newsletter_title",
+      "default": "JOIN THE INNER CIRCLE"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_button_text",
+      "label": "t:sections.footer.newsletter_button_text",
+      "default": "JOIN"
     }
   ]
 }
