@@ -259,7 +259,7 @@
         "subheader_size": 16,
         "subheader_weight": "400",
         "step_color": "#c5a059",
-        "step_size": 56,
+        "step_size": 48,
         "step_weight": "500",
         "card_subtitle_color": "#b45f06",
         "card_subtitle_size": 9,
@@ -277,7 +277,7 @@
         "first_card_offset": 20,
         "header_size_desktop": 54,
         "subheader_size_desktop": 19,
-        "step_size_desktop": 88,
+        "step_size_desktop": 60,
         "card_subtitle_size_desktop": 12,
         "card_title_size_desktop": 22,
         "card_body_size_desktop": 16
