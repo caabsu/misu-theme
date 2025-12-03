@@ -306,7 +306,7 @@
         "btn_secondary_text": "CONTACT US",
         "btn_contact_text": "CONTACT",
         "btn_open_text": "OPEN HUB",
-        "hub_url": "",
+        "hub_url": "shopify://pages/faq",
         "contact_url": "",
         "section_margin_x": 20,
         "padding_x": 24,
