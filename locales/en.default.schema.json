@@ -9,6 +9,7 @@
  */
 {
   "general": {
+    "page": "Page",
     "header": "Header",
     "footer": "Footer",
     "collection": "Collection",

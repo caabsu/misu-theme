@@ -1,13 +1,61 @@
-{% comment %}
-  This section is used in the page template to render store pages like About us
-  or Contact us.
+<div class="page full-width">
+  <div class="page__inner">
+    <h1 class="page__title">{{ page.title }}</h1>
+    <div class="page__content">
+      {{ page.content }}
+    </div>
+  </div>
+</div>
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/page
-{% endcomment %}
+{% stylesheet %}
+  .page {
+    min-height: 60vh;
+  }
 
-<h1>{{ page.title }}</h1>
+  .page__inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: var(--space-3xl) var(--page-margin);
+  }
 
-{{ page.content }}
+  .page__title {
+    font-family: var(--font-heading-family);
+    font-size: 2rem;
+    font-weight: var(--font-heading-weight);
+    margin: 0 0 var(--space-xl);
+  }
+
+  .page__content {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-text);
+  }
+
+  .page__content h2,
+  .page__content h3,
+  .page__content h4 {
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-md);
+  }
+
+  .page__content p {
+    margin-bottom: var(--space-md);
+  }
+
+  .page__content a {
+    color: var(--color-primary);
+  }
+
+  @media (min-width: 768px) {
+    .page__inner {
+      padding: var(--space-4xl) var(--page-margin);
+    }
+
+    .page__title {
+      font-size: 2.5rem;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
