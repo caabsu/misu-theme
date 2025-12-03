@@ -1,0 +1,629 @@
+{% style %}
+  .support-cta {
+    --scta-bg: {{ section.settings.background_color }};
+    --scta-radius: {{ section.settings.border_radius }}px;
+    --scta-padding-x: {{ section.settings.padding_x }}px;
+    --scta-padding-y: {{ section.settings.padding_y }}px;
+    --scta-margin-x: {{ section.settings.section_margin_x }}px;
+    --scta-icon-bg: {{ section.settings.icon_bg }};
+    --scta-icon-color: {{ section.settings.icon_color }};
+    --scta-icon-size: {{ section.settings.icon_size }}px;
+    --scta-header-color: {{ section.settings.header_color }};
+    --scta-header-size: {{ section.settings.header_size }}px;
+    --scta-header-weight: {{ section.settings.header_weight }};
+    --scta-subheader-color: {{ section.settings.subheader_color }};
+    --scta-subheader-size: {{ section.settings.subheader_size }}px;
+    --scta-btn-primary-bg: {{ section.settings.btn_primary_bg }};
+    --scta-btn-primary-text: {{ section.settings.btn_primary_text }};
+    --scta-btn-secondary-bg: {{ section.settings.btn_secondary_bg }};
+    --scta-btn-secondary-text: {{ section.settings.btn_secondary_text }};
+    --scta-btn-radius: {{ section.settings.btn_radius }}px;
+    --scta-image-opacity: {{ section.settings.image_opacity | divided_by: 100.0 }};
+    --scta-dot-color: {{ section.settings.dot_color }};
+    --scta-divider-color: {{ section.settings.divider_color }};
+    --scta-body-color: {{ section.settings.body_color }};
+    --scta-body-size: {{ section.settings.body_size }}px;
+  }
+{% endstyle %}
+
+<div class="support-cta">
+  <div class="support-cta__card">
+    {%- comment -%} Background image with fade {%- endcomment -%}
+    {% if section.settings.background_image %}
+      <div class="support-cta__bg-image">
+        {{ section.settings.background_image | image_url: width: 1200 | image_tag: loading: 'lazy' }}
+      </div>
+      <div class="support-cta__bg-fade"></div>
+    {% endif %}
+
+    {%- comment -%} Mobile Layout {%- endcomment -%}
+    <div class="support-cta__mobile">
+      <div class="support-cta__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+      </div>
+      <h2 class="support-cta__header">{{ section.settings.header }}</h2>
+      <p class="support-cta__subheader">{{ section.settings.subheader }}</p>
+      <div class="support-cta__buttons">
+        <a href="{{ section.settings.hub_url }}" class="support-cta__btn support-cta__btn--primary">
+          {{ section.settings.btn_primary_text }}
+        </a>
+        <a href="{{ section.settings.contact_url }}" class="support-cta__btn support-cta__btn--secondary">
+          {{ section.settings.btn_secondary_text }}
+        </a>
+      </div>
+    </div>
+
+    {%- comment -%} Desktop Layout {%- endcomment -%}
+    <div class="support-cta__desktop">
+      <div class="support-cta__left">
+        <span class="support-cta__dot"></span>
+        <span class="support-cta__title">{{ section.settings.desktop_title }}</span>
+      </div>
+      <span class="support-cta__divider"></span>
+      <p class="support-cta__body">{{ section.settings.desktop_body }}</p>
+      <div class="support-cta__actions">
+        <a href="{{ section.settings.contact_url }}" class="support-cta__contact">
+          {{ section.settings.btn_contact_text }}
+        </a>
+        <a href="{{ section.settings.hub_url }}" class="support-cta__open">
+          <span>{{ section.settings.btn_open_text }}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .support-cta {
+    padding: 0 var(--scta-margin-x);
+  }
+
+  .support-cta__card {
+    position: relative;
+    background: var(--scta-bg);
+    border-radius: var(--scta-radius);
+    overflow: hidden;
+  }
+
+  /* Background image */
+  .support-cta__bg-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .support-cta__bg-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: var(--scta-image-opacity);
+  }
+
+  /* Mobile: vertical fade */
+  .support-cta__bg-fade {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 30%,
+      var(--scta-bg) 70%,
+      var(--scta-bg) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* Mobile Layout */
+  .support-cta__mobile {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--scta-padding-y) var(--scta-padding-x);
+  }
+
+  .support-cta__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--scta-icon-size);
+    height: var(--scta-icon-size);
+    background: var(--scta-icon-bg);
+    color: var(--scta-icon-color);
+    border-radius: 50%;
+    margin-bottom: 1rem;
+  }
+
+  .support-cta__icon svg {
+    width: 50%;
+    height: 50%;
+  }
+
+  .support-cta__header {
+    font-family: var(--font-heading-family);
+    font-size: var(--scta-header-size);
+    font-weight: var(--scta-header-weight);
+    color: var(--scta-header-color);
+    margin: 0 0 0.5rem;
+    line-height: 1.2;
+  }
+
+  .support-cta__subheader {
+    font-family: var(--font-body-family);
+    font-size: var(--scta-subheader-size);
+    color: var(--scta-subheader-color);
+    margin: 0 0 1.5rem;
+    line-height: 1.5;
+    max-width: 280px;
+  }
+
+  .support-cta__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .support-cta__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 1.5rem;
+    font-family: var(--font-body-family);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: var(--scta-btn-radius);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .support-cta__btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .support-cta__btn--primary {
+    background: var(--scta-btn-primary-bg);
+    color: var(--scta-btn-primary-text);
+  }
+
+  .support-cta__btn--secondary {
+    background: var(--scta-btn-secondary-bg);
+    color: var(--scta-btn-secondary-text);
+  }
+
+  /* Desktop Layout - hidden on mobile */
+  .support-cta__desktop {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .support-cta__mobile {
+      display: none;
+    }
+
+    .support-cta__desktop {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: var(--scta-padding-y) var(--scta-padding-x);
+    }
+
+    /* Desktop: horizontal fade from left */
+    .support-cta__bg-fade {
+      background: linear-gradient(
+        to right,
+        transparent 0%,
+        transparent 40%,
+        var(--scta-bg) 60%,
+        var(--scta-bg) 100%
+      );
+    }
+
+    .support-cta__bg-image {
+      width: 60%;
+      right: auto;
+    }
+
+    .support-cta__left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .support-cta__dot {
+      width: 10px;
+      height: 10px;
+      background: var(--scta-dot-color);
+      border-radius: 50%;
+    }
+
+    .support-cta__title {
+      font-family: var(--font-heading-family);
+      font-size: var(--scta-header-size);
+      font-weight: var(--scta-header-weight);
+      color: var(--scta-header-color);
+      white-space: nowrap;
+    }
+
+    .support-cta__divider {
+      width: 1px;
+      height: 2.5rem;
+      background: var(--scta-divider-color);
+      flex-shrink: 0;
+      opacity: 0.3;
+    }
+
+    .support-cta__body {
+      font-family: var(--font-body-family);
+      font-size: var(--scta-body-size);
+      color: var(--scta-body-color);
+      margin: 0;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .support-cta__actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+
+    .support-cta__contact {
+      font-family: var(--font-body-family);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--scta-header-color);
+      text-decoration: none;
+      padding: 0.5rem;
+      transition: opacity 0.2s ease;
+    }
+
+    .support-cta__contact:hover {
+      opacity: 0.7;
+    }
+
+    .support-cta__open {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: var(--scta-btn-primary-bg);
+      color: var(--scta-btn-primary-text);
+      font-family: var(--font-body-family);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: var(--scta-radius);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .support-cta__open:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .support-cta__open svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Support Hub CTA",
+  "tag": "section",
+  "class": "section-support-cta",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Mobile content"
+    },
+    {
+      "type": "text",
+      "id": "header",
+      "label": "Header",
+      "default": "Ritual Support"
+    },
+    {
+      "type": "text",
+      "id": "subheader",
+      "label": "Subheader",
+      "default": "Access our support hub, or speak to the team"
+    },
+    {
+      "type": "header",
+      "content": "Desktop content"
+    },
+    {
+      "type": "text",
+      "id": "desktop_title",
+      "label": "Title",
+      "default": "Support Hub"
+    },
+    {
+      "type": "textarea",
+      "id": "desktop_body",
+      "label": "Body text",
+      "default": "Ingredient information, subscription management, and commonly asked questions - all in one place."
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "btn_primary_text",
+      "label": "Primary button text",
+      "default": "OPEN HUB"
+    },
+    {
+      "type": "text",
+      "id": "btn_secondary_text",
+      "label": "Secondary button text (mobile)",
+      "default": "CONTACT US"
+    },
+    {
+      "type": "text",
+      "id": "btn_contact_text",
+      "label": "Contact text (desktop)",
+      "default": "CONTACT"
+    },
+    {
+      "type": "text",
+      "id": "btn_open_text",
+      "label": "Open button text (desktop)",
+      "default": "OPEN HUB"
+    },
+    {
+      "type": "url",
+      "id": "hub_url",
+      "label": "Hub link"
+    },
+    {
+      "type": "url",
+      "id": "contact_url",
+      "label": "Contact link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_margin_x",
+      "label": "Section side margin",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Card horizontal padding",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "default": 24,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_y",
+      "label": "Card vertical padding",
+      "min": 24,
+      "max": 64,
+      "step": 4,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "image_opacity",
+      "label": "Image opacity",
+      "min": 5,
+      "max": 50,
+      "step": 5,
+      "default": 15,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Icon (mobile)"
+    },
+    {
+      "type": "color",
+      "id": "icon_bg",
+      "label": "Icon background",
+      "default": "#2a2624"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 40,
+      "max": 80,
+      "step": 4,
+      "default": 56,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "color",
+      "id": "header_color",
+      "label": "Header color",
+      "default": "#2a2624"
+    },
+    {
+      "type": "range",
+      "id": "header_size",
+      "label": "Header size",
+      "min": 18,
+      "max": 32,
+      "step": 1,
+      "default": 22,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "header_weight",
+      "label": "Header weight",
+      "options": [
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color",
+      "id": "subheader_color",
+      "label": "Subheader color",
+      "default": "#8c857f"
+    },
+    {
+      "type": "range",
+      "id": "subheader_size",
+      "label": "Subheader size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "default": 14,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Desktop text"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body text color",
+      "default": "#6b6560"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "label": "Body text size",
+      "min": 12,
+      "max": 16,
+      "step": 1,
+      "default": 13,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "dot_color",
+      "label": "Dot color",
+      "default": "#2a2624"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider color",
+      "default": "#2a2624"
+    },
+    {
+      "type": "header",
+      "content": "Button style"
+    },
+    {
+      "type": "color",
+      "id": "btn_primary_bg",
+      "label": "Primary button background",
+      "default": "#2a2624"
+    },
+    {
+      "type": "color",
+      "id": "btn_primary_text",
+      "label": "Primary button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "btn_secondary_bg",
+      "label": "Secondary button background",
+      "default": "#f5f0ea"
+    },
+    {
+      "type": "color",
+      "id": "btn_secondary_text",
+      "label": "Secondary button text",
+      "default": "#2a2624"
+    },
+    {
+      "type": "range",
+      "id": "btn_radius",
+      "label": "Button corner radius",
+      "min": 0,
+      "max": 16,
+      "step": 2,
+      "default": 8,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Support Hub CTA"
+    }
+  ]
+}
+{% endschema %}
