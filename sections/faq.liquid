@@ -36,12 +36,10 @@
 
     {%- comment -%} FAQ Categories {%- endcomment -%}
     <div class="faq__content">
-      {%- liquid
-        assign categories = section.settings.categories | split: ','
-        for category in categories
-          assign category_handle = category | strip | handleize
-          assign category_name = category | strip
-      -%}
+      {%- assign categories = section.settings.categories | split: ',' -%}
+      {%- for category in categories -%}
+        {%- assign category_handle = category | strip | handleize -%}
+        {%- assign category_name = category | strip -%}
         <div class="faq__category" data-faq-category="{{ category_handle }}">
           <h2 class="faq__category-title">{{ category_name }}</h2>
           <div class="faq__list">
