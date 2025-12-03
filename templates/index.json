@@ -284,28 +284,11 @@
         "card_width_desktop": 280,
         "card_gap_desktop": 40
       }
-    },
-    "rich_text_tN6MWa": {
-      "type": "rich-text",
-      "settings": {
-        "eyebrow": "from ancient knowledge",
-        "heading": "Talk about your brand",
-        "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
-        "button_text": "",
-        "button_url": "",
-        "button_style": "primary",
-        "text_alignment_desktop": "center",
-        "content_width": 60,
-        "text_alignment_mobile": "center",
-        "heading_weight": "default",
-        "body_weight": "default"
-      }
     }
   },
   "order": [
     "hero_banner",
     "grain_complex_Q8LKzi",
-    "daily_ritual_dnjyGL",
-    "rich_text_tN6MWa"
+    "daily_ritual_dnjyGL"
   ]
 }
