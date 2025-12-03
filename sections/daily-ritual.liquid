@@ -32,6 +32,8 @@
     --dr-card-subtitle-size-desktop: {{ section.settings.card_subtitle_size_desktop }}px;
     --dr-card-title-size-desktop: {{ section.settings.card_title_size_desktop }}px;
     --dr-card-body-size-desktop: {{ section.settings.card_body_size_desktop }}px;
+    --dr-card-width-desktop: {{ section.settings.card_width_desktop }}px;
+    --dr-card-gap-desktop: {{ section.settings.card_gap_desktop }}px;
   }
 {% endstyle %}
 
@@ -134,15 +136,18 @@
       const slideWidth = slides[0].offsetWidth;
       const gap = parseInt(getComputedStyle(track).gap) || 0;
       const containerWidth = section.offsetWidth;
+      const paddingLeft = parseInt(getComputedStyle(track).paddingLeft) || 0;
 
       let offset;
       if (currentIndex === 0) {
-        // First card: use the left offset setting
+        // First card: no transform needed, uses padding-left positioning
         offset = 0;
       } else {
         // Center the card on screen
+        // Account for initial padding and center the active card
+        const cardPosition = paddingLeft + (currentIndex * (slideWidth + gap));
         const centerOffset = (containerWidth - slideWidth) / 2;
-        offset = (currentIndex * (slideWidth + gap)) - centerOffset;
+        offset = cardPosition - centerOffset;
       }
 
       track.style.transition = animate ? 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
@@ -488,14 +493,14 @@
 
     .daily-ritual__track {
       justify-content: center;
-      gap: 2.5rem;
+      gap: var(--dr-card-gap-desktop);
       padding-left: 0;
       transform: none !important;
       cursor: default;
     }
 
     .daily-ritual__slide {
-      flex: 0 0 280px;
+      flex: 0 0 var(--dr-card-width-desktop);
       cursor: pointer;
     }
 
@@ -877,6 +882,30 @@
       "max": 22,
       "step": 1,
       "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Desktop card layout"
+    },
+    {
+      "type": "range",
+      "id": "card_width_desktop",
+      "label": "Card width",
+      "min": 200,
+      "max": 400,
+      "step": 10,
+      "default": 280,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_gap_desktop",
+      "label": "Gap between cards",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "default": 40,
       "unit": "px"
     }
   ],
