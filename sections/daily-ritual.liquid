@@ -25,6 +25,7 @@
     --dr-indicator-active: {{ section.settings.indicator_active_color }};
     --dr-padding-top: {{ section.settings.padding_top }}px;
     --dr-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --dr-first-card-offset: {{ section.settings.first_card_offset }}px;
   }
 {% endstyle %}
 
@@ -263,7 +264,7 @@
     gap: 1.75rem;
     will-change: transform;
     user-select: none;
-    padding-left: calc(50% - 120px);
+    padding-left: var(--dr-first-card-offset);
   }
 
   .daily-ritual__slide {
@@ -406,7 +407,6 @@
 
     .daily-ritual__track {
       gap: 2rem;
-      padding-left: calc(50% - 140px);
     }
   }
 
@@ -417,7 +417,6 @@
 
     .daily-ritual__track {
       gap: 2.25rem;
-      padding-left: calc(50% - 150px);
     }
 
     .daily-ritual__header {
@@ -700,6 +699,20 @@
       "max": 120,
       "step": 5,
       "default": 60,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Carousel layout"
+    },
+    {
+      "type": "range",
+      "id": "first_card_offset",
+      "label": "First card left offset",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "default": 40,
       "unit": "px"
     }
   ],
