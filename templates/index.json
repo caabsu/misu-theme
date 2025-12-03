@@ -289,11 +289,51 @@
         "card_width_desktop": 280,
         "card_gap_desktop": 40
       }
+    },
+    "support_hub_cta_BAUdRz": {
+      "type": "support-hub-cta",
+      "name": "Support Hub CTA",
+      "settings": {
+        "header": "Ritual Support",
+        "subheader": "Access our support hub, or speak to the team",
+        "desktop_title": "Support Hub",
+        "desktop_body": "Ingredient information, subscription management, and commonly asked questions - all in one place.",
+        "btn_primary_text": "OPEN HUB",
+        "btn_secondary_text": "CONTACT US",
+        "btn_contact_text": "CONTACT",
+        "btn_open_text": "OPEN HUB",
+        "hub_url": "",
+        "contact_url": "",
+        "section_margin_x": 16,
+        "padding_x": 24,
+        "padding_y": 32,
+        "border_radius": 16,
+        "background_color": "#FFFFFF",
+        "image_opacity": 15,
+        "icon_bg": "#f5f0ea",
+        "icon_color": "#2a2624",
+        "icon_size": 56,
+        "header_color": "#2a2624",
+        "header_size": 22,
+        "header_weight": "600",
+        "subheader_color": "#8c857f",
+        "subheader_size": 14,
+        "body_color": "#6b6560",
+        "body_size": 13,
+        "dot_color": "#2a2624",
+        "divider_color": "#2a2624",
+        "btn_primary_bg": "#2a2624",
+        "btn_primary_text_color": "#FFFFFF",
+        "btn_secondary_bg": "#f5f0ea",
+        "btn_secondary_text_color": "#2a2624",
+        "btn_radius": 8
+      }
     }
   },
   "order": [
     "hero_banner",
     "grain_complex_Q8LKzi",
-    "daily_ritual_dnjyGL"
+    "daily_ritual_dnjyGL",
+    "support_hub_cta_BAUdRz"
   ]
 }
