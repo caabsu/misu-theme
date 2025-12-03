@@ -284,42 +284,11 @@
         "card_width_desktop": 280,
         "card_gap_desktop": 40
       }
-    },
-    "support_link_TjYJqk": {
-      "type": "support-link",
-      "name": "Support link",
-      "settings": {
-        "subtitle": "ASSISTANT",
-        "title": "Support Hub",
-        "link_url": "",
-        "padding_x": 24,
-        "padding_y": 24,
-        "margin_top": 0,
-        "margin_bottom": 20,
-        "border_color": "#e6e0d8",
-        "border_width": 1,
-        "border_radius": 12,
-        "background_color": "#ffffff",
-        "image_opacity": 40,
-        "subtitle_color": "#8c857f",
-        "title_color": "#2a2624",
-        "subtitle_size": 10,
-        "subtitle_size_desktop": 11,
-        "subtitle_weight": "500",
-        "title_size": 20,
-        "title_size_desktop": 24,
-        "title_weight": "600",
-        "arrow_bg": "#2a2624",
-        "arrow_color": "#ffffff",
-        "arrow_size": 44,
-        "arrow_size_desktop": 52
-      }
     }
   },
   "order": [
     "hero_banner",
     "grain_complex_Q8LKzi",
-    "daily_ritual_dnjyGL",
-    "support_link_TjYJqk"
+    "daily_ritual_dnjyGL"
   ]
 }
