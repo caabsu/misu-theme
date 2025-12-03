@@ -14,9 +14,9 @@
     --scta-subheader-color: {{ section.settings.subheader_color }};
     --scta-subheader-size: {{ section.settings.subheader_size }}px;
     --scta-btn-primary-bg: {{ section.settings.btn_primary_bg }};
-    --scta-btn-primary-text: {{ section.settings.btn_primary_text }};
+    --scta-btn-primary-text: {{ section.settings.btn_primary_text_color }};
     --scta-btn-secondary-bg: {{ section.settings.btn_secondary_bg }};
-    --scta-btn-secondary-text: {{ section.settings.btn_secondary_text }};
+    --scta-btn-secondary-text: {{ section.settings.btn_secondary_text_color }};
     --scta-btn-radius: {{ section.settings.btn_radius }}px;
     --scta-image-opacity: {{ section.settings.image_opacity | divided_by: 100.0 }};
     --scta-dot-color: {{ section.settings.dot_color }};
@@ -593,8 +593,8 @@
     },
     {
       "type": "color",
-      "id": "btn_primary_text",
-      "label": "Primary button text",
+      "id": "btn_primary_text_color",
+      "label": "Primary button text color",
       "default": "#FFFFFF"
     },
     {
@@ -605,8 +605,8 @@
     },
     {
       "type": "color",
-      "id": "btn_secondary_text",
-      "label": "Secondary button text",
+      "id": "btn_secondary_text_color",
+      "label": "Secondary button text color",
       "default": "#2a2624"
     },
     {
