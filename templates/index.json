@@ -221,11 +221,79 @@
         "heading_weight": "default",
         "body_weight": "default"
       }
+    },
+    "daily_ritual_dnjyGL": {
+      "type": "daily-ritual",
+      "blocks": {
+        "step_yVbYfV": {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "subtitle": "Step One",
+            "title": "Prepare Your Space",
+            "body": "Find a quiet corner and take a moment to settle into stillness."
+          }
+        },
+        "step_Y9zLHg": {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "subtitle": "Step Two",
+            "title": "Mix & Pour",
+            "body": "Add one scoop to warm water and stir gently until smooth."
+          }
+        },
+        "step_8GC4dV": {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "subtitle": "Step Three",
+            "title": "Savor the Moment",
+            "body": "Take slow, mindful sips and embrace the warmth within."
+          }
+        }
+      },
+      "block_order": [
+        "step_yVbYfV",
+        "step_Y9zLHg",
+        "step_8GC4dV"
+      ],
+      "name": "Daily Ritual",
+      "settings": {
+        "header": "The Daily Ritual",
+        "subheader": "3 minutes to stillness",
+        "background_color": "#2a2624",
+        "card_bg": "#2f2c2a",
+        "card_radius": 12,
+        "header_color": "#f5f0ea",
+        "header_size": 42,
+        "header_weight": "400",
+        "subheader_color": "#888888",
+        "subheader_size": 16,
+        "subheader_weight": "400",
+        "step_color": "#c5a059",
+        "step_size": 76,
+        "step_weight": "500",
+        "card_subtitle_color": "#f5f0ea",
+        "card_subtitle_size": 10,
+        "card_subtitle_weight": "500",
+        "card_title_color": "#ffffff",
+        "card_title_size": 28,
+        "card_title_weight": "600",
+        "card_body_color": "#AAAAAA",
+        "card_body_size": 14,
+        "card_body_weight": "400",
+        "indicator_color": "#444444",
+        "indicator_active_color": "#2D5A47",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     }
   },
   "order": [
     "hero_banner",
     "grain_complex_Q8LKzi",
-    "rich_text_tN6MWa"
+    "rich_text_tN6MWa",
+    "daily_ritual_dnjyGL"
   ]
 }
