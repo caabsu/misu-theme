@@ -8,6 +8,8 @@
     --footer-button: {{ settings.footer_button }};
     --footer-watermark: {{ settings.footer_watermark_color }};
     --footer-title-weight: {{ section.settings.title_font_weight }};
+    --footer-top-radius: {{ section.settings.top_corner_radius }}px;
+    --footer-overlap: {{ section.settings.overlap_amount }}px;
   }
 {% endstyle %}
 
@@ -171,10 +173,12 @@
   .footer {
     position: relative;
     overflow: hidden;
-    margin-top: auto;
+    margin-top: calc(-1 * var(--footer-overlap));
     width: 100%;
     background-color: var(--footer-bg);
     color: var(--footer-text);
+    border-top-left-radius: var(--footer-top-radius);
+    border-top-right-radius: var(--footer-top-radius);
   }
 
   .footer__watermark {
@@ -513,6 +517,30 @@
 {
   "name": "t:sections.footer.name",
   "settings": [
+    {
+      "type": "header",
+      "content": "Shape"
+    },
+    {
+      "type": "range",
+      "id": "top_corner_radius",
+      "label": "Top corner radius",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "default": 24,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "overlap_amount",
+      "label": "Overlap into section above",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "default": 16,
+      "unit": "px"
+    },
     {
       "type": "header",
       "content": "t:sections.footer.brand_header"
