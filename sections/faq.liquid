@@ -25,11 +25,18 @@
     --faq-search-border: {{ section.settings.search_border }};
     --faq-padding-top: {{ section.settings.padding_top }}px;
     --faq-hero-opacity: {{ section.settings.hero_opacity | divided_by: 100.0 }};
-    --faq-action-bg: {{ section.settings.action_bg }};
-    --faq-action-text: {{ section.settings.action_text }};
-    --faq-action-icon-bg: {{ section.settings.action_icon_bg }};
-    --faq-action-icon-color: {{ section.settings.action_icon_color }};
-    --faq-action-hover-bg: {{ section.settings.action_hover_bg }};
+    --faq-action1-bg: {{ section.settings.action_1_bg }};
+    --faq-action1-text: {{ section.settings.action_1_text_color }};
+    --faq-action1-icon-bg: {{ section.settings.action_1_icon_bg }};
+    --faq-action1-icon-color: {{ section.settings.action_1_icon_color }};
+    --faq-action2-bg: {{ section.settings.action_2_bg }};
+    --faq-action2-text: {{ section.settings.action_2_text_color }};
+    --faq-action2-icon-bg: {{ section.settings.action_2_icon_bg }};
+    --faq-action2-icon-color: {{ section.settings.action_2_icon_color }};
+    --faq-action3-bg: {{ section.settings.action_3_bg }};
+    --faq-action3-text: {{ section.settings.action_3_text_color }};
+    --faq-action3-icon-bg: {{ section.settings.action_3_icon_bg }};
+    --faq-action3-icon-color: {{ section.settings.action_3_icon_color }};
   }
 {% endstyle %}
 
@@ -62,7 +69,7 @@
       {% if section.settings.show_quick_actions %}
         <div class="faq__actions">
           {% if section.settings.action_1_text != blank %}
-            <a href="{{ section.settings.action_1_url }}" class="faq__action">
+            <a href="{{ section.settings.action_1_url }}" class="faq__action faq__action--1">
               <span class="faq__action-icon-wrap">
                 <svg class="faq__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M17 2l4 4-4 4"/>
@@ -75,7 +82,7 @@
             </a>
           {% endif %}
           {% if section.settings.action_2_text != blank %}
-            <a href="{{ section.settings.action_2_url }}" class="faq__action">
+            <a href="{{ section.settings.action_2_url }}" class="faq__action faq__action--2">
               <span class="faq__action-icon-wrap">
                 <svg class="faq__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="1" y="3" width="15" height="13" rx="2" ry="2"/>
@@ -88,7 +95,7 @@
             </a>
           {% endif %}
           {% if section.settings.action_3_text != blank %}
-            <a href="{{ section.settings.action_3_url }}" class="faq__action">
+            <a href="{{ section.settings.action_3_url }}" class="faq__action faq__action--3">
               <span class="faq__action-icon-wrap">
                 <svg class="faq__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <polyline points="9 14 4 9 9 4"/>
@@ -331,7 +338,6 @@
     padding: 1rem 0.5rem;
     font-family: var(--font-body-family);
     text-decoration: none;
-    background: var(--faq-action-bg);
     border: none;
     border-radius: 8px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -344,7 +350,6 @@
 
   .faq__action:hover .faq__action-icon-wrap {
     transform: scale(1.05);
-    background: var(--faq-action-hover-bg);
   }
 
   .faq__action-icon-wrap {
@@ -353,7 +358,6 @@
     justify-content: center;
     width: 40px;
     height: 40px;
-    background: var(--faq-action-icon-bg);
     border-radius: 50%;
     transition: transform 0.2s ease, background 0.2s ease;
   }
@@ -361,7 +365,6 @@
   .faq__action-icon {
     width: 18px;
     height: 18px;
-    color: var(--faq-action-icon-color);
   }
 
   .faq__action-label {
@@ -369,7 +372,48 @@
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--faq-action-text);
+  }
+
+  /* Button 1 colors */
+  .faq__action--1 {
+    background: var(--faq-action1-bg);
+  }
+  .faq__action--1 .faq__action-icon-wrap {
+    background: var(--faq-action1-icon-bg);
+  }
+  .faq__action--1 .faq__action-icon {
+    color: var(--faq-action1-icon-color);
+  }
+  .faq__action--1 .faq__action-label {
+    color: var(--faq-action1-text);
+  }
+
+  /* Button 2 colors */
+  .faq__action--2 {
+    background: var(--faq-action2-bg);
+  }
+  .faq__action--2 .faq__action-icon-wrap {
+    background: var(--faq-action2-icon-bg);
+  }
+  .faq__action--2 .faq__action-icon {
+    color: var(--faq-action2-icon-color);
+  }
+  .faq__action--2 .faq__action-label {
+    color: var(--faq-action2-text);
+  }
+
+  /* Button 3 colors */
+  .faq__action--3 {
+    background: var(--faq-action3-bg);
+  }
+  .faq__action--3 .faq__action-icon-wrap {
+    background: var(--faq-action3-icon-bg);
+  }
+  .faq__action--3 .faq__action-icon {
+    color: var(--faq-action3-icon-color);
+  }
+  .faq__action--3 .faq__action-label {
+    color: var(--faq-action3-text);
   }
 
   .faq__search {
@@ -645,34 +689,88 @@
       "label": "Button 3 link"
     },
     {
+      "type": "header",
+      "content": "Button 1 colors"
+    },
+    {
       "type": "color",
-      "id": "action_bg",
+      "id": "action_1_bg",
       "label": "Card background",
       "default": "#FFFFFF"
     },
     {
       "type": "color",
-      "id": "action_text",
+      "id": "action_1_text_color",
       "label": "Label color",
       "default": "#4A4A4A"
     },
     {
       "type": "color",
-      "id": "action_icon_bg",
-      "label": "Icon circle background",
-      "default": "#F0F0F0"
+      "id": "action_1_icon_bg",
+      "label": "Icon circle",
+      "default": "#E8F5E9"
     },
     {
       "type": "color",
-      "id": "action_icon_color",
+      "id": "action_1_icon_color",
       "label": "Icon color",
       "default": "#2D5A47"
     },
     {
+      "type": "header",
+      "content": "Button 2 colors"
+    },
+    {
       "type": "color",
-      "id": "action_hover_bg",
-      "label": "Icon circle hover",
-      "default": "#2D5A47"
+      "id": "action_2_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "action_2_text_color",
+      "label": "Label color",
+      "default": "#4A4A4A"
+    },
+    {
+      "type": "color",
+      "id": "action_2_icon_bg",
+      "label": "Icon circle",
+      "default": "#FFF3E0"
+    },
+    {
+      "type": "color",
+      "id": "action_2_icon_color",
+      "label": "Icon color",
+      "default": "#E65100"
+    },
+    {
+      "type": "header",
+      "content": "Button 3 colors"
+    },
+    {
+      "type": "color",
+      "id": "action_3_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "action_3_text_color",
+      "label": "Label color",
+      "default": "#4A4A4A"
+    },
+    {
+      "type": "color",
+      "id": "action_3_icon_bg",
+      "label": "Icon circle",
+      "default": "#E3F2FD"
+    },
+    {
+      "type": "color",
+      "id": "action_3_icon_color",
+      "label": "Icon color",
+      "default": "#1565C0"
     },
     {
       "type": "header",
