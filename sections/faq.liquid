@@ -3,7 +3,6 @@
     --faq-bg: {{ section.settings.background_color }};
     --faq-eyebrow-color: {{ section.settings.eyebrow_color }};
     --faq-eyebrow-size: {{ section.settings.eyebrow_size }}px;
-    --faq-eyebrow-weight: {{ section.settings.eyebrow_weight }};
     --faq-title-color: {{ section.settings.title_color }};
     --faq-title-size: {{ section.settings.title_size }}px;
     --faq-title-weight: {{ section.settings.title_weight }};
@@ -280,7 +279,7 @@
   .faq__eyebrow {
     font-family: var(--font-body-family);
     font-size: var(--faq-eyebrow-size);
-    font-weight: var(--faq-eyebrow-weight);
+    font-weight: 500;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--faq-eyebrow-color);
@@ -895,18 +894,6 @@
       "step": 1,
       "default": 11,
       "unit": "px"
-    },
-    {
-      "type": "select",
-      "id": "eyebrow_weight",
-      "label": "Eyebrow weight",
-      "options": [
-        { "value": "400", "label": "Regular" },
-        { "value": "500", "label": "Medium" },
-        { "value": "600", "label": "Semibold" },
-        { "value": "700", "label": "Bold" }
-      ],
-      "default": "500"
     },
     {
       "type": "header",
