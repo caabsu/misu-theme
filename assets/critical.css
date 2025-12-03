@@ -286,12 +286,19 @@ a {
 .shopify-section:has(.header) {
   position: relative;
   z-index: 100;
+  background-color: var(--color-background);
+  transition: background-color 0.4s ease;
 }
 
 /* Sticky header - parent section handles sticky positioning */
 .shopify-section:has(.header--sticky) {
   position: sticky;
   top: 0;
+}
+
+/* Transparent header - make parent section also transparent */
+.shopify-section:has(.header--transparent) {
+  background-color: transparent;
 }
 
 /** Container utility */

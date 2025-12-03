@@ -126,8 +126,10 @@
 
     let currentIndex = 0;
     let startX = 0;
+    let startY = 0;
     let currentX = 0;
     let isDragging = false;
+    let isHorizontalSwipe = null; // null = undetermined, true = horizontal, false = vertical
 
     function isDesktop() {
       return window.innerWidth >= 1024;
@@ -181,35 +183,63 @@
     track.addEventListener('touchstart', (e) => {
       if (isDesktop()) return;
       startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
       isDragging = true;
+      isHorizontalSwipe = null; // Reset direction detection
       track.style.transition = 'none';
     }, { passive: true });
 
     track.addEventListener('touchmove', (e) => {
       if (isDesktop() || !isDragging) return;
-      currentX = e.touches[0].clientX;
-      const diff = currentX - startX;
-      const slideWidth = slides[0].offsetWidth;
-      const gap = parseInt(getComputedStyle(track).gap) || 0;
-      const baseOffset = currentIndex * (slideWidth + gap);
-      track.style.transform = `translateX(${-baseOffset + diff}px)`;
+
+      const touchX = e.touches[0].clientX;
+      const touchY = e.touches[0].clientY;
+      const diffX = Math.abs(touchX - startX);
+      const diffY = Math.abs(touchY - startY);
+
+      // Determine swipe direction on first significant movement
+      if (isHorizontalSwipe === null && (diffX > 10 || diffY > 10)) {
+        isHorizontalSwipe = diffX > diffY;
+      }
+
+      // Only handle horizontal swipes
+      if (isHorizontalSwipe === false) {
+        return; // Let vertical scrolling happen naturally
+      }
+
+      if (isHorizontalSwipe === true) {
+        currentX = touchX;
+        const diff = currentX - startX;
+        const slideWidth = slides[0].offsetWidth;
+        const gap = parseInt(getComputedStyle(track).gap) || 0;
+        const baseOffset = currentIndex * (slideWidth + gap);
+        track.style.transform = `translateX(${-baseOffset + diff}px)`;
+      }
     }, { passive: true });
 
     track.addEventListener('touchend', () => {
       if (isDesktop() || !isDragging) return;
       isDragging = false;
-      const diff = currentX - startX;
-      const threshold = 50;
 
-      if (diff > threshold && currentIndex > 0) {
-        updateCarousel(currentIndex - 1);
-      } else if (diff < -threshold && currentIndex < slides.length - 1) {
-        updateCarousel(currentIndex + 1);
-      } else {
-        updateCarousel(currentIndex);
+      // Only process swipe if it was horizontal
+      if (isHorizontalSwipe === true) {
+        const diff = currentX - startX;
+        const threshold = 50;
+
+        if (diff > threshold && currentIndex > 0) {
+          updateCarousel(currentIndex - 1);
+        } else if (diff < -threshold && currentIndex < slides.length - 1) {
+          updateCarousel(currentIndex + 1);
+        } else {
+          updateCarousel(currentIndex);
+        }
       }
+
+      // Reset state
       startX = 0;
+      startY = 0;
       currentX = 0;
+      isHorizontalSwipe = null;
     });
 
     // Mouse drag support (mobile only)
@@ -539,6 +569,7 @@
     will-change: transform;
     user-select: none;
     padding-left: var(--dr-first-card-offset);
+    touch-action: pan-y pinch-zoom;
   }
 
   .daily-ritual__slide {
