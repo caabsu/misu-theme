@@ -1,0 +1,772 @@
+{% style %}
+  .daily-ritual {
+    --dr-bg: {{ section.settings.background_color }};
+    --dr-header-color: {{ section.settings.header_color }};
+    --dr-header-size: {{ section.settings.header_size }}px;
+    --dr-header-weight: {{ section.settings.header_weight }};
+    --dr-subheader-color: {{ section.settings.subheader_color }};
+    --dr-subheader-size: {{ section.settings.subheader_size }}px;
+    --dr-subheader-weight: {{ section.settings.subheader_weight }};
+    --dr-card-bg: {{ section.settings.card_bg }};
+    --dr-card-radius: {{ section.settings.card_radius }}px;
+    --dr-step-color: {{ section.settings.step_color }};
+    --dr-step-size: {{ section.settings.step_size }}px;
+    --dr-step-weight: {{ section.settings.step_weight }};
+    --dr-card-subtitle-color: {{ section.settings.card_subtitle_color }};
+    --dr-card-subtitle-size: {{ section.settings.card_subtitle_size }}px;
+    --dr-card-subtitle-weight: {{ section.settings.card_subtitle_weight }};
+    --dr-card-title-color: {{ section.settings.card_title_color }};
+    --dr-card-title-size: {{ section.settings.card_title_size }}px;
+    --dr-card-title-weight: {{ section.settings.card_title_weight }};
+    --dr-card-body-color: {{ section.settings.card_body_color }};
+    --dr-card-body-size: {{ section.settings.card_body_size }}px;
+    --dr-card-body-weight: {{ section.settings.card_body_weight }};
+    --dr-indicator-color: {{ section.settings.indicator_color }};
+    --dr-indicator-active: {{ section.settings.indicator_active_color }};
+    --dr-padding-top: {{ section.settings.padding_top }}px;
+    --dr-padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{% endstyle %}
+
+<section class="daily-ritual full-width" data-daily-ritual>
+  <div class="daily-ritual__inner">
+    <header class="daily-ritual__header">
+      {% if section.settings.header != blank %}
+        <h2 class="daily-ritual__title">{{ section.settings.header }}</h2>
+      {% endif %}
+      {% if section.settings.subheader != blank %}
+        <p class="daily-ritual__subtitle">{{ section.settings.subheader }}</p>
+      {% endif %}
+    </header>
+
+    <div class="daily-ritual__carousel" data-carousel>
+      <div class="daily-ritual__track" data-carousel-track>
+        {% for block in section.blocks %}
+          <div class="daily-ritual__slide" data-carousel-slide {{ block.shopify_attributes }}>
+            <div class="daily-ritual__card">
+              <span class="daily-ritual__step">{{ block.settings.step_number }}</span>
+              {% if block.settings.image %}
+                <div class="daily-ritual__image">
+                  {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy' }}
+                </div>
+              {% else %}
+                <div class="daily-ritual__image daily-ritual__image--placeholder">
+                  {{ 'image' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+              <div class="daily-ritual__content">
+                {% if block.settings.subtitle != blank %}
+                  <p class="daily-ritual__card-subtitle">{{ block.settings.subtitle }}</p>
+                {% endif %}
+                {% if block.settings.title != blank %}
+                  <h3 class="daily-ritual__card-title">{{ block.settings.title }}</h3>
+                {% endif %}
+                {% if block.settings.body != blank %}
+                  <p class="daily-ritual__card-body">{{ block.settings.body }}</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="daily-ritual__indicators" data-carousel-indicators>
+      {% for block in section.blocks %}
+        <button
+          class="daily-ritual__indicator {% if forloop.first %}daily-ritual__indicator--active{% endif %}"
+          data-carousel-indicator="{{ forloop.index0 }}"
+          aria-label="Go to slide {{ forloop.index }}"
+        ></button>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% javascript %}
+  function initDailyRitualCarousel() {
+    const section = document.querySelector('[data-daily-ritual]');
+    if (!section) return;
+
+    const track = section.querySelector('[data-carousel-track]');
+    const slides = section.querySelectorAll('[data-carousel-slide]');
+    const indicators = section.querySelectorAll('[data-carousel-indicator]');
+
+    if (!track || slides.length === 0) return;
+
+    let currentIndex = 0;
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
+
+    function updateCarousel(index, animate = true) {
+      currentIndex = Math.max(0, Math.min(index, slides.length - 1));
+
+      const slideWidth = slides[0].offsetWidth;
+      const gap = parseInt(getComputedStyle(track).gap) || 0;
+      const offset = currentIndex * (slideWidth + gap);
+
+      track.style.transition = animate ? 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
+      track.style.transform = `translateX(-${offset}px)`;
+
+      indicators.forEach((indicator, i) => {
+        indicator.classList.toggle('daily-ritual__indicator--active', i === currentIndex);
+      });
+
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('daily-ritual__slide--active', i === currentIndex);
+      });
+    }
+
+    // Touch/Mouse events for swipe
+    track.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+      track.style.transition = 'none';
+    }, { passive: true });
+
+    track.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      currentX = e.touches[0].clientX;
+      const diff = currentX - startX;
+      const slideWidth = slides[0].offsetWidth;
+      const gap = parseInt(getComputedStyle(track).gap) || 0;
+      const baseOffset = currentIndex * (slideWidth + gap);
+      track.style.transform = `translateX(${-baseOffset + diff}px)`;
+    }, { passive: true });
+
+    track.addEventListener('touchend', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      const diff = currentX - startX;
+      const threshold = 50;
+
+      if (diff > threshold && currentIndex > 0) {
+        updateCarousel(currentIndex - 1);
+      } else if (diff < -threshold && currentIndex < slides.length - 1) {
+        updateCarousel(currentIndex + 1);
+      } else {
+        updateCarousel(currentIndex);
+      }
+      startX = 0;
+      currentX = 0;
+    });
+
+    // Mouse drag support
+    track.addEventListener('mousedown', (e) => {
+      startX = e.clientX;
+      isDragging = true;
+      track.style.transition = 'none';
+      track.style.cursor = 'grabbing';
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      currentX = e.clientX;
+      const diff = currentX - startX;
+      const slideWidth = slides[0].offsetWidth;
+      const gap = parseInt(getComputedStyle(track).gap) || 0;
+      const baseOffset = currentIndex * (slideWidth + gap);
+      track.style.transform = `translateX(${-baseOffset + diff}px)`;
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      track.style.cursor = 'grab';
+      const diff = currentX - startX;
+      const threshold = 50;
+
+      if (diff > threshold && currentIndex > 0) {
+        updateCarousel(currentIndex - 1);
+      } else if (diff < -threshold && currentIndex < slides.length - 1) {
+        updateCarousel(currentIndex + 1);
+      } else {
+        updateCarousel(currentIndex);
+      }
+      startX = 0;
+      currentX = 0;
+    });
+
+    // Indicator clicks
+    indicators.forEach((indicator) => {
+      indicator.addEventListener('click', () => {
+        const index = parseInt(indicator.dataset.carouselIndicator);
+        updateCarousel(index);
+      });
+    });
+
+    // Keyboard navigation
+    section.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        updateCarousel(currentIndex - 1);
+      } else if (e.key === 'ArrowRight') {
+        updateCarousel(currentIndex + 1);
+      }
+    });
+
+    // Initial setup
+    track.style.cursor = 'grab';
+    updateCarousel(0, false);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDailyRitualCarousel);
+  } else {
+    initDailyRitualCarousel();
+  }
+{% endjavascript %}
+
+{% stylesheet %}
+  .daily-ritual {
+    background-color: var(--dr-bg);
+    padding: var(--dr-padding-top) var(--page-margin) var(--dr-padding-bottom);
+    overflow: hidden;
+  }
+
+  .daily-ritual__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+  }
+
+  .daily-ritual__header {
+    margin-bottom: var(--space-2xl);
+    text-align: left;
+  }
+
+  .daily-ritual__title {
+    font-family: var(--font-heading-family);
+    font-size: var(--dr-header-size);
+    font-weight: var(--dr-header-weight);
+    color: var(--dr-header-color);
+    margin: 0 0 var(--space-xs);
+    line-height: 1.2;
+  }
+
+  .daily-ritual__subtitle {
+    font-family: var(--font-body-family);
+    font-size: var(--dr-subheader-size);
+    font-weight: var(--dr-subheader-weight);
+    color: var(--dr-subheader-color);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .daily-ritual__carousel {
+    position: relative;
+    margin: 0 calc(-1 * var(--page-margin));
+    padding: 0 var(--page-margin);
+  }
+
+  .daily-ritual__track {
+    display: flex;
+    gap: 1.5rem;
+    will-change: transform;
+    user-select: none;
+  }
+
+  .daily-ritual__slide {
+    flex: 0 0 280px;
+    opacity: 0.6;
+    transform: scale(0.95);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .daily-ritual__slide--active {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .daily-ritual__card {
+    position: relative;
+    background: var(--dr-card-bg);
+    border-radius: var(--dr-card-radius);
+    overflow: visible;
+    padding-top: 1.5rem;
+  }
+
+  .daily-ritual__step {
+    position: absolute;
+    top: -0.5rem;
+    left: -0.25rem;
+    font-family: var(--font-heading-family);
+    font-size: var(--dr-step-size);
+    font-weight: var(--dr-step-weight);
+    color: var(--dr-step-color);
+    line-height: 1;
+    z-index: 2;
+    opacity: 0.9;
+    transform: translateY(-30%);
+  }
+
+  .daily-ritual__image {
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border-radius: calc(var(--dr-card-radius) * 0.8);
+    margin: 0 0.75rem;
+  }
+
+  .daily-ritual__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .daily-ritual__slide:hover .daily-ritual__image img {
+    transform: scale(1.03);
+  }
+
+  .daily-ritual__image--placeholder {
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .daily-ritual__image--placeholder svg {
+    width: 48px;
+    height: 48px;
+    opacity: 0.3;
+  }
+
+  .daily-ritual__content {
+    padding: 1.25rem 0.75rem 1.5rem;
+    text-align: left;
+  }
+
+  .daily-ritual__card-subtitle {
+    font-family: var(--font-body-family);
+    font-size: var(--dr-card-subtitle-size);
+    font-weight: var(--dr-card-subtitle-weight);
+    color: var(--dr-card-subtitle-color);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0 0 0.5rem;
+    line-height: 1.4;
+  }
+
+  .daily-ritual__card-title {
+    font-family: var(--font-heading-family);
+    font-size: var(--dr-card-title-size);
+    font-weight: var(--dr-card-title-weight);
+    color: var(--dr-card-title-color);
+    margin: 0 0 0.625rem;
+    line-height: 1.3;
+  }
+
+  .daily-ritual__card-body {
+    font-family: var(--font-body-family);
+    font-size: var(--dr-card-body-size);
+    font-weight: var(--dr-card-body-weight);
+    color: var(--dr-card-body-color);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .daily-ritual__indicators {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: var(--space-xl);
+  }
+
+  .daily-ritual__indicator {
+    width: 8px;
+    height: 4px;
+    border: none;
+    border-radius: 2px;
+    background: var(--dr-indicator-color);
+    padding: 0;
+    cursor: pointer;
+    transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                background-color 0.3s ease,
+                transform 0.2s ease;
+  }
+
+  .daily-ritual__indicator:hover {
+    transform: scaleY(1.3);
+    background: var(--dr-indicator-active);
+  }
+
+  .daily-ritual__indicator--active {
+    width: 24px;
+    background: var(--dr-indicator-active);
+  }
+
+  @media (min-width: 768px) {
+    .daily-ritual__slide {
+      flex: 0 0 320px;
+    }
+
+    .daily-ritual__step {
+      left: -0.5rem;
+    }
+
+    .daily-ritual__track {
+      gap: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .daily-ritual__slide {
+      flex: 0 0 360px;
+    }
+
+    .daily-ritual__header {
+      margin-bottom: var(--space-3xl);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Daily Ritual",
+  "tag": "section",
+  "class": "section-daily-ritual",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "header",
+      "label": "Header",
+      "default": "The Daily Ritual"
+    },
+    {
+      "type": "text",
+      "id": "subheader",
+      "label": "Subheader",
+      "default": "3 minutes to stillness"
+    },
+    {
+      "type": "header",
+      "content": "Section colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#252525"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Header style"
+    },
+    {
+      "type": "color",
+      "id": "header_color",
+      "label": "Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "header_size",
+      "label": "Size",
+      "min": 24,
+      "max": 64,
+      "step": 2,
+      "default": 36,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "header_weight",
+      "label": "Weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "header",
+      "content": "Subheader style"
+    },
+    {
+      "type": "color",
+      "id": "subheader_color",
+      "label": "Color",
+      "default": "#888888"
+    },
+    {
+      "type": "range",
+      "id": "subheader_size",
+      "label": "Size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "subheader_weight",
+      "label": "Weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "header",
+      "content": "Step number style"
+    },
+    {
+      "type": "color",
+      "id": "step_color",
+      "label": "Color",
+      "default": "#3D3D3D"
+    },
+    {
+      "type": "range",
+      "id": "step_size",
+      "label": "Size",
+      "min": 48,
+      "max": 120,
+      "step": 4,
+      "default": 72,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "step_weight",
+      "label": "Weight",
+      "options": [
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra Bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "header",
+      "content": "Card subtitle style"
+    },
+    {
+      "type": "color",
+      "id": "card_subtitle_color",
+      "label": "Color",
+      "default": "#888888"
+    },
+    {
+      "type": "range",
+      "id": "card_subtitle_size",
+      "label": "Size",
+      "min": 8,
+      "max": 14,
+      "step": 1,
+      "default": 10,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "card_subtitle_weight",
+      "label": "Weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "header",
+      "content": "Card title style"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "card_title_size",
+      "label": "Size",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "default": 18,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "card_title_weight",
+      "label": "Weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "header",
+      "content": "Card body style"
+    },
+    {
+      "type": "color",
+      "id": "card_body_color",
+      "label": "Color",
+      "default": "#AAAAAA"
+    },
+    {
+      "type": "range",
+      "id": "card_body_size",
+      "label": "Size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "default": 14,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "card_body_weight",
+      "label": "Weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "header",
+      "content": "Indicators"
+    },
+    {
+      "type": "color",
+      "id": "indicator_color",
+      "label": "Default color",
+      "default": "#444444"
+    },
+    {
+      "type": "color",
+      "id": "indicator_active_color",
+      "label": "Active color",
+      "default": "#2D5A47"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "default": 60,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "default": 60,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_number",
+          "label": "Step number",
+          "default": "01"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Step One"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Prepare Your Space"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body text",
+          "default": "Find a quiet corner and take a moment to settle into stillness."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Daily Ritual",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "subtitle": "Step One",
+            "title": "Prepare Your Space",
+            "body": "Find a quiet corner and take a moment to settle into stillness."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "subtitle": "Step Two",
+            "title": "Mix & Pour",
+            "body": "Add one scoop to warm water and stir gently until smooth."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "subtitle": "Step Three",
+            "title": "Savor the Moment",
+            "body": "Take slow, mindful sips and embrace the warmth within."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
