@@ -61,16 +61,14 @@
         "q5"
       ],
       "settings": {
-        "title": "INQUIRIES",
+        "title": "Inquiries",
         "subtitle": "Find answers to commonly asked questions",
         "search_placeholder": "Search questions...",
         "no_results_text": "No questions found. Try a different search term.",
         "categories": "General, Nutrition, Subscription, Shipping",
         "background_color": "#f5f0ea",
-        "text_color": "#4e332e",
-        "text_muted_color": "#b45f06",
-        "border_color": "#e5e5e5",
-        "accent_color": "#2d5a47"
+        "border_color": "#E5E5E5",
+        "accent_color": "#d4af37"
       }
     }
   },
