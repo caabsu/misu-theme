@@ -40,7 +40,7 @@
 
     /* Buttons */
     --scta-btn-desktop-padding: {{ section.settings.btn_desktop_padding }}px;
-    --scta-btn-desktop-margin: {{ section.settings.btn_desktop_margin }}px;
+    --scta-btn-edge-gap: {{ section.settings.btn_edge_gap }}px;
     --scta-btn-primary-bg: {{ section.settings.btn_primary_bg }};
     --scta-btn-primary-text: {{ section.settings.btn_primary_text_color }};
     --scta-btn-secondary-bg: {{ section.settings.btn_secondary_bg }};
@@ -415,7 +415,6 @@
       gap: 1rem;
       flex-shrink: 0;
       margin-left: auto;
-      margin-right: var(--scta-btn-desktop-margin);
     }
 
     .support-cta__contact {
@@ -434,7 +433,7 @@
       opacity: 0.7;
     }
 
-    /* OPEN HUB button - customizable pill shape */
+    /* OPEN HUB button - positioned at edge with gap control */
     .support-cta__open {
       display: inline-flex;
       align-items: center;
@@ -451,6 +450,8 @@
       border-radius: 50px;
       transition: opacity 0.2s ease;
       white-space: nowrap;
+      margin: var(--scta-btn-edge-gap);
+      margin-left: 0;
     }
 
     .support-cta__open:hover {
@@ -470,6 +471,7 @@
     .support-cta__desktop {
       width: 100%;
       padding: var(--scta-padding-y) var(--scta-padding-x);
+      padding-right: 0;
     }
   }
 {% endstylesheet %}
@@ -897,12 +899,12 @@
     },
     {
       "type": "range",
-      "id": "btn_desktop_margin",
-      "label": "Button margin from edge",
+      "id": "btn_edge_gap",
+      "label": "Button gap from section edge",
       "min": 0,
-      "max": 24,
-      "step": 2,
-      "default": 8,
+      "max": 20,
+      "step": 1,
+      "default": 6,
       "unit": "px"
     },
     {
