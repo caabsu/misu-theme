@@ -43,6 +43,10 @@
     --faq-mini-border-width: {{ section.settings.mini_border_width }}px;
     --faq-mini1-border: {{ section.settings.mini_1_border }};
     --faq-mini2-border: {{ section.settings.mini_2_border }};
+    --faq-main-sub-size-desktop: {{ section.settings.main_sub_size_desktop }}px;
+    --faq-main-title-size-desktop: {{ section.settings.main_title_size_desktop }}px;
+    --faq-mini-text-size-desktop: {{ section.settings.mini_text_size_desktop }}px;
+    --faq-mini-stack-width-desktop: {{ section.settings.mini_stack_width_desktop }}px;
   }
 {% endstyle %}
 
@@ -320,7 +324,6 @@
     align-items: stretch;
     gap: 0.5rem;
     margin-bottom: var(--space-xl);
-    max-width: 480px;
   }
 
   /* Main subscription button - fills remaining width, ~4:3 ratio */
@@ -456,7 +459,7 @@
   }
 
   .faq__search {
-    max-width: 480px;
+    width: 100%;
   }
 
   .faq__search-wrap {
@@ -611,8 +614,20 @@
       padding: var(--space-5xl) var(--page-margin);
     }
 
-    .faq__search-wrap {
-      max-width: 400px;
+    .faq__action-main-sub {
+      font-size: var(--faq-main-sub-size-desktop);
+    }
+
+    .faq__action-main-title {
+      font-size: var(--faq-main-title-size-desktop);
+    }
+
+    .faq__action-stack {
+      width: var(--faq-mini-stack-width-desktop);
+    }
+
+    .faq__action-mini-text {
+      font-size: var(--faq-mini-text-size-desktop);
     }
   }
 {% endstylesheet %}
@@ -865,6 +880,50 @@
       "max": 3,
       "step": 1,
       "default": 1,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Desktop button settings"
+    },
+    {
+      "type": "range",
+      "id": "main_sub_size_desktop",
+      "label": "Main subheader size",
+      "min": 9,
+      "max": 16,
+      "step": 1,
+      "default": 11,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "main_title_size_desktop",
+      "label": "Main title size",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "default": 18,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "mini_text_size_desktop",
+      "label": "Mini button text size",
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "mini_stack_width_desktop",
+      "label": "Mini buttons width",
+      "min": 120,
+      "max": 280,
+      "step": 10,
+      "default": 180,
       "unit": "px"
     },
     {
