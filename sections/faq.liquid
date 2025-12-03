@@ -40,6 +40,9 @@
     --faq-main-title-weight: {{ section.settings.main_title_weight }};
     --faq-mini-text-size: {{ section.settings.mini_text_size }}px;
     --faq-mini-text-weight: {{ section.settings.mini_text_weight }};
+    --faq-mini-border-width: {{ section.settings.mini_border_width }}px;
+    --faq-mini1-border: {{ section.settings.mini_1_border }};
+    --faq-mini2-border: {{ section.settings.mini_2_border }};
   }
 {% endstyle %}
 
@@ -426,6 +429,7 @@
 
   .faq__action-mini--1 {
     background: var(--faq-mini1-bg);
+    border: var(--faq-mini-border-width) solid var(--faq-mini1-border);
   }
   .faq__action-mini--1 .faq__action-mini-text,
   .faq__action-mini--1 .faq__action-mini-arrow {
@@ -434,6 +438,7 @@
 
   .faq__action-mini--2 {
     background: var(--faq-mini2-bg);
+    border: var(--faq-mini-border-width) solid var(--faq-mini2-border);
   }
   .faq__action-mini--2 .faq__action-mini-text,
   .faq__action-mini--2 .faq__action-mini-arrow {
@@ -789,6 +794,12 @@
       "default": "#4A4A4A"
     },
     {
+      "type": "color",
+      "id": "mini_1_border",
+      "label": "Border color",
+      "default": "#E5E5E5"
+    },
+    {
       "type": "header",
       "content": "Mini button 2 (Returns)"
     },
@@ -816,6 +827,12 @@
       "default": "#4A4A4A"
     },
     {
+      "type": "color",
+      "id": "mini_2_border",
+      "label": "Border color",
+      "default": "#E5E5E5"
+    },
+    {
       "type": "header",
       "content": "Mini buttons typography"
     },
@@ -839,6 +856,16 @@
         { "value": "600", "label": "Semibold" }
       ],
       "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "mini_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 3,
+      "step": 1,
+      "default": 1,
+      "unit": "px"
     },
     {
       "type": "header",
