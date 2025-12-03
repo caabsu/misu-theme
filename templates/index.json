@@ -313,7 +313,7 @@
         "padding_y": 24,
         "border_radius": 16,
         "border_radius_mobile": 24,
-        "background_color": "#ffffff",
+        "background_color": "#fefaf6",
         "background_image": "shopify://shop_images/custom_nano-banana-pro_1764586035612.png",
         "image_opacity": 15,
         "icon_bg": "#f5f0ea",
