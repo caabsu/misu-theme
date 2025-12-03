@@ -277,16 +277,16 @@
         "card_subtitle_color": "#f5f0ea",
         "card_subtitle_size": 10,
         "card_subtitle_weight": "500",
-        "card_title_color": "#ffffff",
-        "card_title_size": 28,
-        "card_title_weight": "600",
-        "card_body_color": "#AAAAAA",
-        "card_body_size": 14,
+        "card_title_color": "#f5f0ea",
+        "card_title_size": 25,
+        "card_title_weight": "400",
+        "card_body_color": "#e6e0d8",
+        "card_body_size": 13,
         "card_body_weight": "400",
-        "indicator_color": "#444444",
-        "indicator_active_color": "#2D5A47",
-        "padding_top": 60,
-        "padding_bottom": 60
+        "indicator_color": "#4d4b4a",
+        "indicator_active_color": "#b45f06",
+        "padding_top": 40,
+        "padding_bottom": 45
       }
     }
   },
