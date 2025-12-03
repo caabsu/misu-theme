@@ -28,11 +28,6 @@
     --scta-body-color-desktop: {{ section.settings.body_color_desktop }};
     --scta-body-size-desktop: {{ section.settings.body_size_desktop }}px;
 
-    /* Icon (mobile) */
-    --scta-icon-bg: {{ section.settings.icon_bg }};
-    --scta-icon-color: {{ section.settings.icon_color }};
-    --scta-icon-size: {{ section.settings.icon_size }}px;
-
     /* Desktop dot & divider */
     --scta-dot-color: {{ section.settings.dot_color }};
     --scta-dot-size: {{ section.settings.dot_size }}px;
@@ -61,13 +56,6 @@
 
     {%- comment -%} Mobile Layout {%- endcomment -%}
     <div class="support-cta__mobile">
-      <div class="support-cta__icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-          <line x1="12" y1="17" x2="12.01" y2="17"></line>
-        </svg>
-      </div>
       <h2 class="support-cta__header">{{ section.settings.header }}</h2>
       <p class="support-cta__subheader">{{ section.settings.subheader }}</p>
       <div class="support-cta__buttons">
@@ -155,23 +143,6 @@
     padding: var(--scta-padding-y) var(--scta-padding-x);
   }
 
-  .support-cta__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--scta-icon-size);
-    height: var(--scta-icon-size);
-    background: var(--scta-icon-bg);
-    color: var(--scta-icon-color);
-    border-radius: 50%;
-    margin-bottom: 1rem;
-  }
-
-  .support-cta__icon svg {
-    width: 50%;
-    height: 50%;
-  }
-
   .support-cta__header {
     font-family: var(--font-heading-family);
     font-size: var(--scta-header-size-mobile);
@@ -249,8 +220,6 @@
       display: flex;
       align-items: center;
       gap: 1.25rem;
-      padding: 0;
-      padding-left: var(--scta-padding-x);
     }
 
     /* Desktop: horizontal fade from left */
@@ -390,13 +359,12 @@
       opacity: 0.7;
     }
 
-    /* OPEN HUB button - pill shape hugging the edge */
+    /* OPEN HUB button - pill shape with padding from edge */
     .support-cta__open {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      height: 100%;
-      padding: var(--scta-padding-y) calc(var(--scta-padding-x) + 0.25rem);
+      padding: 0.625rem 1.25rem;
       background: var(--scta-btn-primary-bg);
       color: var(--scta-btn-primary-text);
       font-family: var(--font-body-family);
@@ -405,9 +373,7 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       text-decoration: none;
-      border-radius: var(--scta-radius);
-      margin: 0;
-      margin-left: 0.5rem;
+      border-radius: 50px;
       transition: opacity 0.2s ease;
     }
 
@@ -420,16 +386,14 @@
       height: 14px;
     }
 
-    /* Card needs specific height for button alignment */
+    /* Card layout for desktop */
     .support-cta__card {
-      display: flex;
-      align-items: stretch;
       border-radius: var(--scta-radius);
     }
 
     .support-cta__desktop {
       width: 100%;
-      min-height: calc(var(--scta-padding-y) * 2 + 1.5rem);
+      padding: var(--scta-padding-y) var(--scta-padding-x);
     }
   }
 {% endstylesheet %}
@@ -636,32 +600,6 @@
       "step": 5,
       "default": 15,
       "unit": "%"
-    },
-    {
-      "type": "header",
-      "content": "Icon (mobile)"
-    },
-    {
-      "type": "color",
-      "id": "icon_bg",
-      "label": "Icon background",
-      "default": "#2a2624"
-    },
-    {
-      "type": "color",
-      "id": "icon_color",
-      "label": "Icon color",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "range",
-      "id": "icon_size",
-      "label": "Icon size",
-      "min": 40,
-      "max": 80,
-      "step": 4,
-      "default": 56,
-      "unit": "px"
     },
     {
       "type": "header",
