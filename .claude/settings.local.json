@@ -12,7 +12,8 @@
       "Bash(python:*)",
       "Bash(done)",
       "Bash(git revert:*)",
-      "Bash(git rebase:*)"
+      "Bash(git rebase:*)",
+      "Bash(git fetch:*)"
     ],
     "deny": [],
     "ask": []

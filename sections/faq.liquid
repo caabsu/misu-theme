@@ -63,6 +63,7 @@
     --faq-feature-margin-top: {{ section.settings.feature_margin_top }}px;
     --faq-feature-margin-bottom: {{ section.settings.feature_margin_bottom }}px;
     --faq-feature-gap: {{ section.settings.feature_gap }}px;
+    --faq-feature-image-opacity: {{ section.settings.feature_image_opacity | divided_by: 100.0 }};
   }
 {% endstyle %}
 
@@ -711,7 +712,8 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.4s ease;
+    opacity: var(--faq-feature-image-opacity);
+    transition: transform 0.4s ease, opacity 0.3s ease;
   }
 
   .faq__feature-card:hover .faq__feature-image img {
@@ -1199,6 +1201,16 @@
     {
       "type": "header",
       "content": "Feature cards style"
+    },
+    {
+      "type": "range",
+      "id": "feature_image_opacity",
+      "label": "Image opacity",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "default": 75,
+      "unit": "%"
     },
     {
       "type": "range",
