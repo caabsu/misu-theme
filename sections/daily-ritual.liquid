@@ -34,8 +34,8 @@
     --dr-card-body-size-desktop: {{ section.settings.card_body_size_desktop }}px;
     --dr-card-width-desktop: {{ section.settings.card_width_desktop }}px;
     --dr-card-gap-desktop: {{ section.settings.card_gap_desktop }}px;
-    --dr-orbit-color: {{ section.settings.orbit_color }};
-    --dr-orbit-speed: {{ section.settings.orbit_speed }}s;
+    --dr-anim-color: {{ section.settings.anim_color }};
+    --dr-anim-speed: {{ section.settings.anim_speed }}s;
     --dr-nav-color: {{ section.settings.nav_color }};
     --dr-nav-size: {{ section.settings.nav_size }}px;
   }
@@ -45,11 +45,9 @@
   <div class="daily-ritual__inner">
     <header class="daily-ritual__header">
       {% if section.settings.header != blank %}
-        <div class="daily-ritual__title-wrap">
+        <div class="daily-ritual__title-wrap daily-ritual__title-wrap--{{ section.settings.anim_style }}">
           <h2 class="daily-ritual__title">{{ section.settings.header }}</h2>
-          <div class="daily-ritual__orbit">
-            <span class="daily-ritual__orbit-dot"></span>
-          </div>
+          <span class="daily-ritual__title-line"></span>
         </div>
       {% endif %}
       <div class="daily-ritual__header-row">
@@ -349,46 +347,131 @@
     line-height: 1.2;
   }
 
-  .daily-ritual__orbit {
-    position: absolute;
-    inset: -12px -20px;
-    pointer-events: none;
-    animation: orbitRotate var(--dr-orbit-speed) linear infinite;
+  .daily-ritual__title-line {
+    display: none;
   }
 
-  .daily-ritual__orbit-dot {
+  /* Animation Style: Underline Sweep */
+  .daily-ritual__title-wrap--underline .daily-ritual__title-line {
+    display: block;
     position: absolute;
-    top: 50%;
+    bottom: 0.15em;
     left: 0;
-    width: 6px;
-    height: 6px;
-    margin-top: -3px;
-    margin-left: -3px;
-    background: var(--dr-orbit-color);
-    border-radius: 50%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--dr-anim-color) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: underlineSweep var(--dr-anim-speed) ease-in-out infinite;
+    opacity: 0.6;
+  }
+
+  @keyframes underlineSweep {
+    0%, 100% {
+      background-position: 200% 0;
+    }
+    50% {
+      background-position: -100% 0;
+    }
+  }
+
+  /* Animation Style: Text Shimmer */
+  .daily-ritual__title-wrap--shimmer .daily-ritual__title {
+    background: linear-gradient(
+      90deg,
+      var(--dr-header-color) 0%,
+      var(--dr-header-color) 40%,
+      var(--dr-anim-color) 50%,
+      var(--dr-header-color) 60%,
+      var(--dr-header-color) 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textShimmer var(--dr-anim-speed) ease-in-out infinite;
+  }
+
+  @keyframes textShimmer {
+    0% {
+      background-position: 100% 0;
+    }
+    100% {
+      background-position: -100% 0;
+    }
+  }
+
+  /* Animation Style: Border Trace */
+  .daily-ritual__title-wrap--border {
+    padding: 0.2em 0.4em;
+  }
+
+  .daily-ritual__title-wrap--border::before,
+  .daily-ritual__title-wrap--border::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
+
+  .daily-ritual__title-wrap--border::before {
+    border: 1px solid transparent;
+    border-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--dr-anim-color) 25%,
+      var(--dr-anim-color) 75%,
+      transparent 100%
+    ) 1;
+    animation: borderTrace var(--dr-anim-speed) linear infinite;
     opacity: 0.5;
   }
 
-  .daily-ritual__orbit-dot::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 1px;
-    background: linear-gradient(90deg, var(--dr-orbit-color) 0%, transparent 100%);
-    opacity: 0.4;
-    transform: translateY(-50%);
-    transform-origin: left center;
+  @keyframes borderTrace {
+    0% {
+      clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    }
+    25% {
+      clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    }
+    50% {
+      clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    }
+    75% {
+      clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+    }
+    100% {
+      clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    }
   }
 
-  @keyframes orbitRotate {
-    from {
-      transform: rotate(0deg);
+  /* Animation Style: Glow Pulse */
+  .daily-ritual__title-wrap--glow .daily-ritual__title {
+    animation: glowPulse var(--dr-anim-speed) ease-in-out infinite;
+  }
+
+  @keyframes glowPulse {
+    0%, 100% {
+      text-shadow: 0 0 0 transparent;
     }
-    to {
-      transform: rotate(360deg);
+    50% {
+      text-shadow:
+        0 0 10px color-mix(in srgb, var(--dr-anim-color) 40%, transparent),
+        0 0 20px color-mix(in srgb, var(--dr-anim-color) 20%, transparent),
+        0 0 30px color-mix(in srgb, var(--dr-anim-color) 10%, transparent);
     }
+  }
+
+  /* Animation Style: None */
+  .daily-ritual__title-wrap--none .daily-ritual__title-line {
+    display: none;
   }
 
   .daily-ritual__header-row {
@@ -612,21 +695,6 @@
       font-size: var(--dr-header-size-desktop);
     }
 
-    .daily-ritual__orbit {
-      inset: -16px -28px;
-    }
-
-    .daily-ritual__orbit-dot {
-      width: 7px;
-      height: 7px;
-      margin-top: -3.5px;
-      margin-left: -3.5px;
-    }
-
-    .daily-ritual__orbit-dot::before {
-      width: 28px;
-    }
-
     .daily-ritual__subtitle {
       font-size: var(--dr-subheader-size-desktop);
     }
@@ -766,22 +834,35 @@
     },
     {
       "type": "header",
-      "content": "Header orbit animation"
+      "content": "Header animation"
+    },
+    {
+      "type": "select",
+      "id": "anim_style",
+      "label": "Animation style",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "underline", "label": "Underline sweep" },
+        { "value": "shimmer", "label": "Text shimmer" },
+        { "value": "glow", "label": "Glow pulse" },
+        { "value": "border", "label": "Border trace" }
+      ],
+      "default": "shimmer"
     },
     {
       "type": "color",
-      "id": "orbit_color",
-      "label": "Orbit color",
+      "id": "anim_color",
+      "label": "Animation color",
       "default": "#FFFFFF"
     },
     {
       "type": "range",
-      "id": "orbit_speed",
-      "label": "Orbit speed (seconds)",
-      "min": 6,
-      "max": 24,
-      "step": 2,
-      "default": 12,
+      "id": "anim_speed",
+      "label": "Animation speed (seconds)",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4,
       "unit": "s"
     },
     {
