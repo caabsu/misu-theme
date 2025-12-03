@@ -36,6 +36,8 @@
     --dr-card-gap-desktop: {{ section.settings.card_gap_desktop }}px;
     --dr-orbit-color: {{ section.settings.orbit_color }};
     --dr-orbit-speed: {{ section.settings.orbit_speed }}s;
+    --dr-nav-color: {{ section.settings.nav_color }};
+    --dr-nav-size: {{ section.settings.nav_size }}px;
   }
 {% endstyle %}
 
@@ -50,9 +52,23 @@
           </div>
         </div>
       {% endif %}
-      {% if section.settings.subheader != blank %}
-        <p class="daily-ritual__subtitle">{{ section.settings.subheader }}</p>
-      {% endif %}
+      <div class="daily-ritual__header-row">
+        {% if section.settings.subheader != blank %}
+          <p class="daily-ritual__subtitle">{{ section.settings.subheader }}</p>
+        {% endif %}
+        <div class="daily-ritual__nav" data-carousel-nav>
+          <button class="daily-ritual__nav-btn" data-carousel-prev aria-label="Previous slide">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+          </button>
+          <button class="daily-ritual__nav-btn" data-carousel-next aria-label="Next slide">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </button>
+        </div>
+      </div>
     </header>
 
     <div class="daily-ritual__carousel" data-carousel>
@@ -252,6 +268,22 @@
       });
     });
 
+    // Nav button clicks
+    const prevBtn = section.querySelector('[data-carousel-prev]');
+    const nextBtn = section.querySelector('[data-carousel-next]');
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        updateCarousel(currentIndex - 1);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        updateCarousel(currentIndex + 1);
+      });
+    }
+
     // Keyboard navigation
     section.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowLeft') {
@@ -359,6 +391,13 @@
     }
   }
 
+  .daily-ritual__header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+  }
+
   .daily-ritual__subtitle {
     font-family: var(--font-body-family);
     font-size: var(--dr-subheader-size);
@@ -366,6 +405,40 @@
     color: var(--dr-subheader-color);
     margin: 0;
     line-height: 1.5;
+  }
+
+  .daily-ritual__nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .daily-ritual__nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--dr-nav-size);
+    height: var(--dr-nav-size);
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: var(--dr-nav-color);
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .daily-ritual__nav-btn:hover {
+    opacity: 1;
+  }
+
+  .daily-ritual__nav-btn:active {
+    transform: scale(0.9);
+  }
+
+  .daily-ritual__nav-btn svg {
+    width: 100%;
+    height: 100%;
   }
 
   .daily-ritual__carousel {
@@ -599,6 +672,14 @@
 
     .daily-ritual__indicators {
       display: none;
+    }
+
+    .daily-ritual__nav {
+      display: none;
+    }
+
+    .daily-ritual__header-row {
+      justify-content: center;
     }
   }
 {% endstylesheet %}
@@ -874,6 +955,26 @@
       "id": "indicator_active_color",
       "label": "Active color",
       "default": "#2D5A47"
+    },
+    {
+      "type": "header",
+      "content": "Navigation arrows (mobile)"
+    },
+    {
+      "type": "color",
+      "id": "nav_color",
+      "label": "Arrow color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "nav_size",
+      "label": "Arrow size",
+      "min": 16,
+      "max": 32,
+      "step": 2,
+      "default": 24,
+      "unit": "px"
     },
     {
       "type": "header",
