@@ -313,19 +313,20 @@
     max-width: 480px;
   }
 
-  /* Main subscription button - landscape with icon top-right, text bottom-left */
+  /* Main subscription button - slight landscape with icon top-right, text bottom-left */
   .faq__action-main {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    flex: 1;
-    height: 100px;
+    width: 160px;
+    height: 120px;
     padding: var(--faq-main-padding);
     background: var(--faq-main-bg);
     border-radius: 12px;
     text-decoration: none;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    flex-shrink: 0;
   }
 
   .faq__action-main:hover {
@@ -374,8 +375,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 120px;
     flex-shrink: 0;
   }
 
@@ -436,12 +437,13 @@
 
   @media (max-width: 480px) {
     .faq__action-main {
-      height: 80px;
+      width: 130px;
+      height: 100px;
     }
 
     .faq__action-stack {
       width: 70px;
-      height: 80px;
+      height: 100px;
     }
 
     .faq__action-mini {
