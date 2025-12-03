@@ -18,34 +18,47 @@
     --faq-search-bg: {{ section.settings.search_bg }};
     --faq-search-text: {{ section.settings.search_text }};
     --faq-search-border: {{ section.settings.search_border }};
+    --faq-padding-top: {{ section.settings.padding_top }}px;
+    --faq-hero-opacity: {{ section.settings.hero_opacity | divided_by: 100.0 }};
   }
 {% endstyle %}
 
 <section class="faq full-width" data-faq-section>
-  <div class="faq__inner">
-    {%- comment -%} Header {%- endcomment -%}
-    <header class="faq__header">
-      <h1 class="faq__title">{{ section.settings.title }}</h1>
-      {% if section.settings.subtitle != blank %}
-        <p class="faq__subtitle">{{ section.settings.subtitle }}</p>
-      {% endif %}
-    </header>
+  {%- comment -%} Hero area with background image {%- endcomment -%}
+  <div class="faq__hero">
+    {% if section.settings.hero_image %}
+      <div class="faq__hero-image">
+        {{ section.settings.hero_image | image_url: width: 1920 | image_tag: loading: 'eager' }}
+      </div>
+    {% endif %}
+    <div class="faq__hero-gradient"></div>
+    <div class="faq__hero-content">
+      <header class="faq__header">
+        <h1 class="faq__title">{{ section.settings.title }}</h1>
+        {% if section.settings.subtitle != blank %}
+          <p class="faq__subtitle">{{ section.settings.subtitle }}</p>
+        {% endif %}
+      </header>
 
-    {%- comment -%} Search {%- endcomment -%}
-    <div class="faq__search">
-      <div class="faq__search-wrap">
-        <svg class="faq__search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"></circle>
-          <path d="m21 21-4.3-4.3"></path>
-        </svg>
-        <input
-          type="text"
-          class="faq__search-input"
-          placeholder="{{ section.settings.search_placeholder }}"
-          data-faq-search
-        >
+      {%- comment -%} Search {%- endcomment -%}
+      <div class="faq__search">
+        <div class="faq__search-wrap">
+          <svg class="faq__search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+          <input
+            type="text"
+            class="faq__search-input"
+            placeholder="{{ section.settings.search_placeholder }}"
+            data-faq-search
+          >
+        </div>
       </div>
     </div>
+  </div>
+
+  <div class="faq__inner">
 
     {%- comment -%} FAQ Categories {%- endcomment -%}
     <div class="faq__content">
@@ -151,14 +164,53 @@
     min-height: 100vh;
   }
 
+  .faq__hero {
+    position: relative;
+    padding: var(--faq-padding-top) var(--page-margin) var(--space-2xl);
+    overflow: hidden;
+  }
+
+  .faq__hero-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .faq__hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: var(--faq-hero-opacity);
+  }
+
+  .faq__hero-gradient {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 40%,
+      var(--faq-bg) 100%
+    );
+    pointer-events: none;
+  }
+
+  .faq__hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
   .faq__inner {
     max-width: 720px;
     margin: 0 auto;
-    padding: var(--space-4xl) var(--page-margin);
+    padding: 0 var(--page-margin) var(--space-4xl);
   }
 
   .faq__header {
-    margin-bottom: var(--space-2xl);
+    margin-bottom: var(--space-xl);
   }
 
   .faq__title {
@@ -178,7 +230,7 @@
   }
 
   .faq__search {
-    margin-bottom: var(--space-3xl);
+    margin-bottom: 0;
   }
 
   .faq__search-wrap {
@@ -373,6 +425,35 @@
       "label": "t:sections.faq.categories",
       "info": "t:sections.faq.categories_info",
       "default": "General, Nutrition, Subscription, Shipping"
+    },
+    {
+      "type": "header",
+      "content": "Hero background"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "hero_opacity",
+      "label": "Image opacity",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "default": 20,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 20,
+      "max": 150,
+      "step": 5,
+      "default": 60,
+      "unit": "px"
     },
     {
       "type": "header",
