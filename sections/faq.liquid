@@ -34,6 +34,12 @@
     --faq-mini2-bg: {{ section.settings.mini_2_bg }};
     --faq-mini2-text: {{ section.settings.mini_2_text }};
     --faq-main-padding: {{ section.settings.main_padding }}px;
+    --faq-main-sub-size: {{ section.settings.main_sub_size }}px;
+    --faq-main-sub-weight: {{ section.settings.main_sub_weight }};
+    --faq-main-title-size: {{ section.settings.main_title_size }}px;
+    --faq-main-title-weight: {{ section.settings.main_title_weight }};
+    --faq-mini-text-size: {{ section.settings.mini_text_size }}px;
+    --faq-mini-text-weight: {{ section.settings.mini_text_weight }};
   }
 {% endstyle %}
 
@@ -356,8 +362,8 @@
 
   .faq__action-main-sub {
     font-family: var(--font-body-family);
-    font-size: 0.5625rem;
-    font-weight: 500;
+    font-size: var(--faq-main-sub-size);
+    font-weight: var(--faq-main-sub-weight);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--faq-main-sub);
@@ -365,8 +371,8 @@
 
   .faq__action-main-title {
     font-family: var(--font-body-family);
-    font-size: 0.9375rem;
-    font-weight: 600;
+    font-size: var(--faq-main-title-size);
+    font-weight: var(--faq-main-title-weight);
     color: var(--faq-main-text);
   }
 
@@ -400,8 +406,8 @@
 
   .faq__action-mini-text {
     font-family: var(--font-body-family);
-    font-size: 0.625rem;
-    font-weight: 500;
+    font-size: var(--faq-mini-text-size);
+    font-weight: var(--faq-mini-text-weight);
     letter-spacing: 0.03em;
     text-transform: uppercase;
   }
@@ -717,6 +723,49 @@
       "unit": "px"
     },
     {
+      "type": "range",
+      "id": "main_sub_size",
+      "label": "Subheader size",
+      "min": 8,
+      "max": 14,
+      "step": 1,
+      "default": 9,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "main_sub_weight",
+      "label": "Subheader weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "main_title_size",
+      "label": "Title size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 15,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "main_title_weight",
+      "label": "Title weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
       "type": "header",
       "content": "Mini button 1 (Tracking)"
     },
@@ -769,6 +818,31 @@
       "id": "mini_2_text",
       "label": "Text color",
       "default": "#4A4A4A"
+    },
+    {
+      "type": "header",
+      "content": "Mini buttons typography"
+    },
+    {
+      "type": "range",
+      "id": "mini_text_size",
+      "label": "Text size",
+      "min": 8,
+      "max": 14,
+      "step": 1,
+      "default": 10,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "mini_text_weight",
+      "label": "Text weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" }
+      ],
+      "default": "500"
     },
     {
       "type": "header",
